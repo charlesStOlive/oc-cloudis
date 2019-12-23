@@ -1,0 +1,48 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: waka.cloudis::lang.montage.name
+        span: auto
+    slug:
+        label: waka.utils::lang.global.slug
+        preset: name
+        span: auto
+    active:
+        label: waka.cloudis::lang.montage.active
+        type: checkbox
+        default: true
+        span: auto
+    auto_create:
+        label: waka.cloudis::lang.montage.auto_create
+        type: checkbox
+        default: true
+        span: auto
+    data_dource:
+        label: waka.cloudis::lang.montage.data_source
+        type: relation
+        nameFrom: name
+        span: auto
+    src:
+        label: waka.cloudis::lang.montage.src
+        type: fileupload
+        mode: image
+        imageHeight: 260
+        imageWidth: 260
+        thumbOptions:
+            mode: crop
+            offset:
+                - 0
+                - 0
+            quality: 90
+    cloudi_path: 
+        label: waka.cloudis::lang.montage.cloudi_path
+        default: 'campagnes/'
+    options:
+        label: waka.cloudis::lang.montage.options
+        type: codeeditor
+
+
+    

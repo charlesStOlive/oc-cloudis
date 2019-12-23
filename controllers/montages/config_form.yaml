@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Montage
+
+# Model Form Field configuration
+form: $/waka/cloudis/models/montage/fields.yaml
+
+# Model Class name
+modelClass: Waka\Cloudis\Models\Montage
+
+# Default redirect location
+defaultRedirect: waka/cloudis/montages
+
+# Create page
+create:
+    title: Create Montage
+    redirect: waka/cloudis/montages/update/:id
+    redirectClose: waka/cloudis/montages
+
+# Update page
+update:
+    title: Edit Montage
+    redirect: waka/cloudis/montages
+    redirectClose: waka/cloudis/montages
+
+# Preview page
+preview:
+    title: Preview Montage

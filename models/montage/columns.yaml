@@ -1,0 +1,20 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    name:
+        label: waka.cloudis::lang.montage.name
+        searchable: true
+    updated_at:
+        label: waka.utils::lang.global.updated_at
+        type: timetense
+    active:
+        label: waka.cloudis::lang.montage.active
+    auto_create:
+        label: waka.cloudis::lang.montage.auto_create
+    datasrc:
+        label: waka.cloudis::lang.montage.data_source
+        relation: data_source
+        nameFrom: name
+    
