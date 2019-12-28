@@ -14,14 +14,13 @@ class CreateMontagesTable extends Migration
             $table->string('name');
             $table->string('slug');
 
-            $table->boolean('active')->default('true');
-            $table->boolean('auto_create')->default('true');
+            $table->boolean('active')->default(true);
+            $table->boolean('auto_create')->default(true);
+            $table->boolean('ready')->default(false);
 
             $table->boolean('data_source_id');
 
-            $table->string('cloudi_path')->nullable();
-
-            $table->text('options')->default('true');
+            $table->text('options')->nullable();
             
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('nest_left')->unsigned()->nullable();

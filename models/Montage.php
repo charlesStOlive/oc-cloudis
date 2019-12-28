@@ -2,6 +2,7 @@
 
 use Model;
 
+
 /**
  * Montage Model
  */
@@ -10,6 +11,10 @@ class Montage extends Model
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\NestedTree;
     use \October\Rain\Database\Traits\SoftDelete;
+    //
+    use \Waka\Cloudis\Classes\Traits\CloudiTrait;
+    public $slugAttribute = 'slug';
+    public $imgCloudis = ['src', 'masque'];
 
     /**
      * @var string The database table used by the model.
@@ -64,6 +69,8 @@ class Montage extends Model
         'updated_at',
         'deleted_at',
     ];
+    
+
 
     /**
      * @var array Relations
@@ -79,10 +86,22 @@ class Montage extends Model
     public $morphMany = [];
     public $attachOne = [
         'src' => 'System\Models\File',
+        'masque' => 'System\Models\File',
     ];
     public $attachMany = [];
 
-    public function getCloudiPathAttribute() {
-        return null;
+    /**
+     * Event
+     */
+    public function afterSave() {
+        // cet fonction utilse le trait cloudis
+        $this->checkFileChange();
     }
+    /**
+     * Attributes
+     */
+    public function getCloudi() {
+        return $this->src();
+    }
+    
 }

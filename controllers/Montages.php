@@ -13,6 +13,8 @@ class Montages extends Controller
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
         'Waka.Utils.Behaviors.DuplicateModel',
+        'Waka.Cloudis.Behaviors.PopupCloudis',
+        'Waka.Utils.Behaviors.PopupActions',
 
     ];
 

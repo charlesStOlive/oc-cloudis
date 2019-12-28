@@ -20,9 +20,10 @@ fields:
         type: checkbox
         default: true
         span: auto
-    data_dource:
+    data_source:
         label: waka.cloudis::lang.montage.data_source
         type: relation
+        placeholder: waka.cloudis::lang.montage.data_source_placeholder
         nameFrom: name
         span: auto
     src:
@@ -37,12 +38,10 @@ fields:
                 - 0
                 - 0
             quality: 90
-    cloudi_path: 
-        label: waka.cloudis::lang.montage.cloudi_path
-        default: 'campagnes/'
     options:
         label: waka.cloudis::lang.montage.options
         type: codeeditor
+        language: yaml
 
 
     

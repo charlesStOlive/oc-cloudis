@@ -2,6 +2,9 @@
 
 use Backend;
 use System\Classes\PluginBase;
+use Lang;
+use Event;
+use View;
 
 /**
  * Cloudis Plugin Information File
@@ -40,6 +43,24 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        Event::listen('backend.down.update', function($controller) {
+            if(in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement )) {
+                $data = [
+                    'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
+                    'modelId' => $controller->formGetModel()->id
+                ];
+                return View::make('waka.cloudis::cloudisbutton')->withData($data);;
+            }
+        });
+        Event::listen('popup.actions.line1', function($controller, $model, $id) {
+            if(in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
+                $data = [
+                    'model' => str_replace('\\', '\\\\', $model),
+                    'modelId' => $id
+                ];
+                return View::make('waka.cloudis::cloudisbutton')->withData($data);;
+            }
+        });
 
     }
 

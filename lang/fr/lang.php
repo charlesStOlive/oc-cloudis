@@ -13,6 +13,10 @@ return [
         'cloudi_path' => 'Chemin sur cloudi',
         'options' => 'Options',
         'src' => 'Source du montage',
+        'data_source_placeholder' => '--Choisissez une source--'
+    ],
+    'popup' => [
+        'title' => 'Montage cloudis',
     ]
     
 ];
