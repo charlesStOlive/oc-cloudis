@@ -13,8 +13,8 @@ class Montage extends Model
     use \October\Rain\Database\Traits\SoftDelete;
     //
     use \Waka\Cloudis\Classes\Traits\CloudiTrait;
-    public $slugAttribute = 'slug';
-    public $imgCloudis = ['src', 'masque'];
+    public $cloudiSlug = 'slug';
+    public $cloudiImages = ['src', 'masque'];
 
     /**
      * @var string The database table used by the model.
@@ -95,7 +95,7 @@ class Montage extends Model
      */
     public function afterSave() {
         // cet fonction utilse le trait cloudis
-        $this->checkFileChange();
+        $this->checkCloudisFilesChanges();
     }
     /**
      * Attributes

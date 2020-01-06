@@ -25,12 +25,23 @@ fields:
         type: relation
         placeholder: waka.cloudis::lang.montage.data_source_placeholder
         nameFrom: name
-        span: auto
     src:
         label: waka.cloudis::lang.montage.src
         type: fileupload
         mode: image
-        imageHeight: 260
+        span: auto
+        imageWidth: 260
+        thumbOptions:
+            mode: crop
+            offset:
+                - 0
+                - 0
+            quality: 90
+    masque:
+        label: waka.cloudis::lang.montage.masque
+        type: fileupload
+        mode: image
+        span: auto
         imageWidth: 260
         thumbOptions:
             mode: crop
