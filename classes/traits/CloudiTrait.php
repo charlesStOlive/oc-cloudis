@@ -32,6 +32,7 @@ trait CloudiTrait
         }
         // si la nouvelle version n'existe plus et il existe une ancienne version on detruit l'image sur cloudi
         if(!$newVersion && $this->{$src}) {
+            $this->updateCloudiRelations('detach');
             $this->clouderDelete($src);
             return false;
         }
@@ -43,15 +44,14 @@ trait CloudiTrait
                 $this->clouderDelete($src);
                 $this->clouderUpload($newVersion, $src);
                 return true;
-                //$this->updateCloudiRelations();
             } else {
                 return false;
             }
         } else {
             //Nouvelle image
             $this->clouderUpload($newVersion, $src);
+            $this->updateCloudiRelations();
             return true;
-            //$this->updateCloudiRelations();
         }
     }
     /**
@@ -62,7 +62,7 @@ trait CloudiTrait
         $options = [
             "invalidate" => true
         ];
-        Cloudder::destroy($this->getCloudiIdOld($src), $options);
+        Cloudder::destroy($this->getCloudiId($src, false), $options);
     }
     /**
      * $charge sur cloudder
@@ -81,19 +81,19 @@ trait CloudiTrait
         //
         return Cloudder::secureShow($this->getCloudiId($src), $options);
     }
-    public function getCloudiRowUrl($src, $width=30) 
+    public function getCloudiRowUrl($src, $height=30) 
     {
         // if(!in_array($src, $this->cloudiImages)) {
         //     throw new ApplicationException('The source doesnt exist CloudiTrait');
         // } 
-        return 'fuck';
+        $url = $this->getCloudiId($src, false);
         $options =  [
             "gravity"=>"face",
-            "width"=>$width,
+            "height"=>$height,
             "crop"=>"thumb",
             "format"=>"jpg"
         ];
-        return Cloudder::secureShow($src, $options);
+        return Cloudder::secureShow($url, $options);
     }
     public function getCloudiBase($src) 
     {
@@ -103,20 +103,17 @@ trait CloudiTrait
     /**
      * $field nom du champs qui portera le nom
      */
-    public function getCloudiId($src) 
+    public function getCloudiId($src, $deffered=true) 
     {
         $srcPath = env('CLOUDINARY_PATH');
         $modelName = snake_case((new \ReflectionClass($this))->getShortName());
         $modelSlug = $this->attributes[$this->cloudiSlug];
-        $timeStamp = str_slug($this->getDeferredCloudiImage($src)->created_at);
-        return $srcPath.'/'.$modelName.'/'.$modelSlug.'-'.$src.'-v'.$timeStamp;
-    }
-    public function getCloudiIdOld($src) 
-    {
-        $srcPath = env('CLOUDINARY_PATH');
-        $modelName = snake_case((new \ReflectionClass($this))->getShortName());
-        $modelSlug = $this->attributes[$this->cloudiSlug];
-        $timeStamp = str_slug($this->{$src}->created_at);
+        $timeStamp = null;
+        if($deffered) {
+            $timeStamp = str_slug($this->getDeferredCloudiImage($src)->created_at);
+        } else {
+            $timeStamp = str_slug($this->{$src}->created_at);
+        }
         return $srcPath.'/'.$modelName.'/'.$modelSlug.'-'.$src.'-v'.$timeStamp;
     }
 
@@ -131,8 +128,10 @@ trait CloudiTrait
      * Image existe
      */
     public function getCloudiExiste($src) {
+        trace_log($src);
         if(!$this->{$src}) return false;
-        $url = $this->getCloudiBase($src);
+        trace_log("test de cloudiExiste");
+        $url = $this->getCloudiRowUrl($src);
         $handle = curl_init($url);
         curl_setopt($handle, CURLOPT_NOBODY, true);
         //  Get the HTML or whatever is linked in $url. 
@@ -166,11 +165,10 @@ trait CloudiTrait
         }
     }
     private function updateCloudiRelations($attachOrDetach='attach') {
-        trace_log($attachOrDetach);
+        trace_log('updateCloudiRelations');
         $mainClass = get_class($this);
-        if($mainClass == 'Waka\Cloudis\Models\Montages') {
-            $targetModel = new $this->data_source->modelClass;
-            $models = $targetModel->get();
+        if($mainClass == 'Waka\Cloudis\Models\Montage') {
+            $models = $this->data_source->modelClass::get();
             foreach($models as $model) {
                 $this->attachOrDetach($model, $this->id, $attachOrDetach);
                 // if(!$model->montages()->find($this->id)) {
@@ -194,6 +192,7 @@ trait CloudiTrait
         } 
     }
     public function attachOrDetach($model, $montageId, $attachOrDetach) {
+        trace_log('attachOrDetach : '.$attachOrDetach);
         if($attachOrDetach = 'attach') {
             if(!$model->montages()->find($montageId)) {
                 $model->montages()->attach($montageId);
