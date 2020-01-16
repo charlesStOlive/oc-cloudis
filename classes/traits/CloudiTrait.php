@@ -17,14 +17,14 @@ trait CloudiTrait
         } 
         else {
             foreach($this->cloudiImages as $cloudiImage) {
-                trace_log($cloudiImage);
+                //trace_log($cloudiImage);
                 $this->checkCloudisFileChange($cloudiImage);
             }
         }
     }
     
     public function checkCloudisFileChange($src) {
-        trace_log("analyse de l'image ".$src);
+        //trace_log("analyse de l'image ".$src);
         $newVersion = $this->getDeferredCloudiImage($src);
         if(!$newVersion && !$this->{$src}) {
             //il n' y a pas de fichier on ferme
@@ -43,6 +43,7 @@ trait CloudiTrait
                 //remplacement d'image
                 $this->clouderDelete($src);
                 $this->clouderUpload($newVersion, $src);
+                $this->updateCloudiRelations('attach');
                 return true;
             } else {
                 return false;
@@ -71,10 +72,18 @@ trait CloudiTrait
     {
         Cloudder::upload($file->getLocalPath(), $this->getCloudiId($src));
     }
-    public function getCloudiUrl($src) 
+    public function getCloudiUrl($src, $id=null)
     {
         $targetModel = new $this->data_source->modelClass;
-        $targetModelId = $targetModel->first()->id;
+        $targetModelId;
+        if($id) {
+            $targetModelId = $id;
+        } else {
+            $targetModelId = $this->data_source->test_id;
+        }
+        // trace_log('targetModelId');
+        // trace_log($targetModelId);
+        // trace_log($targetModel->toArray());
         $parser = new YamlParserRelation();
         //
         $options = $parser->parse($this, $targetModelId, $targetModel);
@@ -128,9 +137,9 @@ trait CloudiTrait
      * Image existe
      */
     public function getCloudiExiste($src) {
-        trace_log($src);
+        //trace_log($src);
         if(!$this->{$src}) return false;
-        trace_log("test de cloudiExiste");
+        //trace_log("test de cloudiExiste");
         $url = $this->getCloudiRowUrl($src);
         $handle = curl_init($url);
         curl_setopt($handle, CURLOPT_NOBODY, true);
@@ -165,7 +174,7 @@ trait CloudiTrait
         }
     }
     private function updateCloudiRelations($attachOrDetach='attach') {
-        trace_log('updateCloudiRelations');
+        //trace_log('updateCloudiRelations');
         $mainClass = get_class($this);
         if($mainClass == 'Waka\Cloudis\Models\Montage') {
             $models = $this->data_source->modelClass::get();
@@ -178,7 +187,7 @@ trait CloudiTrait
         } 
         else {
             $shortName = (new \ReflectionClass($this))->getShortName();
-            trace_log($shortName);
+            //trace_log($shortName);
             $montages = \Waka\Cloudis\Models\Montage::whereHas('data_source', function ($query) use($shortName) {
                 $query->where('model', '=', $shortName);
             })->get(['id']);
@@ -192,7 +201,7 @@ trait CloudiTrait
         } 
     }
     public function attachOrDetach($model, $montageId, $attachOrDetach) {
-        trace_log('attachOrDetach : '.$attachOrDetach);
+        //trace_log('attachOrDetach : '.$attachOrDetach);
         if($attachOrDetach = 'attach') {
             if(!$model->montages()->find($montageId)) {
                 $model->montages()->attach($montageId);

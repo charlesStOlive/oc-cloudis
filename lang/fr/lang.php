@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'menu' => [
+        'label' => 'Montage photos',
+        'description' => "Gestion des montages photos pour les models de l'application",
+        'category' => 'Wakaari publisher',
+    ],
     'settings' => [
         'default_path' => 'Chemin par défaut',
     ],

@@ -121,7 +121,7 @@ class Plugin extends PluginBase
                 'label'       => Lang::get('waka.cloudis::lang.menu.label'),
                 'description' => Lang::get('waka.cloudis::lang.menu.description'),
                 'category'    => Lang::get('waka.cloudis::lang.menu.category'),
-                'icon'        => 'icon-paper-plane',
+                'icon'        => 'icon-object-group',
                 'url'         => Backend::url('waka/cloudis/montages'),
                 'order'       => 1,
             ]
