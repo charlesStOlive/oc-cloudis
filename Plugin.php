@@ -78,6 +78,13 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerFormWidgets(): array
+    {
+        return [
+            'Waka\Cloudis\FormWidgets\MontagesList' => 'montagelist',
+        ];
+    }
+
     /**
      * Registers any back-end permissions used by this plugin.
      *

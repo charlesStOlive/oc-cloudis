@@ -24,37 +24,57 @@ trait CloudiTrait
     }
     
     public function checkCloudisFileChange($src) {
+        trace_log('checkCloudisFileChange');
         //trace_log("analyse de l'image ".$src);
         $newVersion = $this->getDeferredCloudiImage($src);
+
         if(!$newVersion && !$this->{$src}) {
+            trace_log('il n y as pas de fichier on ferme');
             //il n' y a pas de fichier on ferme
             return false;
         }
         // si la nouvelle version n'existe plus et il existe une ancienne version on detruit l'image sur cloudi
         if(!$newVersion && $this->{$src}) {
+            trace_log('il n y as plus de fichier on efface');
             $this->updateCloudiRelations('detach');
             $this->clouderDelete($src);
             return false;
         }
         //si il y a une ancienne version
         if($this->{$src}) {
+            trace_log('il y a une ancienne version');
             $oldVersion = $this->{$src};
             if($oldVersion->created_at != $newVersion->created_at ) {
+                trace_log('l ancienne version et la nouvelle sont differentes');
                 //remplacement d'image
                 $this->clouderDelete($src);
                 $this->clouderUpload($newVersion, $src);
                 $this->updateCloudiRelations('attach');
                 return true;
             } else {
+                trace_log('l ancienne version et la nouvelle sont les memes');
                 return false;
             }
         } else {
+            trace_log('c est une nouvelle');
             //Nouvelle image
             $this->clouderUpload($newVersion, $src);
             $this->updateCloudiRelations();
             return true;
         }
     }
+    /**
+     * 
+     */
+    public function uploadToCloudinary($srcs) {
+        trace_log("'UploadToCloudinary");
+        foreach($srcs as $src) {
+            trace_log($src);
+            $this->clouderUpload($this->{$src}, $src);
+            $this->updateCloudiRelations('attach');
+        } 
+    }
+    
     /**
      * $delete sur cloudder
      */
@@ -81,27 +101,35 @@ trait CloudiTrait
         } else {
             $targetModelId = $this->data_source->test_id;
         }
-        // trace_log('targetModelId');
-        // trace_log($targetModelId);
-        // trace_log($targetModel->toArray());
         $parser = new YamlParserRelation();
         //
         $options = $parser->parse($this, $targetModelId, $targetModel);
         //
         return Cloudder::secureShow($this->getCloudiId($src), $options);
     }
+    public function getCloudiModelUrl($src, $montages, $id)
+    {
+        $targetModelId = $id;
+        $parser = new YamlParserRelation();
+        $options = $parser->parse($montages, $targetModelId, $this);
+        return Cloudder::secureShow($this->getCloudiId($src), $options);
+    }
+    
     public function getCloudiRowUrl($src, $height=30) 
     {
         // if(!in_array($src, $this->cloudiImages)) {
         //     throw new ApplicationException('The source doesnt exist CloudiTrait');
         // } 
         $url = $this->getCloudiId($src, false);
+        trace_log('getCloudiRowUrl');
+        trace_log($url);
         $options =  [
             "gravity"=>"face",
             "height"=>$height,
             "crop"=>"thumb",
             "format"=>"jpg"
         ];
+        trace_log(Cloudder::secureShow($url, $options));
         return Cloudder::secureShow($url, $options);
     }
     public function getCloudiBase($src) 

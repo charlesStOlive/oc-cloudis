@@ -36,6 +36,19 @@ class MontagesList extends FormWidgetBase
         $this->vars['name'] = $this->formField->getName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['model'] = $this->model;
+        $this->vars['montages'] = $this->getMontageList();
+    }
+
+    public function getMontageList() {
+        return $this->model->montages->lists('name', 'id');
+    }
+
+    public function onShowCloudiImage() {
+        $montage = $this->model->montages->find(post('id'));
+        $url = $this->model->getCloudiModelUrl('logo_c',$montage, post('id'));
+        $this->vars['url'] = $url;
+        return $this->makePartial('popup');
+
     }
 
     /**

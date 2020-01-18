@@ -1,5 +1,10 @@
-<ul>
-    <?php foreach($montages as $montage) { ?>
-    <li><a href="#"><?=$montage->name<?></li>
-    <?php } ?>
-</ul>
+<div id="<?= $this->getId() ?>">
+    <div class="form-group">
+        <?php foreach($montages as $key=>$value) { ?>
+        <li><a href="javascript:;" data-control="popup" data-handler="onShowCloudiImage"
+                data-request-data="id:<?=$key?>">
+                <?=$value?>
+            </a></li>
+        <?php } ?>
+    </div>
+</div>
