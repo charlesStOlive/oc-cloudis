@@ -42,13 +42,21 @@ class MontagesList extends FormWidgetBase
     public function getMontageList() {
         return $this->model->montages->lists('name', 'id');
     }
+    public function onRefreshList() {
+
+        $this->vars['montages'] = $this->getMontageList();
+        trace_log($this->getMontageList());
+        return [
+            '#listMontage' => $this->makePartial('list')
+        ];
+        //return $this->makePartial('montageslist');
+    }
 
     public function onShowCloudiImage() {
         $montage = $this->model->montages->find(post('id'));
-        $url = $this->model->getCloudiModelUrl('logo_c',$montage, post('id'));
+        $url = $this->model->getCloudiModelUrl($montage);
         $this->vars['url'] = $url;
         return $this->makePartial('popup');
-
     }
 
     /**

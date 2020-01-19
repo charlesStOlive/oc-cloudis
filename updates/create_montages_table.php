@@ -21,6 +21,9 @@ class CreateMontagesTable extends Migration
             $table->boolean('data_source_id');
 
             $table->text('options')->nullable();
+
+            $table->boolean('use_files')->default(false);
+
             
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('nest_left')->unsigned()->nullable();

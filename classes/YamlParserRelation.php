@@ -5,18 +5,18 @@ Class YamlParserRelation {
     private $id;
     private $model;
     private $modelMontage;
+    public $errors;
 
-    function __construct() {
-    }
+    public $src;
+    public $options;
 
-    public function parse($modelMontage, $id, $model) {
-        $this->id = $id;
+    function __construct($modelMontage, $model) {
+        $this->errors = 0;
         $this->model = $model;
         $this->modelMontage = $modelMontage;
-
         $array = Yaml::parse($modelMontage->options);
-        return $this->recursiveSearch($array['options']);
-
+        $this->src = $this->getParsedValue($array['src']);
+        $this->options = $this->recursiveSearch($array['options']);
     }
 
     private function recursiveSearch(array $array) {
@@ -26,47 +26,57 @@ Class YamlParserRelation {
                 $returnArray[$key] = $this->recursiveSearch($value);
             } else {
                 //check if their is some text between xx- & -xx
-                if(preg_match("/xx-(.*?)-xx/", $value, $match)) {
-                    //on lance la fonction de recherche ( la fonction utilise le model lié)
-                    $replace =  $this->getModel($match[1]);
-                    $replacement =  preg_replace("/xx-(.*)-xx/",$replace,$value);
-                    $returnArray[$key] = $replacement;
-                }
-                elseif(preg_match("/xl-(.*?)-lx/", $value, $match)) {
-                    //on lance la fonction de recherche ( la fonction utilise le model lié)
-                    $replace =  $this->getLayer($match[1]);
-                    $replacement =  preg_replace("/xl-(.*)-lx/",$replace,$value);
-                    $returnArray[$key] = $replacement;
-                }
-                elseif(preg_match("/xlr-(.*?)-rlx/", $value, $match)) {
-                    //on lance la fonction de recherche ( la fonction utilise le model lié)
-                    $replace =  $this->getModelLayer($match[1]);
-                    $replacement =  preg_replace("/xlr-(.*)-rlx/",$replace,$value);
-                    $returnArray[$key] = $replacement;
-                }  
-                else {
-                    $returnArray[$key] = $value;
-                }
+                // si il y a une url avec des / on modifie / par : pour cloudi
+                $returnArray[$key] = str_replace('/', ':', $this->getParsedValue($value));
             }
         }
         return $returnArray;
     }
 
+    public function getParsedValue($value) {
+        if(preg_match("/xx-(.*?)-xx/", $value, $match)) {
+            //on lance la fonction de recherche ( la fonction utilise le model lié)
+            $replace =  $this->getModel($match[1]);
+            if(!$replace) $this->errors++;
+            $replacement =  preg_replace("/xx-(.*)-xx/",$replace,$value);
+            return $replacement;
+        }
+        elseif(preg_match("/xl-(.*?)-lx/", $value, $match)) {
+            //on lance la fonction de recherche ( la fonction utilise le model lié)
+            $replace =  $this->getLayer($match[1]);
+            if(!$replace) $this->errors++;
+            $replacement =  preg_replace("/xl-(.*)-lx/",$replace,$value);
+            return $replacement;
+        }
+        elseif(preg_match("/xlr-(.*?)-rlx/", $value, $match)) {
+            //on lance la fonction de recherche ( la fonction utilise le model lié)
+            $replace =  $this->getModelLayer($match[1]);
+            if(!$replace) $this->errors++;
+            $replacement =  preg_replace("/xlr-(.*)-rlx/",$replace,$value);
+            return $replacement;
+        }  
+        else {
+            return $value;
+        }
+    }
+
     private function getModel($value) {
         $array = explode(".", $value);
-        trace_log(count($array));
         if(count($array)>1) {
             $relation = [];
-
-            return $this->model::find($this->id)[$array[0]][$array[1]]; 
+            return $this->model[$array[0]][$array[1]] ?? null;
         }
-        return $this->model::find($this->id)[$value];
+        return $this->model[$value] ?? null;
     }
     private function getLayer($value) {
-        return str_replace('/', ':', $this->modelMontage->getCloudiId($value));
+        return $this->modelMontage->getCloudiId($value) ?? null;
     }
     private function getModelLayer($value) {
-        return str_replace('/', ':', $this->model::find($this->id)->getCloudiId($value));
+        $array = explode(".", $value);
+        if(count($array)>1) {
+            return $this->model{$array[0]}->getCloudiId($array[1]) ?? null;
+        }
+        return $this->model->getCloudiId($value) ?? null;
     }
     public function getUrl() {
         return null;

@@ -25,6 +25,10 @@ fields:
         type: relation
         placeholder: waka.cloudis::lang.montage.data_source_placeholder
         nameFrom: name
+    use_files:
+        label: waka.cloudis::lang.montage.use_files
+        type: checkbox
+
     src:
         label: waka.cloudis::lang.montage.src
         type: fileupload
@@ -37,6 +41,10 @@ fields:
                 - 0
                 - 0
             quality: 90
+        trigger:
+            action: show
+            field: use_files
+            condition: checked
     masque:
         label: waka.cloudis::lang.montage.masque
         type: fileupload
@@ -49,6 +57,11 @@ fields:
                 - 0
                 - 0
             quality: 90
+        trigger:
+            action: show
+            field: use_files
+            condition: checked
+            
     options:
         label: waka.cloudis::lang.montage.options
         type: codeeditor

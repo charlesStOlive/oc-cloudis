@@ -38,7 +38,6 @@ class Montage extends Model
         'name' => 'required',
         'slug' => 'required|unique:waka_cloudis_montages',
         'data_source' => 'required',
-        'src' => 'required',
     ];
 
     /**
@@ -95,7 +94,8 @@ class Montage extends Model
      */
     public function afterSave() {
         // cet fonction utilse le trait cloudis
-        $this->checkCloudisFilesChanges();
+        $this->checkMontageChanges();
+        $this->updateCLoudiRelationsFromMontage();
     }
     /**
      * Attributes

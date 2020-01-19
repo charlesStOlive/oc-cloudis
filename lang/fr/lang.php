@@ -18,10 +18,16 @@ return [
         'cloudi_path' => 'Chemin sur cloudi',
         'options' => 'Options',
         'src' => 'Source du montage',
-        'data_source_placeholder' => '--Choisissez une source--'
+        'data_source_placeholder' => '--Choisissez une source--',
+        'use_files' => "Utiliser des fichiers pour le montage",
     ],
     'popup' => [
         'title' => 'Montage cloudis',
+    ],
+    'formwidget' => [
+        'title' => 'Montage cloudis',
+        'checking' => 'Vérifier les montages',
+        'checking_indicator' => 'Vérification en cours'
     ]
     
 ];

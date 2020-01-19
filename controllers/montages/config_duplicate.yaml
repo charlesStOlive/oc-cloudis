@@ -25,6 +25,9 @@ duplication:
     fields:
         name:
           label: waka.cloudis::lang.montage.name 
+        slug:
+          label: waka.cloudis::lang.montage.slug
+          preset: name
 
         # _keep:
         #   label: Dupliquer dans ce projet

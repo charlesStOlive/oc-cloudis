@@ -22,5 +22,5 @@ columns:
     datasrc:
         label: waka.cloudis::lang.montage.data_source
         relation: data_source
-        nameFrom: name
+        select: name
     
