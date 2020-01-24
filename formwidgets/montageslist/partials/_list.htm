@@ -1,5 +1,35 @@
-<?php foreach($montages as $key=>$value) { ?>
-<li><a href="javascript:;" data-control="popup" data-handler="onShowCloudiImage" data-request-data="id:<?=$key?>">
-        <?=$value?>
-    </a></li>
-<?php } ?>
+<div class="control-list">
+    <table class="table data" data-control="rowlink">
+        <thead>
+            <tr>
+                <th class="list-checkbox">
+                    <div class="checkbox custom-checkbox nolabel">
+                        <input type="checkbox" id="checkboxAll" />
+                        <label for="checkboxAll"></label>
+                    </div>
+                </th>
+                <th><a href="/">Nom de l'image</a></th>
+                <th><a href="/">Created</a></th>
+            </tr>
+        </thead>
+
+        <body>
+            <?php foreach($montages as $montage) { ?>
+            <tr>
+                <td class="list-checkbox nolink">
+                    <div class="checkbox custom-checkbox nolabel">
+                        <input id="checkbox_<?=$montage->id?>" type="checkbox" />
+                        <label for="checkbox_<?=$montage->id?>">Check</label>
+                    </div>
+                </td>
+                <td><a href="javascript:;" data-control="popup" data-handler="onShowCloudiImage"
+                        data-request-data="id:<?=$montage->id?>">
+                        <?=$montage->name?>
+                    </a>
+                </td>
+                <td><?=$montage->updated_at?></td>
+            </tr>
+            <?php } ?>
+        </body>
+    </table>
+</div>

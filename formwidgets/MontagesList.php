@@ -40,12 +40,11 @@ class MontagesList extends FormWidgetBase
     }
 
     public function getMontageList() {
-        return $this->model->montages->lists('name', 'id');
+        return $this->model->montages;
     }
     public function onRefreshList() {
 
         $this->vars['montages'] = $this->getMontageList();
-        trace_log($this->getMontageList());
         return [
             '#listMontage' => $this->makePartial('list')
         ];
