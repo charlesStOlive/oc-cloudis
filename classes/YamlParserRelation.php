@@ -1,7 +1,9 @@
 <?php namespace Waka\Cloudis\Classes;
+
 use Yaml;
 
-Class YamlParserRelation {
+class YamlParserRelation
+{
     private $id;
     private $model;
     private $modelMontage;
@@ -10,7 +12,8 @@ Class YamlParserRelation {
     public $src;
     public $options;
 
-    function __construct($modelMontage, $model) {
+    public function __construct($modelMontage, $model)
+    {
         $this->errors = 0;
         $this->model = $model;
         $this->modelMontage = $modelMontage;
@@ -19,10 +22,11 @@ Class YamlParserRelation {
         $this->options = $this->recursiveSearch($array['options']);
     }
 
-    private function recursiveSearch(array $array) {
+    private function recursiveSearch(array $array)
+    {
         $returnArray = array();
-        foreach($array as $key => $value) {
-            if(is_array($value)) {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
                 $returnArray[$key] = $this->recursiveSearch($value);
             } else {
                 //check if their is some text between xx- & -xx
@@ -33,52 +37,67 @@ Class YamlParserRelation {
         return $returnArray;
     }
 
-    public function getParsedValue($value) {
-        if(preg_match("/xx-(.*?)-xx/", $value, $match)) {
+    public function getParsedValue($value)
+    {
+        if (preg_match("/xx-(.*?)-xx/", $value, $match)) {
             //on lance la fonction de recherche ( la fonction utilise le model lié)
-            $replace =  $this->getModel($match[1]);
-            if(!$replace) $this->errors++;
-            $replacement =  preg_replace("/xx-(.*)-xx/",$replace,$value);
+            $replace = $this->getModel($match[1]);
+            if (!$replace) {
+                $this->errors++;
+            }
+
+            $replacement = preg_replace("/xx-(.*)-xx/", $replace, $value);
             return $replacement;
-        }
-        elseif(preg_match("/xl-(.*?)-lx/", $value, $match)) {
+        } elseif (preg_match("/xl-(.*?)-lx/", $value, $match)) {
             //on lance la fonction de recherche ( la fonction utilise le model lié)
-            $replace =  $this->getLayer($match[1]);
-            if(!$replace) $this->errors++;
-            $replacement =  preg_replace("/xl-(.*)-lx/",$replace,$value);
+            $replace = $this->getLayer($match[1]);
+            if (!$replace) {
+                $this->errors++;
+            }
+
+            $replacement = preg_replace("/xl-(.*)-lx/", $replace, $value);
             return $replacement;
-        }
-        elseif(preg_match("/xlr-(.*?)-rlx/", $value, $match)) {
+        } elseif (preg_match("/xlr-(.*?)-rlx/", $value, $match)) {
             //on lance la fonction de recherche ( la fonction utilise le model lié)
-            $replace =  $this->getModelLayer($match[1]);
-            if(!$replace) $this->errors++;
-            $replacement =  preg_replace("/xlr-(.*)-rlx/",$replace,$value);
+            $replace = $this->getModelLayer($match[1]);
+            if (!$replace) {
+                $this->errors++;
+            }
+
+            $replacement = preg_replace("/xlr-(.*)-rlx/", $replace, $value);
             return $replacement;
-        }  
-        else {
+        } else {
             return $value;
         }
     }
 
-    private function getModel($value) {
+    private function getModel($value)
+    {
         $array = explode(".", $value);
-        if(count($array)>1) {
+        if (count($array) > 1) {
             $relation = [];
             return $this->model[$array[0]][$array[1]] ?? null;
         }
         return $this->model[$value] ?? null;
     }
-    private function getLayer($value) {
+    private function getLayer($value)
+    {
         return $this->modelMontage->getCloudiId($value) ?? null;
     }
-    private function getModelLayer($value) {
+    private function getModelLayer($value)
+    {
         $array = explode(".", $value);
-        if(count($array)>1) {
+        if (count($array) > 1) {
+            if (!$this->model{$array[0]}) {
+                return null;
+            }
+
             return $this->model{$array[0]}->getCloudiId($array[1]) ?? null;
         }
         return $this->model->getCloudiId($value) ?? null;
     }
-    public function getUrl() {
+    public function getUrl()
+    {
         return null;
     }
 }
