@@ -82,7 +82,12 @@ class Montage extends Model
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
-    public $morphMany = [];
+    public $morphMany = [
+        'cloudis_files' => [
+            'Waka\Cloudis\Models\CloudisFile',
+            'name' => 'cloudeable'
+        ] 
+    ];
     public $attachOne = [
         'src' => 'System\Models\File',
         'masque' => 'System\Models\File',
