@@ -88,10 +88,8 @@ class YamlParserRelation
     {
         $array = explode(".", $value);
         if (count($array) > 1) {
-            if (!$this->model{$array[0]}) {
-                return null;
-            }
-
+            trace_log("erreur ?");
+            trace_log($this->model{$array[0]}->getCloudiId($array[1]));
             return $this->model{$array[0]}->getCloudiId($array[1]) ?? null;
         }
         return $this->model->getCloudiId($value) ?? null;
