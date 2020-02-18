@@ -4,7 +4,7 @@ return [
     'menu' => [
         'label' => 'Montage photos',
         'description' => "Gestion des montages photos pour les models de l'application",
-        'category' => 'Wakaari publisher',
+        'category' => 'Wakaari compilator',
     ],
     'settings' => [
         'default_path' => 'Chemin par défaut',
@@ -27,7 +27,7 @@ return [
     'formwidget' => [
         'title' => 'Montage cloudis',
         'checking' => 'Vérifier les montages',
-        'checking_indicator' => 'Vérification en cours'
-    ]
-    
+        'checking_indicator' => 'Vérification en cours',
+    ],
+
 ];

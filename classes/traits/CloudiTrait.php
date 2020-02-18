@@ -45,39 +45,39 @@ trait CloudiTrait
         //trace_log("analyse de l'image ".$src);
         $newVersion = $this->getDeferredCloudiImage($src);
 
-        trace_log("cloudi existe : " . $this->getCloudiExiste($src));
+        //trace_log("cloudi existe : " . $this->getCloudiExiste($src));
         if (!$newVersion && !$this->getCloudiExiste($src)) {
-            trace_log('il n y as pas de fichier on ferme');
+            //trace_log('il n y as pas de fichier on ferme');
             //il n' y a pas de fichier on ferme
             return null;
         }
         // si la nouvelle version n'existe plus et il existe une ancienne version on detruit l'image sur cloudi
         if (!$newVersion && $this->getCloudiExiste($src)) {
-            trace_log('il n y as plus de fichier on efface');
+            //trace_log('il n y as plus de fichier on efface');
             //$this->updateCloudiRelations('detach');
             $this->clouderDelete($src);
             return 'delete';
         }
         //si il y a une ancienne version
         if ($this->{$src}) {
-            trace_log('il y a une ancienne version');
+            //trace_log('il y a une ancienne version');
             $oldVersion = $this->{$src};
             if ($oldVersion->created_at != $newVersion->created_at) {
-                trace_log('l ancienne version et la nouvelle sont differentes');
+                //trace_log('l ancienne version et la nouvelle sont differentes');
                 //remplacement d'image
                 //$this->clouderDelete($src); plus besoin du delete on remplace
                 $this->clouderUpload($newVersion, $src);
                 //$this->updateCloudiRelations('attach');
                 return 'update';
             } else {
-                trace_log('l ancienne version et la nouvelle sont les memes, verificatiob');
+                //trace_log('l ancienne version et la nouvelle sont les memes, verificatiob');
                 if (!$this->getCloudiExiste($src)) {
                     $this->clouderUpload($newVersion, $src);
                     return 'update';
                 }
             }
         } else {
-            trace_log('c est une nouvelle');
+            //trace_log('c est une nouvelle');
             //Nouvelle image
             $this->clouderUpload($newVersion, $src);
             //$this->updateCloudiRelations('attach');
@@ -122,7 +122,7 @@ trait CloudiTrait
      */
     public function clouderUpload($file, $src)
     {
-        trace_log("Cloudder upload");
+        //trace_log("Cloudder upload");
         $cloudData = Cloudder::upload($file->getLocalPath(), $this->readCloudiId($src));
         $result = $cloudData->getResult();
         $this->cloudis_files()->updateOrCreate(
@@ -320,6 +320,7 @@ trait CloudiTrait
     }
     public function updateCLoudiRelationsFromMontage()
     {
+        //trace_log("updateCLoudiRelationsFromMontage : " . $this->active);
         if ($this->active) {
             $this->updateCloudiRelations('attach');
         } else {
@@ -329,13 +330,13 @@ trait CloudiTrait
     }
     public function updateCloudiRelations($attachOrDetach = 'attach')
     {
-        trace_log('updateCloudiRelations : ');
+        //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
         if ($mainClass == 'Waka\Cloudis\Models\Montage') {
             $models = $this->data_source->modelClass::get();
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
-                trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
+                //trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
                 if (!$parser->errors) {
                     $this->attachOrDetach($model, $this->id, $attachOrDetach);
                 } else {
@@ -350,9 +351,9 @@ trait CloudiTrait
                     $query->where('model', '=', $shortName);
                 })->get();
             foreach ($montages as $montage) {
-                trace_log($montage->slug);
+                //trace_log($montage->slug);
                 $parser = new YamlParserRelation($montage, $this);
-                trace_log($parser->errors);
+                //trace_log($parser->errors);
                 if (!$parser->errors) {
                     $this->attachOrDetach($this, $montage->id, $attachOrDetach);
                 } else {
