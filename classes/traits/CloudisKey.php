@@ -44,7 +44,7 @@ trait CloudisKey
                     break;
                 case 'montages':
                     foreach ($tempModel->montages as $montage) {
-                        $key = $startKey . '**key=' . $montage->id;
+                        $key = $startKey . '**key=' . $montage->slug;
                         $collection[$key] = $data['label'] . ' : ' . $montage->name;
                     }
                     break;
@@ -98,8 +98,13 @@ trait CloudisKey
             case 'montages':
                 //trace_log("montages");
                 //trace_log($tempModel->montages->toArray());
-                $montage = $tempModel->montages->where('id', $key[1])->first();
-                $url = $montage->getCloudiUrl('src', $tempModel->id);
+                $montage = $tempModel->montages->where('slug', $key[1])->first();
+                if ($montage) {
+                    $url = $montage->getCloudiUrl('src', $tempModel->id);
+                } else {
+                    $url = null;
+                }
+
                 //trace_log($url);
                 break;
         }
