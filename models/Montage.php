@@ -2,7 +2,6 @@
 
 use Model;
 
-
 /**
  * Montage Model
  */
@@ -68,8 +67,6 @@ class Montage extends Model
         'updated_at',
         'deleted_at',
     ];
-    
-
 
     /**
      * @var array Relations
@@ -85,8 +82,8 @@ class Montage extends Model
     public $morphMany = [
         'cloudis_files' => [
             'Waka\Cloudis\Models\CloudisFile',
-            'name' => 'cloudeable'
-        ] 
+            'name' => 'cloudeable',
+        ],
     ];
     public $attachOne = [
         'src' => 'System\Models\File',
@@ -97,7 +94,8 @@ class Montage extends Model
     /**
      * Event
      */
-    public function afterSave() {
+    public function afterSave()
+    {
         // cet fonction utilse le trait cloudis
         $this->checkMontageChanges();
         $this->updateCLoudiRelationsFromMontage();
@@ -105,8 +103,19 @@ class Montage extends Model
     /**
      * Attributes
      */
-    public function getCloudi() {
+    public function getCloudi()
+    {
         return $this->src();
     }
-    
+
+    public function filterFields($fields, $context = null)
+    {
+        $user = \BackendAuth::getUser();
+        if (!$user->hasAccess('waka.cloudis.admin.*')) {
+            $fields->options->hidden = true;
+            $fields->data_source->readOnly = true;
+            $fields->slug->readOnly = true;
+            $fields->use_files->readOnly = true;
+        }
+    }
 }

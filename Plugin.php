@@ -1,9 +1,9 @@
 <?php namespace Waka\Cloudis;
 
 use Backend;
-use System\Classes\PluginBase;
-use Lang;
 use Event;
+use Lang;
+use System\Classes\PluginBase;
 use View;
 
 /**
@@ -18,7 +18,6 @@ class Plugin extends PluginBase
         'Waka.Utils',
     ];
 
-
     /**
      * Returns information about this plugin.
      *
@@ -27,10 +26,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Cloudis',
+            'name' => 'Cloudis',
             'description' => 'No description provided yet...',
-            'author'      => 'Waka',
-            'icon'        => 'icon-leaf'
+            'author' => 'Waka',
+            'icon' => 'icon-leaf',
         ];
     }
 
@@ -51,20 +50,20 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        Event::listen('backend.down.update', function($controller) {
-            if(in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement )) {
+        Event::listen('backend.down.update', function ($controller) {
+            if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
                 $data = [
                     'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
-                    'modelId' => $controller->formGetModel()->id
+                    'modelId' => $controller->formGetModel()->id,
                 ];
                 return View::make('waka.cloudis::cloudisbutton')->withData($data);;
             }
         });
-        Event::listen('popup.actions.line1', function($controller, $model, $id) {
-            if(in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
+        Event::listen('popup.actions.line1', function ($controller, $model, $id) {
+            if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
                 $data = [
                     'model' => str_replace('\\', '\\\\', $model),
-                    'modelId' => $id
+                    'modelId' => $id,
                 ];
                 return View::make('waka.cloudis::cloudisbutton')->withData($data);;
             }
@@ -100,12 +99,18 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
-            'waka.cloudis.some_permission' => [
-                'tab' => 'Cloudis',
-                'label' => 'Some permission'
+            'waka.cloudis.admin.super' => [
+                'tab' => 'Waka',
+                'label' => 'Super Administrateur de Cloudi',
+            ],
+            'waka.cloudis.admin' => [
+                'tab' => 'Waka',
+                'label' => 'Administrateur de Cloudi',
+            ],
+            'waka.cloudis.user' => [
+                'tab' => 'Waka',
+                'label' => 'Utilisateur de cloudi',
             ],
         ];
     }
@@ -121,11 +126,11 @@ class Plugin extends PluginBase
 
         return [
             'cloudis' => [
-                'label'       => 'Cloudis',
-                'url'         => Backend::url('waka/cloudis/mycontroller'),
-                'icon'        => 'icon-leaf',
+                'label' => 'Cloudis',
+                'url' => Backend::url('waka/cloudis/mycontroller'),
+                'icon' => 'icon-leaf',
                 'permissions' => ['waka.cloudis.*'],
-                'order'       => 500,
+                'order' => 500,
             ],
         ];
     }
@@ -133,13 +138,14 @@ class Plugin extends PluginBase
     {
         return [
             'montage' => [
-                'label'       => Lang::get('waka.cloudis::lang.menu.label'),
+                'label' => Lang::get('waka.cloudis::lang.menu.label'),
                 'description' => Lang::get('waka.cloudis::lang.menu.description'),
-                'category'    => Lang::get('waka.cloudis::lang.menu.category'),
-                'icon'        => 'icon-object-group',
-                'url'         => Backend::url('waka/cloudis/montages'),
-                'order'       => 1,
-            ]
+                'category' => Lang::get('waka.cloudis::lang.menu.category'),
+                'icon' => 'icon-object-group',
+                'permissions' => ['waka.cloudis.admin'],
+                'url' => Backend::url('waka/cloudis/montages'),
+                'order' => 1,
+            ],
         ];
     }
 }

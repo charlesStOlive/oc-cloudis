@@ -10,6 +10,9 @@
 <?= Form::open(['class' => 'layout']) ?>
 
 <div class="form-buttons">
+    <?php if ($this->user->hasAccess('waka.cloudis.admin.super')): ?>
+    <?= $this->fireViewEvent('backend.update.duplicate') ?>
+    <?php endif ?>
     <?= $this->fireViewEvent('backend.top.update') ?>
     <?= $this->fireViewEvent('backend.crsm.updateView') ?>
 </div>
