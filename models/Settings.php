@@ -1,7 +1,6 @@
-<?php namespace Waka\Crsm\Models;
+<?php namespace Waka\Cloudis\Models;
 
 use Model;
-
 
 class Settings extends Model
 {
@@ -13,5 +12,4 @@ class Settings extends Model
     // Reference to field configuration
     public $settingsFields = 'fields.yaml';
 
-    
 }

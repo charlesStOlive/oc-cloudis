@@ -3,6 +3,7 @@
 use ApplicationException;
 use Cloudder;
 use Waka\Cloudis\Classes\YamlParserRelation;
+use \Waka\Cloudis\Models\Settings as CloudisSettings;
 use \Waka\Informer\Models\Inform;
 
 trait CloudiTrait
@@ -225,7 +226,7 @@ trait CloudiTrait
      */
     public function readCloudiId($src)
     {
-        $srcPath = env('CLOUDINARY_PATH');
+        $srcPath = CloudisSettings::get('cloudinary_path');
         if (!$srcPath) {
             throw new ApplicationException('CLOUDINARY_PATH problem, refresh your page');
         }
@@ -237,7 +238,7 @@ trait CloudiTrait
     }
     public function getCloudiId($src)
     {
-        $srcPath = env('CLOUDINARY_PATH');
+        $srcPath = CloudisSettings::get('cloudinary_path');
         if (!$this->getCloudiExiste($src)) {
             return null;
         }

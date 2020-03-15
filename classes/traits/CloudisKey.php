@@ -111,4 +111,67 @@ trait CloudisKey
         return $url;
     }
 
+    public function getDotedImagesList($dataSource, $id = null)
+    {
+        $targetModel;
+
+        if (!$id) {
+            $targetModel = $dataSource->test_id;
+        } else {
+            $targetModel = $dataSource->modelClass::find($id);
+        }
+
+        trace_log("targetModel");
+        trace_log($targetModel->toArray());
+
+        $collection = [];
+
+        $datas = Yaml::parse($dataSource->media_files);
+        foreach ($datas as $key => $data) {
+            $dotFrom = null;
+            $dotInfo = null;
+            $tempModel = $targetModel;
+            if (array_key_exists('from', $data)) {
+                if (!$targetModel[$data['from']]) {
+                    throw new ApplicationException('dataSource model relation not exist : ' . $data['from']);
+                }
+
+                // nous sommes dans une relation.
+                $tempModel = $targetModel[$data['from']];
+                $dotFrom = $data['from'];
+            }
+            if (!$data['type']) {
+                throw new ApplicationException('dataSource type missing');
+            }
+            if ($dotFrom) {
+                $dotInfo = $dotFrom . '.' . $data['type'];
+            } else {
+                $dotInfo = $data['type'];
+            }
+
+            //
+            switch ($data['type']) {
+                case 'file':
+                    if ($tempModel[$key]) {
+                        $dotTemp = $dotInfo . '.' . $key;
+                        array_set($collection, $dotTemp, $tempModel[$key]->getPath() ?? null);
+                    }
+                    break;
+                case 'media':
+                    if ($tempModel[$key]) {
+                        $dotTemp = $dotInfo . '.' . $key;
+                        array_set($collection, $dotTemp, storage_path('app/media/' . $tempModel[$key]));
+                    }
+                    break;
+                case 'montages':
+                    foreach ($tempModel->montages as $montage) {
+                        $dotTemp = $dotInfo . '.' . $montage->slug;
+                        array_set($collection, $dotTemp, $montage->getCloudiUrl('src', $tempModel->id));
+                    }
+                    break;
+            }
+
+        }
+        return $collection;
+    }
 }

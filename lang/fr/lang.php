@@ -7,7 +7,7 @@ return [
         'category' => 'Wakaari compilator',
     ],
     'settings' => [
-        'default_path' => 'Chemin par défaut',
+        'cloudinary_path' => 'Chemin cloudinary',
     ],
     'montage' => [
         'name' => 'Nom du montage',

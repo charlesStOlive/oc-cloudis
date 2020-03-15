@@ -43,6 +43,35 @@ class Plugin extends PluginBase
 
     }
 
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'getCloudiBaseUrl' => function ($twig, $key = false, $size = false) {
+                    trace_log("twig");
+                    return $twig->getCloudiBaseUrl('main_image', 'jpg-400-350');
+                    //
+                },
+                'getCloudiMontageUrl' => function ($twig, $key = false, $size = false) {
+                    trace_log("twig");
+                    return $twig->getCloudiBaseUrl('main_image', 'jpg-400-350');
+                    //
+                },
+                'imageHeight' => function ($image) {
+                    if (!$image instanceof Image) {
+                        $image = new Image($image);
+                    }
+                    return getimagesize($image->getCachedImagePath())[1];
+                },
+            ],
+        ];
+    }
+
+    public function getCloudiUrl($cloudi)
+    {
+        return get_class($cloudi);
+    }
+
     /**
      * Boot method, called right before the request route.
      *
@@ -145,6 +174,15 @@ class Plugin extends PluginBase
                 'permissions' => ['waka.cloudis.admin'],
                 'url' => Backend::url('waka/cloudis/montages'),
                 'order' => 1,
+            ],
+            'cloudis_settings' => [
+                'label' => Lang::get('waka.cloudis::lang.settings.label'),
+                'description' => Lang::get('waka.cloudis::lang.settings.description'),
+                'category' => Lang::get('waka.crsm::cloudis.settings.category'),
+                'icon' => 'icon-cog',
+                'class' => 'Waka\Cloudis\Models\Settings',
+                'order' => 1,
+                'permissions' => ['waka.cloudis.admin'],
             ],
         ];
     }
