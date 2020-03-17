@@ -8,6 +8,9 @@ return [
     ],
     'settings' => [
         'cloudinary_path' => 'Chemin cloudinary',
+        'unknown' => "Image de remplacement pour les assets manquant",
+        'unknown_com' => "Pour remplacer l'image vous devez choisir une image avec un nom different.",
+
     ],
     'montage' => [
         'name' => 'Nom du montage',
