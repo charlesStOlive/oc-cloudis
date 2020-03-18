@@ -178,7 +178,7 @@ class Plugin extends PluginBase
             'cloudis_settings' => [
                 'label' => Lang::get('waka.cloudis::lang.settings.label'),
                 'description' => Lang::get('waka.cloudis::lang.settings.description'),
-                'category' => Lang::get('waka.crsm::cloudis.settings.category'),
+                'category' => Lang::get('waka.cloudis::lang.menu.category'),
                 'icon' => 'icon-cog',
                 'class' => 'Waka\Cloudis\Models\Settings',
                 'order' => 1,

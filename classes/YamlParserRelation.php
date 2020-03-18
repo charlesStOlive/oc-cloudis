@@ -51,20 +51,14 @@ class YamlParserRelation
         } elseif (preg_match("/xl-(.*?)-lx/", $value, $match)) {
             //on lance la fonction de recherche ( la fonction utilise le model lié)
             $replace = $this->getLayer($match[1]);
-            if (!$replace) {
-                $this->errors++;
-            }
 
             $replacement = preg_replace("/xl-(.*)-lx/", $replace, $value);
             return $replacement;
         } elseif (preg_match("/xlr-(.*?)-rlx/", $value, $match)) {
             //on lance la fonction de recherche ( la fonction utilise le model lié)
             $replace = $this->getModelLayer($match[1]);
-            if (!$replace) {
-                $this->errors++;
-            }
-
             $replacement = preg_replace("/xlr-(.*)-rlx/", $replace, $value);
+
             return $replacement;
         } else {
             return $value;
@@ -82,17 +76,31 @@ class YamlParserRelation
     }
     private function getLayer($value)
     {
-        return $this->modelMontage->getCloudiId($value) ?? null;
+        $layer = $this->modelMontage->getCloudiId($value) ?? null;
+        if (!$layer) {
+            $this->errors++;
+            trace_log("url image error : " . $this->modelMontage->getErrorImage());
+            $layer = $this->modelMontage->getErrorImage();
+        }
+        return $layer;
     }
     private function getModelLayer($value)
     {
+        $layer = null;
         $array = explode(".", $value);
         if (count($array) > 1) {
             //trace_log("erreur ?");
             //trace_log($this->model{$array[0]}->getCloudiId($array[1]));
-            return $this->model{$array[0]}->getCloudiId($array[1]) ?? null;
+            $layer = $this->model{$array[0]}->getCloudiId($array[1]) ?? null;
+        } else {
+            $layer = $this->model->getCloudiId($value) ?? null;
         }
-        return $this->model->getCloudiId($value) ?? null;
+        if (!$layer) {
+            $this->errors++;
+            trace_log("url image error : " . $this->modelMontage->getErrorImage());
+            $layer = $this->modelMontage->getErrorImage();
+        }
+        return $layer;
     }
     public function getUrl()
     {

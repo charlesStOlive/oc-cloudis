@@ -236,6 +236,11 @@ trait CloudiTrait
         return $srcPath . '/' . $modelName . '/' . $modelSlug . '-' . $src;
 
     }
+
+    public function getErrorImage()
+    {
+        return CloudisSettings::get('srcPath');
+    }
     public function getCloudiId($src)
     {
         $srcPath = CloudisSettings::get('cloudinary_path');
@@ -337,7 +342,7 @@ trait CloudiTrait
             $models = $this->data_source->modelClass::get();
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
-                //trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
+                trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
                 if (!$parser->errors) {
                     $this->attachOrDetach($model, $this->id, $attachOrDetach);
                 } else {
