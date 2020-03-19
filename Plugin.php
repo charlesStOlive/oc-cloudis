@@ -176,13 +176,13 @@ class Plugin extends PluginBase
                 'order' => 1,
             ],
             'cloudis_settings' => [
-                'label' => Lang::get('waka.cloudis::lang.settings.label'),
-                'description' => Lang::get('waka.cloudis::lang.settings.description'),
+                'label' => Lang::get('waka.cloudis::lang.menu.settings'),
+                'description' => Lang::get('waka.cloudis::lang.menu.settings_description'),
                 'category' => Lang::get('waka.cloudis::lang.menu.category'),
                 'icon' => 'icon-cog',
                 'class' => 'Waka\Cloudis\Models\Settings',
                 'order' => 1,
-                'permissions' => ['waka.cloudis.admin'],
+                'permissions' => ['waka.cloudis.admin.super'],
             ],
         ];
     }

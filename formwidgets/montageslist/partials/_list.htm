@@ -9,6 +9,7 @@
                     </div>
                 </th>
                 <th><a href="/">Nom de l'image</a></th>
+                <th><a href="/">Etat</a></th>
                 <th><a href="/">Created</a></th>
             </tr>
         </thead>
@@ -26,6 +27,20 @@
                         data-request-data="id:<?=$montage->id?>">
                         <?=$montage->name?>
                     </a>
+                </td>
+                <td>
+                    <?php if($montage->pivot->errors) { ?>
+                    <span class="oc-icon-warning text-danger">
+                        Erreur
+                    </span>
+                    <?php } else { ?>
+                    <span class="oc-icon-check text-success">
+                        OK
+                    </span>
+                    <?php } ?>
+
+
+
                 </td>
                 <td><?=$montage->updated_at?></td>
             </tr>

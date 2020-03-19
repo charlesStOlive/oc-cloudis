@@ -1,12 +1,13 @@
 fields:
     cloudinary_path: 
         label: waka.cloudis::lang.settings.cloudinary_path
+        span: full
     unknown: 
         label: waka.cloudis::lang.settings.unknown
         commentAbove: waka.cloudis::lang.settings.unknown_com
         type: mediafinder
         mode: image
-        span: auto
+        span: full
         imageWidth: 260
         thumbOptions:
             mode: crop
@@ -14,3 +15,14 @@ fields:
                 - 0
                 - 0
             quality: 90
+
+    primaryColor:
+            label: waka.cloudis::lang.settings.primary_color
+            type: colorpicker
+            span: auto
+
+    secondaryColor:
+        label: waka.cloudis::lang.settings.secondary_color
+        type: colorpicker
+        span: auto
+

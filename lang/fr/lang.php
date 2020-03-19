@@ -4,7 +4,9 @@ return [
     'menu' => [
         'label' => 'Montage photos',
         'description' => "Gestion des montages photos pour les models de l'application",
-        'category' => 'Wakaari compilator',
+        'settings' => "Optiosn cloudis",
+        'settings_description' => "Réglage des valeurs par defaut",
+        'category' => 'Wakaari',
     ],
     'settings' => [
         'category' => 'Cloudi',
@@ -12,7 +14,8 @@ return [
         'cloudinary_path' => 'Chemin cloudinary',
         'unknown' => "Image de remplacement pour les assets manquant",
         'unknown_com' => "Pour remplacer l'image vous devez choisir une image avec un nom different.",
-
+        'primary_color' => "Couleur primaire",
+        'secondary_color' => "Couleur secondaire",
     ],
     'montage' => [
         'name' => 'Nom du montage',

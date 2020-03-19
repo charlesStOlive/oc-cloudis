@@ -343,11 +343,16 @@ trait CloudiTrait
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
                 trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
-                if (!$parser->errors) {
-                    $this->attachOrDetach($model, $this->id, $attachOrDetach);
-                } else {
-                    $this->attachOrDetach($model, $this->id, 'detach');
-                }
+                $errors = $parser->errors ? true : false;
+                trace_log($errors);
+
+                $this->attachOrDetach($model, $this->id, $attachOrDetach, $errors);
+                // trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
+                // if (!$parser->errors) {
+                //     $this->attachOrDetach($model, $this->id, $attachOrDetach, $parser->errors);
+                // } else {
+                //     $this->attachOrDetach($model, $this->id, 'detach');
+                // }
             }
         } else {
             $shortName = (new \ReflectionClass($this))->getShortName();
@@ -360,11 +365,13 @@ trait CloudiTrait
                 //trace_log($montage->slug);
                 $parser = new YamlParserRelation($montage, $this);
                 //trace_log($parser->errors);
-                if (!$parser->errors) {
-                    $this->attachOrDetach($this, $montage->id, $attachOrDetach);
-                } else {
-                    $this->attachOrDetach($this, $montage->id, 'detach');
-                }
+                $errors = $parser->errors ? true : false;
+                $this->attachOrDetach($this, $montage->id, $attachOrDetach, $errors);
+                // if (!$parser->errors) {
+                //     $this->attachOrDetach($this, $montage->id, $attachOrDetach);
+                // } else {
+                //     $this->attachOrDetach($this, $montage->id, 'detach');
+                // }
 
                 // if(!$this->montages()->find($montage->id)) {
                 //     $this->montages()->attach($montage->id);
@@ -373,18 +380,18 @@ trait CloudiTrait
             }
         }
     }
-    public function attachOrDetach($model, $montageId, $attachOrDetach)
+    public function attachOrDetach($model, $montageId, $attachOrDetach, $errors)
     {
         //trace_log('attachOrDetach : '.$attachOrDetach);
         if ($attachOrDetach == 'attach') {
             if (!$model->montages()->find($montageId)) {
-                //trace_log($model->name." attach : ".$montageId);
-                $model->montages()->attach($montageId);
+                $model->montages()->attach($montageId, ['errors' => $errors]);
+            } else {
+                $model->montages()->updateExistingPivot($montageId, ['errors' => $errors]);
             }
         }
         if ($attachOrDetach == 'detach') {
             if ($model->montages()->find($montageId)) {
-                //trace_log($model->name." detach : ".$montageId);
                 $model->montages()->detach($montageId);
             }
         }

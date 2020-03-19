@@ -15,7 +15,7 @@ class Settings extends Model
     public function beforeSave()
     {
         if ($this::get('unknown') != $this::get('previous_file')) {
-            $srcPath = $this::get('cloudinary_path') . '/errors/unkown.jpg';
+            $srcPath = $this::get('cloudinary_path') . '/errors/unkown';
             $cloudData = \Cloudder::upload(storage_path('app/media/' . $this::get('unknown')), $srcPath);
             $result = $cloudData->getResult();
             $version = $result['version'];
