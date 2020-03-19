@@ -312,7 +312,7 @@ trait CloudiTrait
         if ($this->primary_color) {
             return substr($this->primary_color, 1);
         } else {
-            return null;
+            return substr(CloudisSettings::get('primary_color'), 1);
         }
 
     }
@@ -321,7 +321,7 @@ trait CloudiTrait
         if ($this->secondary_color) {
             return substr($this->secondary_color, 1);
         } else {
-            return null;
+            return substr(CloudisSettings::get('secondary_color'), 1);
         }
     }
     public function updateCLoudiRelationsFromMontage()

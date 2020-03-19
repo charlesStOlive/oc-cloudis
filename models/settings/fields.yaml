@@ -16,12 +16,12 @@ fields:
                 - 0
             quality: 90
 
-    primaryColor:
+    primary_color:
             label: waka.cloudis::lang.settings.primary_color
             type: colorpicker
             span: auto
 
-    secondaryColor:
+    secondary_color:
         label: waka.cloudis::lang.settings.secondary_color
         type: colorpicker
         span: auto
