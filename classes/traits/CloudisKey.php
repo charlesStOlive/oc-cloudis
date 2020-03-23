@@ -7,19 +7,19 @@ trait CloudisKey
 {
     public function encryptKeyedImage($dataSource, $id = null)
     {
-        $targetModel;
         if (!$id) {
-            $targetModel = $dataSource->test_id;
-        } else {
-            $targetModel = $dataSource->modelClass::find($id);
+            $id = $dataSource->test_id;
         }
+        $targetModel = $dataSource->modelClass::find($id);
+
         $collection = [];
         $datas = Yaml::parse($dataSource->media_files);
         foreach ($datas as $key => $data) {
             $tempModel = $targetModel;
             $startKey = 'from=null';
+            trace_log($tempModel->name);
             if (array_key_exists('from', $data)) {
-                if (!$targetModel[$data['from']]) {
+                if (!$targetModel[$data['from']] ?? false) {
                     throw new ApplicationException('dataSource model relation not exist : ' . $data['from']);
                 }
 
