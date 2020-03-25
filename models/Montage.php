@@ -12,8 +12,6 @@ class Montage extends Model
     use \October\Rain\Database\Traits\SoftDelete;
     //
     use \Waka\Cloudis\Classes\Traits\CloudiTrait;
-    public $cloudiSlug = 'slug';
-    public $cloudiImages = ['src', 'masque'];
 
     /**
      * @var string The database table used by the model.
@@ -79,15 +77,10 @@ class Montage extends Model
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
-    public $morphMany = [
-        'cloudis_files' => [
-            'Waka\Cloudis\Models\CloudisFile',
-            'name' => 'cloudeable',
-        ],
-    ];
+    public $morphMany = [];
     public $attachOne = [
-        'src' => 'System\Models\File',
-        'masque' => 'System\Models\File',
+        'src' => 'Waka\Cloudis\Models\CloudiFile',
+        'masque' => 'Waka\Cloudis\Models\CloudiFile',
     ];
     public $attachMany = [];
 
@@ -96,8 +89,7 @@ class Montage extends Model
      */
     public function afterSave()
     {
-        // cet fonction utilse le trait cloudis
-        $this->checkMontageChanges();
+        $this->testCloudis();
         $this->updateCLoudiRelationsFromMontage();
     }
     /**

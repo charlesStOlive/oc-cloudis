@@ -5,6 +5,7 @@ use Config;
 use October\Rain\Database\Attach\File as FileBase;
 use Storage;
 use Url;
+use \Waka\Cloudis\Models\Settings as CloudisSettings;
 
 /**
  * File attachment model
@@ -12,12 +13,18 @@ use Url;
  * @package october\system
  * @author Alexey Bobkov, Samuel Georges
  */
-class CloudiFile extends FileBase
+class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
+
 {
     /**
      * @var string The database table used by the model.
      */
     protected $table = 'waka_cloudis_system_files';
+
+    public function getCloudiPathAttribute()
+    {
+        return CloudisSettings::get('cloudinary_path');
+    }
 
     public function fromPost($uploadedFile)
     {
@@ -37,7 +44,7 @@ class CloudiFile extends FileBase
         ? $uploadedFile->getPath() . DIRECTORY_SEPARATOR . $uploadedFile->getFileName()
         : $uploadedFile->getRealPath();
 
-        \Cloudder::upload($realPath, 'testtemp/' . $this->disk_name);
+        \Cloudder::upload($realPath, $this->cloudiPath . '/' . $this->disk_name);
 
         $this->putFile($realPath, $this->disk_name);
 
@@ -45,39 +52,55 @@ class CloudiFile extends FileBase
     }
 
     /**
-     * {@inheritDoc}
+     * Copy de la finction de FILEBASE pour enlever les extentions.
      */
-    public function getThumb($width, $height, $options = [])
+    protected function getDiskName()
     {
-        $url = '';
-        // if (!$this->isPublic() && class_exists(Files::class)) {
-        //     $options = $this->getDefaultThumbOptions($options);
-        //     // Ensure that the thumb exists first
-        //     parent::getThumb($width, $height, $options);
-
-        //     // Return the Files controller handler for the URL
-        //     $url = Files::getThumbUrl($this, $width, $height, $options);
-        // } else {
-        //     $url = parent::getThumb($width, $height, $options);
-        // }
-        trace_log('testtemp/' . $this->disk_name);
-        //$version = 'thumb-' . $width . '-' . $height;
-        $version = 'thumb-100-35';
-        $formatOption = $version ? $this->setFormat($version) : null;
-        trace_log($formatOption);
-        return \Cloudder::secureShow('testtemp/' . $this->disk_name, $formatOption);
+        if ($this->disk_name !== null) {
+            return $this->disk_name;
+        }
+        return $this->disk_name = str_replace('.', '', uniqid(null, true));
     }
 
-    public function getUrl($version)
+    /**
+     * {@inheritDoc}
+     */
+    public function getThumb($width = 160, $height = 100, $options = [])
     {
-        return \Cloudder::secureShow('testtemp/' . $this->disk_name, $formatOption);
+        $version = 'png-' . $width . '-' . $height;
+        $formatOption = $version ? $this->setFormat($version) : null;
+        trace_log($formatOption);
+        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
+    }
+
+    public function getColumnThumb($width = 75, $height = 30, $options = [])
+    {
+        $version = 'jpg-' . $width . '-' . $height;
+        $formatOption = $version ? $this->setFormat($version) : null;
+        trace_log($formatOption);
+        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
+    }
+
+    public function getUrl($version = null)
+    {
+        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name);
     }
 
     public function deleteCloudi()
     {
 
-        \Cloudder::destroy('testtemp/' . $this->disk_name, ['invalidate' => true]);
+        \Cloudder::destroy($this->cloudiPath . '/' . $this->disk_name, ['invalidate' => true]);
         $this->delete();
+    }
+
+    public function getCloudiIdAttribute()
+    {
+        return $this->cloudiPath . '/' . $this->disk_name;
+    }
+
+    public function getIdPathAttribute()
+    {
+        return $this->cloudiPath . ':' . $this->disk_name;
     }
 
     public function setFormat($vers = 'base')
@@ -95,23 +118,13 @@ class CloudiFile extends FileBase
             $height = $options[2] ?? null;
         }
         $versions = [
-            'thumb' => [
-                "gravity" => "face",
-                "crop" => "thumb",
-                "format" => "png",
-            ],
-            'thumbPng' => [
-                "gravity" => "face",
-                "crop" => "thumb",
+            'png' => [
+                "crop" => "pad",
                 "format" => "png",
             ],
             'jpg' => [
-                "crop" => 'fill',
+                "crop" => 'pad',
                 "format" => "jpg",
-            ],
-            'png' => [
-                "crop" => 'fill',
-                "format" => 'png',
             ],
         ];
         $array = $versions[$vers];

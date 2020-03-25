@@ -1,30 +1,19 @@
 <?php namespace Waka\Cloudis\Behaviors;
-use Waka\Cloudis\Models\Montage;
 
 use Backend\Classes\ControllerBehavior;
-
-use October\Rain\Support\Collection;
-use October\Rain\Exception\ApplicationException;
-use Flash;
-use Redirect;
-use Session;
-use Lang;
-
 
 class PopupCloudis extends ControllerBehavior
 {
     public $model;
 
-
-	public function __construct($controller)
+    public function __construct($controller)
     {
         parent::__construct($controller);
         $this->model = $controller->formGetModel();
 
     }
 
-
-     //ci dessous tous les calculs pour permettre l'import excel. 
+    //ci dessous tous les calculs pour permettre l'import excel.
 
     public function onCallPopupCloudis()
     {
@@ -32,13 +21,13 @@ class PopupCloudis extends ControllerBehavior
         $modelId = post('modelId');
         $model;
         $src;
-        if($modelName == 'Waka\Cloudis\Models\Montage')  {
+        if ($modelName == 'Waka\Cloudis\Models\Montage') {
             $model = $modelName::find($modelId);
             $src = 'src';
-        } 
+        }
         $this->vars['url'] = $model->getCloudiUrl($src);
         return $this->makePartial('$/waka/cloudis/behaviors/popupcloudis/_popup.htm');
-    } 
+    }
     public function onCallPopupModelCloudis()
     {
         $model = post('model');
@@ -51,5 +40,5 @@ class PopupCloudis extends ControllerBehavior
         $url = $model->getCloudiModelUrl($montage);
         $this->vars['url'] = $url;
         return $this->makePartial('$/waka/cloudis/behaviors/popupcloudis/_popup.htm');
-    }    
+    }
 }

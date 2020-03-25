@@ -31,32 +31,22 @@ fields:
 
     src:
         label: waka.cloudis::lang.montage.src
-        type: fileupload
+        type: cloudifileupload
         mode: image
         span: auto
+        imageHeight: 100
         imageWidth: 260
-        thumbOptions:
-            mode: crop
-            offset:
-                - 0
-                - 0
-            quality: 90
         trigger:
             action: show
             field: use_files
             condition: checked
     masque:
         label: waka.cloudis::lang.montage.masque
-        type: fileupload
+        type: cloudifileupload
         mode: image
         span: auto
+        imageHeight: 100
         imageWidth: 260
-        thumbOptions:
-            mode: crop
-            offset:
-                - 0
-                - 0
-            quality: 90
         trigger:
             action: show
             field: use_files

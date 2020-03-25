@@ -4,6 +4,7 @@ use Yaml;
 
 class YamlParserRelation
 {
+    use \Waka\Utils\Classes\Traits\StringRelation;
     private $id;
     private $model;
     private $modelMontage;
@@ -68,45 +69,29 @@ class YamlParserRelation
     private function getModel($value)
     {
         $result;
-        $array = explode(".", $value);
-        if (count($array) > 1) {
-            //$relation = [];
-            //$result = $this->checkSetDefaultValue($this->model[$array[0]][$array[1]], $array[1]);
-            return $this->model[$array[0]][$array[1]];
-        } else {
-            //$result = $this->checkSetDefaultValue($this->model[$value], $value);
-            return $this->model[$value];
-        }
-        //return $result;
+        return $this->getStringRelation($this->model, $value);
     }
 
     private function getLayer($value)
     {
-        $layer = $this->modelMontage->getCloudiId($value) ?? null;
-        if (!$layer) {
+        $layer = $this->getStringRelation($this->modelMontage, $value);
+        if ($layer) {
+            $layer = $layer->cloudiId;
+        } else {
             $this->errors++;
-            trace_log("url image error : " . $this->modelMontage->getErrorImage());
             $layer = $this->modelMontage->getErrorImage();
         }
         return $layer;
     }
     private function getModelLayer($value)
     {
-        $layer = null;
-        $array = explode(".", $value);
-        if (count($array) > 1) {
-            $layer = $this->model{$array[0]}->getCloudiId($array[1]) ?? null;
+        $layer = $this->getStringRelation($this->model, $value);
+        if ($layer) {
+            $layer = $layer->cloudiId;
         } else {
-            $layer = $this->model->getCloudiId($value) ?? null;
-        }
-        if (!$layer) {
             $this->errors++;
-            $layer = $this->modelMontage->getErrorImage();
+            $layer = $this->model->getErrorImage();
         }
         return $layer;
-    }
-    public function getUrl()
-    {
-        return null;
     }
 }

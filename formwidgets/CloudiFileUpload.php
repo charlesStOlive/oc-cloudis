@@ -335,9 +335,6 @@ class CloudiFileUpload extends FormWidgetBase
     {
         $fileModel = $this->getRelationModel();
         $fileId = post('file_id');
-        trace_log("delete");
-        trace_log($fileId);
-        trace_log($fileModel::find($fileId));
         $fileModel = $this->getRelationModel();
         if (($fileId = post('file_id')) && ($file = $fileModel::find($fileId))) {
             $file->deleteCloudi();
@@ -484,6 +481,8 @@ class CloudiFileUpload extends FormWidgetBase
                 'thumb' => $file->thumbUrl,
                 'path' => $file->pathUrl,
             ];
+
+            $this->model->save();
 
             $response = Response::make($result, 200);
         } catch (Exception $ex) {
