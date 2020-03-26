@@ -189,7 +189,7 @@ class CloudiFileUpload extends FormWidgetBase
             return $this->configFormWidget;
         }
 
-        $config = $this->makeConfig('~/modules/system/models/file/fields.yaml');
+        $config = $this->makeConfig('~/plugins/waka/cloudis/models/cloudifile/fields.yaml');
         $config->model = $this->getFileRecord() ?: $this->getRelationModel();
         $config->alias = $this->alias . $this->defaultAlias;
         $config->arrayName = $this->getFieldName();
