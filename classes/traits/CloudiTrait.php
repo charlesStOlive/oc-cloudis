@@ -14,40 +14,85 @@ trait CloudiTrait
         trace_log($this->cloudiStringKeyExist('logo'));
     }
 
-    public function cloudiKeyExist($cloudiModel)
+    public function cloudiKeyExist($cloudiModel, $strict = true)
     {
-        return in_array($cloudiModel, $this->getCloudiKeys());
+        return in_array($cloudiModel, $this->getCloudiKeys($strict));
     }
 
-    public function cloudiStringKeyExist($string)
+    public function cloudiStringKeyExist($string, $strict = true)
     {
-        return in_array($string, $this->getCloudiStringKeys());
+        return in_array($string, $this->getCloudiStringKeys($strict));
     }
 
     /**
      * Retourne les imageCloudi de ce modèle.
      */
-    public function getCloudiKeys()
+    public function getCloudiKeys($strict = true)
     {
         $cloudiKeys = [];
         $cloudiImgs = $this->attachOne;
+
         foreach ($cloudiImgs as $key => $value) {
-            if ($value == 'Waka\Cloudis\Models\CloudiFile' && $this->{$key}) {
-                array_push($cloudiKeys, $this->{$key});
+            if ($strict) {
+                if ($value == 'Waka\Cloudis\Models\CloudiFile' && $this->{$key}) {
+                    array_push($cloudiKeys, $this->{$key});
+                }
+
+            } else {
+                if ($value == 'Waka\Cloudis\Models\CloudiFile') {
+                    array_push($cloudiKeys, $this->{$key});
+                }
             }
         }
         return $cloudiKeys;
     }
 
-    public function getCloudiStringKeys()
+    /**
+     * Retourne uniquement le nom de l'image
+     */
+    public function getCloudiStringKeys($strict = true)
     {
         $cloudiKeys = [];
         $cloudiImgs = $this->attachOne;
         foreach ($cloudiImgs as $key => $value) {
-            if ($value == 'Waka\Cloudis\Models\CloudiFile' && $this->{$key}) {
-                array_push($cloudiKeys, $key);
+            if ($strict) {
+                if ($value == 'Waka\Cloudis\Models\CloudiFile' && $strict ? $this->{$key} : true) {
+                    array_push($cloudiKeys, $key);
+                }
+
+            } else {
+                if ($value == 'Waka\Cloudis\Models\CloudiFile') {
+                    array_push($cloudiKeys, $key);
+                }
             }
         }
+        return $cloudiKeys;
+    }
+
+    /**
+     * Retourne Key nom de l'image et value Model Image
+     */
+    public function getCloudiKeysObjects()
+    {
+        $cloudiKeys = [];
+        $cloudiImgs = $this->attachOne;
+        foreach ($cloudiImgs as $key => $value) {
+            if ($value == 'Waka\Cloudis\Models\CloudiFile') {
+                if ($this->{$key}) {
+                    $cloudiKeys[$key] = $this->{$key}->cloudiId;
+                } else {
+                    $cloudiKeys[$key] = $this->getErrorImage();
+                }
+            }
+        }
+        $montages = $this->montages;
+        if ($montages) {
+            foreach ($montages as $montage) {
+                $cloudiKeys['montages'][$montage->slug] = $montage->id;
+            }
+
+        }
+
         return $cloudiKeys;
     }
 
@@ -56,7 +101,12 @@ trait CloudiTrait
         return CloudisSettings::get('srcPath');
     }
 
-    public function getCloudiUrl($src, $id = null, $version = null)
+    public function getUrlErrorImage()
+    {
+        return CloudisSettings::get('srcPath');
+    }
+
+    public function getCloudiUrl($id = null, $version = null)
     {
         $modelMontage = $this;
         $model = new $this->data_source->modelClass;

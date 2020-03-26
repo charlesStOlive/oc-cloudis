@@ -9,6 +9,7 @@
                     </div>
                 </th>
                 <th><a href="/">Nom de l'image</a></th>
+                <th><a href="/">Slug</a></th>
                 <th><a href="/">Etat</a></th>
                 <th><a href="/">Created</a></th>
             </tr>
@@ -26,6 +27,11 @@
                 <td><a href="javascript:;" data-control="popup" data-handler="onShowCloudiImage"
                         data-request-data="id:<?=$montage->id?>">
                         <?=$montage->name?>
+                    </a>
+                </td>
+                <td><a href="javascript:;" data-control="popup" data-handler="onShowCloudiImage"
+                        data-request-data="id:<?=$montage->id?>">
+                        <?=$montage->slug?>
                     </a>
                 </td>
                 <td>
