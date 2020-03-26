@@ -85,6 +85,8 @@ class YamlParserRelation
     }
     private function getModelLayer($value)
     {
+        trace_log($value);
+        trace_log($this->model->name);
         $layer = $this->getStringRelation($this->model, $value);
         if ($layer) {
             $layer = $layer->cloudiId;

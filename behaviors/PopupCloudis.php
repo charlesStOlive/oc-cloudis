@@ -23,9 +23,8 @@ class PopupCloudis extends ControllerBehavior
         $src;
         if ($modelName == 'Waka\Cloudis\Models\Montage') {
             $model = $modelName::find($modelId);
-            $src = 'src';
         }
-        $this->vars['url'] = $model->getCloudiUrl($src);
+        $this->vars['url'] = $model->getCloudiUrl();
         return $this->makePartial('$/waka/cloudis/behaviors/popupcloudis/_popup.htm');
     }
     public function onCallPopupModelCloudis()
