@@ -62,6 +62,17 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         return $this->disk_name = str_replace('.', '', uniqid(null, true));
     }
 
+    public function getCloudiUrl($width = 400, $height = 400, $format = "png", $crop = "fill")
+    {
+        $formatOption = [
+            "width" => $width,
+            "height" => $height,
+            "format" => $format,
+            "crop" => $crop,
+        ];
+        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
+    }
+
     /**
      * {@inheritDoc}
      */

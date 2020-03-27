@@ -47,9 +47,8 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'getCloudiBaseUrl' => function ($twig, $key = false, $size = false) {
-                    trace_log("twig");
-                    return $twig->getCloudiBaseUrl('main_image', 'jpg-400-350');
+                'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = 'png', $crop = "fill") {
+                    return $twig->getCloudiUrl($width, $height, $format, $crop);
                     //
                 },
                 'getCloudiMontageUrl' => function ($twig, $key = false, $size = false) {
