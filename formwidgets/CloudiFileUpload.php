@@ -80,7 +80,7 @@ class CloudiFileUpload extends FormWidgetBase
     /**
      * @var boolean Automatically attaches the uploaded file on upload if the parent record exists instead of using deferred binding to attach on save of the parent record. Defaults to false.
      */
-    public $attachOnUpload = false;
+    public $attachOnUpload = true;
 
     //
     // Object properties
@@ -339,7 +339,7 @@ class CloudiFileUpload extends FormWidgetBase
         if (($fileId = post('file_id')) && ($file = $fileModel::find($fileId))) {
             $file->deleteCloudi();
             //detruit la relation
-            $this->getRelationObject()->remove($file, $this->sessionKey);
+            $this->getRelationObject()->remove($file);
         }
     }
 
@@ -424,7 +424,6 @@ class CloudiFileUpload extends FormWidgetBase
      */
     public function onUpload()
     {
-        trace_log("ON UPLOAD FROM cloudi");
         try {
             if (!Input::hasFile('file_data')) {
                 throw new ApplicationException('File missing from request');
@@ -458,7 +457,6 @@ class CloudiFileUpload extends FormWidgetBase
             $fileRelation = $this->getRelationObject();
 
             $file = $fileModel;
-            trace_log($file);
             $file->data = $uploadedFile;
             $file->is_public = $fileRelation->isPublic();
             $file->save();

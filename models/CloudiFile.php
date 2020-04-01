@@ -46,7 +46,7 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
 
         \Cloudder::upload($realPath, $this->cloudiPath . '/' . $this->disk_name);
 
-        $this->putFile($realPath, $this->disk_name);
+        //$this->putFile($realPath, $this->disk_name);
 
         return $this;
     }
@@ -80,7 +80,7 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
     {
         $version = 'png-' . $width . '-' . $height;
         $formatOption = $version ? $this->setFormat($version) : null;
-        trace_log($formatOption);
+        //trace_log($formatOption);
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
 
@@ -88,7 +88,7 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
     {
         $version = 'jpg-' . $width . '-' . $height;
         $formatOption = $version ? $this->setFormat($version) : null;
-        trace_log($formatOption);
+        //trace_log($formatOption);
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
 
