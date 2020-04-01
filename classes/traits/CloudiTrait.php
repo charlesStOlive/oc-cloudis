@@ -95,6 +95,29 @@ trait CloudiTrait
 
         return $cloudiKeys;
     }
+    public function getCloudiKeysObjectsUrl()
+    {
+        $cloudiKeys = [];
+        $cloudiImgs = $this->attachOne;
+        foreach ($cloudiImgs as $key => $value) {
+            if ($value == 'Waka\Cloudis\Models\CloudiFile') {
+                if ($this->{$key}) {
+                    $cloudiKeys[$key] = $this->{$key}->getUrl();
+                } else {
+                    $cloudiKeys[$key] = $this->getErrorImage();
+                }
+            }
+        }
+        $montages = $this->montages;
+        if ($montages) {
+            foreach ($montages as $montage) {
+                $cloudiKeys['montages'][$montage->slug] = $montage->getCloudiUrl($montage->id);
+            }
+
+        }
+
+        return $cloudiKeys;
+    }
 
     public function getErrorImage()
     {
@@ -103,7 +126,7 @@ trait CloudiTrait
 
     public function getUrlErrorImage()
     {
-        return CloudisSettings::get('srcPath');
+        return \Cloudder::secureShow($CloudisSettings::get('srcPath'));
     }
 
     public function getCloudiUrl($id = null, $version = null)

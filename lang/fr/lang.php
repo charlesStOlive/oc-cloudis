@@ -6,7 +6,8 @@ return [
         'description' => "Gestion des montages photos pour les models de l'application",
         'settings' => "Optiosn cloudis",
         'settings_description' => "Réglage des valeurs par defaut",
-        'category' => 'Wakaari',
+        'settings_category' => 'Wakaari Modèle',
+        'settings_category_options' => 'Wakaari Options',
     ],
     'settings' => [
         'category' => 'Cloudi',

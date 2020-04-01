@@ -169,7 +169,7 @@ class Plugin extends PluginBase
             'montage' => [
                 'label' => Lang::get('waka.cloudis::lang.menu.label'),
                 'description' => Lang::get('waka.cloudis::lang.menu.description'),
-                'category' => Lang::get('waka.cloudis::lang.menu.category'),
+                'category' => Lang::get('waka.cloudis::lang.menu.settings_category'),
                 'icon' => 'icon-object-group',
                 'permissions' => ['waka.cloudis.admin'],
                 'url' => Backend::url('waka/cloudis/montages'),
@@ -178,7 +178,7 @@ class Plugin extends PluginBase
             'cloudis_settings' => [
                 'label' => Lang::get('waka.cloudis::lang.menu.settings'),
                 'description' => Lang::get('waka.cloudis::lang.menu.settings_description'),
-                'category' => Lang::get('waka.cloudis::lang.menu.category'),
+                'category' => Lang::get('waka.utils::lang.menu.settings_category'),
                 'icon' => 'icon-cog',
                 'class' => 'Waka\Cloudis\Models\Settings',
                 'order' => 1,
