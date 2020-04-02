@@ -11,7 +11,7 @@ trait CloudiTrait
      */
     public function testCloudis()
     {
-        trace_log($this->cloudiStringKeyExist('logo'));
+        //trace_log($this->cloudiStringKeyExist('logo'));
     }
 
     public function cloudiKeyExist($cloudiModel, $strict = true)
@@ -57,14 +57,47 @@ trait CloudiTrait
         foreach ($cloudiImgs as $key => $value) {
             if ($strict) {
                 if ($value == 'Waka\Cloudis\Models\CloudiFile' && $strict ? $this->{$key} : true) {
-                    array_push($cloudiKeys, $key);
+                    $cloudiKeys[$key] = $key;
                 }
 
             } else {
                 if ($value == 'Waka\Cloudis\Models\CloudiFile') {
-                    array_push($cloudiKeys, $key);
+                    $cloudiKeys[$key] = $key;
                 }
             }
+        }
+        $montages = $this->montages;
+        if ($montages) {
+            foreach ($montages as $montage) {
+                $cloudiKeys['montages'][$montage->slug] = $montage->id;
+            }
+
+        }
+        return $cloudiKeys;
+    }
+
+    public function getCloudiStringId($strict = true)
+    {
+        $cloudiKeys = [];
+        $cloudiImgs = $this->attachOne;
+        foreach ($cloudiImgs as $key => $value) {
+            if ($strict) {
+                if ($value == 'Waka\Cloudis\Models\CloudiFile' && $strict ? $this->{$key} : true) {
+                    $cloudiKeys[$key] = 'cloudi-' . $key;
+                }
+
+            } else {
+                if ($value == 'Waka\Cloudis\Models\CloudiFile') {
+                    $cloudiKeys[$key] = 'cloudi-' . $key;
+                }
+            }
+        }
+        $montages = $this->montages;
+        if ($montages) {
+            foreach ($montages as $montage) {
+                $cloudiKeys['montages'][$montage->slug] = 'montage-' . $montage->id;
+            }
+
         }
         return $cloudiKeys;
     }
@@ -89,29 +122,6 @@ trait CloudiTrait
         if ($montages) {
             foreach ($montages as $montage) {
                 $cloudiKeys['montages'][$montage->slug] = $montage->id;
-            }
-
-        }
-
-        return $cloudiKeys;
-    }
-    public function getCloudiKeysObjectsUrl()
-    {
-        $cloudiKeys = [];
-        $cloudiImgs = $this->attachOne;
-        foreach ($cloudiImgs as $key => $value) {
-            if ($value == 'Waka\Cloudis\Models\CloudiFile') {
-                if ($this->{$key}) {
-                    $cloudiKeys[$key] = $this->{$key}->getUrl();
-                } else {
-                    $cloudiKeys[$key] = $this->getErrorImage();
-                }
-            }
-        }
-        $montages = $this->montages;
-        if ($montages) {
-            foreach ($montages as $montage) {
-                $cloudiKeys['montages'][$montage->slug] = $montage->getCloudiUrl($montage->id);
             }
 
         }

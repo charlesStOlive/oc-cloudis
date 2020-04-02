@@ -117,6 +117,7 @@ class Plugin extends PluginBase
     {
         return [
             'Waka\Cloudis\FormWidgets\MontagesList' => 'montagelist',
+            'Waka\Cloudis\FormWidgets\ImagesList' => 'imageslist',
             'Waka\Cloudis\FormWidgets\CloudiFileUpload' => 'cloudifileupload',
         ];
     }
