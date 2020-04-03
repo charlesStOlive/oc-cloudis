@@ -129,12 +129,12 @@ class ImagesList extends FormWidgetBase
     public function onDeleteImage()
     {
 
-        $collectionCode = post('code');
+        $code = post('code');
         $datas = $this->getLoadValue();
 
         $updatedDatas = [];
         foreach ($datas as $key => $data) {
-            if ($data['code'] != $collectionCode) {
+            if ($data['code'] != $code) {
                 $updatedDatas[$key] = $data;
             }
         }
@@ -152,20 +152,20 @@ class ImagesList extends FormWidgetBase
     public function onUpdateImageValidation()
     {
         //On range collection code hidden das oldCollectionCode au cas ou le user change le collectionCode qui est notre clé
-        $OldCollectionCode = post('collectionCode');
-        $functionCode = post('functionCode');
-
+        $oldCode = post('oldCode');
         //mis d'en une collection des données existantes
         $datas = $this->getLoadValue();
 
+        trace_log($oldCode);
+
         //preparatio de l'array a ajouter
-        $widgetArray = post('attributes_array');
-        //ajout du code qui n'est pas dans le widget_array
-        $widgetArray['functionCode'] = post('functionCode');
+        $imageOptionsArray = post('imageOptions_array');
+        $imageInfo = $this->model->data_source->getOnePictureKey($imageOptionsArray['source']);
+        $imageOptionsArray = array_merge($imageOptionsArray, $imageInfo);
 
         foreach ($datas as $key => $data) {
-            if ($data['code'] == $OldCollectionCode) {
-                $datas[$key] = $widgetArray;
+            if ($data['code'] == $oldCode) {
+                $datas[$key] = $imageOptionsArray;
             }
         }
 
