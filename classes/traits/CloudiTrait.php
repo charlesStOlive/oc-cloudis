@@ -151,7 +151,7 @@ trait CloudiTrait
         }
         $model = $model::find($modelId);
         $parser = new YamlParserRelation($modelMontage, $model);
-        trace_log($parser);
+     //  trace_log($parser);
         $options = $parser->options;
         $formatOption = $version ? $this->setFormat($version) : null;
         // si il y a un format particulier on le merge avec
@@ -162,16 +162,17 @@ trait CloudiTrait
         return \Cloudder::secureShow($parser->src, $options);
 
     }
-    public function getCloudiModelUrl($modelMontage, $version = null)
+    public function getCloudiModelUrl($modelMontage, $opt = null)
     {
         $model = $this;
         $parser = new YamlParserRelation($modelMontage, $model);
         $options = $parser->options;
-        $formatOption = $version ? $this->setFormat($version) : null;
+        //$formatOption = $version ? $this->setFormat($version) : null;
         // si il y a un format particulier on le merge avec
-        if ($formatOption) {
-            array_push($options['transformation'], $formatOption);
+        if ($opt) {
+            array_push($options['transformation'], $opt);
         }
+     //  trace_log($options);
 
         return \Cloudder::secureShow($parser->src, $options);
     }
@@ -225,9 +226,9 @@ trait CloudiTrait
             $models = $this->data_source->modelClass::get();
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
-                trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
+             //  trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
                 $errors = $parser->errors ? true : false;
-                trace_log($errors);
+             //  trace_log($errors);
                 $this->attachOrDetach($model, $this->id, $attachOrDetach, $errors);
             }
         } else {

@@ -17,7 +17,7 @@ trait CloudisKey
         foreach ($datas as $key => $data) {
             $tempModel = $targetModel;
             $startKey = 'from=null';
-            trace_log($tempModel->name);
+            //trace_log($tempModel->name);
             if (array_key_exists('from', $data)) {
                 if (!$targetModel[$data['from']] ?? false) {
                     throw new ApplicationException('dataSource model relation not exist : ' . $data['from']);
@@ -121,8 +121,8 @@ trait CloudisKey
             $targetModel = $dataSource->modelClass::find($id);
         }
 
-        trace_log("targetModel");
-        trace_log($targetModel->toArray());
+        //trace_log("targetModel");
+        //trace_log($targetModel->toArray());
 
         $collection = [];
 

@@ -52,7 +52,7 @@ class Plugin extends PluginBase
                     //
                 },
                 'getCloudiMontageUrl' => function ($twig, $key = false, $size = false) {
-                    trace_log("twig");
+                    //trace_log("twig");
                     return $twig->getCloudiBaseUrl('main_image', 'jpg-400-350');
                     //
                 },

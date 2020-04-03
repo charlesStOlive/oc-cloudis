@@ -26,11 +26,14 @@ class GroupedImages
         return $collection->where('key', $key)->first();
     }
 
-    private function getCloudisList($model)
+    private function getCloudisList($model, $relation = null)
     {
         $modelClassName = get_class($model);
         $shortName = (new \ReflectionClass($modelClassName))->getShortName();
         $cloudiKeys = [];
+        if (!$relation) {
+            $relation = 'self';
+        }
 
         $cloudiImgs = $model->attachOne;
         foreach ($cloudiImgs as $key => $value) {
@@ -38,7 +41,7 @@ class GroupedImages
                 $img = [
                     'field' => $key,
                     'type' => 'cloudi',
-                    'className' => $modelClassName,
+                    'relation' => $relation,
                     'key' => $shortName . $key,
                     'name' => $shortName . ' : ' . $key,
                 ];
@@ -47,11 +50,14 @@ class GroupedImages
         }
         return $cloudiKeys;
     }
-    private function getCloudiMontagesList($model)
+    private function getCloudiMontagesList($model, $relation = null)
     {
         $modelClassName = get_class($model);
         $shortName = (new \ReflectionClass($modelClassName))->getShortName();
         $cloudiKeys = [];
+        if (!$relation) {
+            $relation = 'self';
+        }
 
         $montages = $model->montages;
         if ($montages) {
@@ -59,7 +65,7 @@ class GroupedImages
                 $img = [
                     'id' => $montage->id,
                     'type' => 'montage',
-                    'className' => $modelClassName,
+                    'relation' => $relation,
                     'key' => $shortName . $montage->id,
                     'name' => 'Montage : ' . $montage->name,
                 ];
@@ -90,8 +96,8 @@ class GroupedImages
 
         foreach ($relationWithImages as $relation) {
             $subModel = $this->getStringModelRelation($this->model, $relation);
-            $listsImages = $this->getCloudisList($subModel);
-            $listMontages = $this->getCloudiMontagesList($subModel);
+            $listsImages = $this->getCloudisList($subModel, $relation);
+            $listMontages = $this->getCloudiMontagesList($subModel, $relation);
             if ($listsImages) {
                 $allImages = $allImages->merge($listsImages);
             }

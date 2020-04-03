@@ -18,7 +18,7 @@ fields:
         label: Comment ajuster l'image
         type: dropdown
         options:
-            ajust: ajuster
+            fill: ajuster
             crop: couper
             pad: adapter
 

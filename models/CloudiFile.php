@@ -92,9 +92,9 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
 
-    public function getUrl($version = null)
+    public function getUrl($options = null)
     {
-        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name);
+        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $options);
     }
 
     public function deleteCloudi()
