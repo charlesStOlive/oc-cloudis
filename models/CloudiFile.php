@@ -2,6 +2,7 @@
 
 use Backend\Controllers\Files;
 use Config;
+use File as FileHelper;
 use October\Rain\Database\Attach\File as FileBase;
 use Storage;
 use Url;
@@ -49,6 +50,31 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         //$this->putFile($realPath, $this->disk_name);
 
         return $this;
+    }
+
+    /**
+     * Creates a file object from url
+     * @param $url string URL
+     * @param $filename string Filename
+     * @return $this
+     */
+    public function fromUrl($url, $filename = null)
+    {
+        if (empty($filename)) {
+            $filename = FileHelper::basename($url);
+        }
+
+        $upload = \Cloudder::upload($url, $this->cloudiPath . '/' . $this->disk_name);
+
+        if ($upload) {
+            $this->file_name = $filename;
+            $this->file_size = $upload['bytes'];
+            $this->content_type = $upload['resource_type'] . '/' . $upload['format'];
+            $this->disk_name = $this->getDiskName();
+            return $this;
+        } else {
+            return null;
+        }
     }
 
     /**
