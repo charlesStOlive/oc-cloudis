@@ -22,6 +22,15 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
      */
     protected $table = 'waka_cloudis_system_files';
 
+    public function afterDelete()
+    {
+        trace_log("after delete in cloudi");
+    }
+    public function beforeDelete()
+    {
+        trace_log("before delete in cloudi");
+    }
+
     public function getCloudiPathAttribute()
     {
         return CloudisSettings::get('cloudinary_path');
@@ -60,17 +69,19 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
      */
     public function fromUrl($url, $filename = null)
     {
+        $this->disk_name = $this->getDiskName();
+
         if (empty($filename)) {
             $filename = FileHelper::basename($url);
         }
 
         $upload = \Cloudder::upload($url, $this->cloudiPath . '/' . $this->disk_name);
+        $cloudiResult = $upload->getResult();
 
         if ($upload) {
             $this->file_name = $filename;
-            $this->file_size = $upload['bytes'];
-            $this->content_type = $upload['resource_type'] . '/' . $upload['format'];
-            $this->disk_name = $this->getDiskName();
+            $this->file_size = $cloudiResult['bytes'];
+            $this->content_type = $cloudiResult['resource_type'] . '/' . $cloudiResult['format'];
             return $this;
         } else {
             return null;
