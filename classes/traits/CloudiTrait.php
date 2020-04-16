@@ -136,7 +136,7 @@ trait CloudiTrait
 
     public function getUrlErrorImage()
     {
-        return \Cloudder::secureShow($CloudisSettings::get('srcPath'));
+        return \Cloudder::secureShow(CloudisSettings::get('srcPath'));
     }
 
     public function getCloudiUrl($id = null, $version = null)
