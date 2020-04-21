@@ -17,10 +17,12 @@ fields:
     crop:
         label: Comment ajuster l'image
         type: dropdown
-        options:
-            fill: ajuster
-            crop: couper
-            pad: adapter
+        span: auto
+    gravity:
+        label: Comment ajuster l'image
+        type: dropdown
+        span: auto
+            
 
 
     

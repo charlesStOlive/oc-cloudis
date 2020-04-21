@@ -69,6 +69,8 @@ class ImagesList extends FormWidgetBase
         //liste des images de la classe depuis le datasource
         $imageWidget = $this->createFormWidget();
         $imageWidget->getField('source')->options = $this->model->data_source->getAllPicturesKey();
+        $imageWidget->getField('crop')->options = \Config::get('waka.cloudis::ImageCrops');
+        $imageWidget->getField('gravity')->options = \Config::get('waka.cloudis::ImageOptions.gravity.options');
         $this->vars['imageWidget'] = $imageWidget;
         return $this->makePartial('popup');
 
@@ -115,11 +117,14 @@ class ImagesList extends FormWidgetBase
 
         $imageWidget = $this->createFormWidget();
         $imageWidget->getField('source')->options = $this->model->data_source->getAllPicturesKey();
+        $imageWidget->getField('crop')->options = \Config::get('waka.cloudis::ImageOptions.crop.options');
+        $imageWidget->getField('gravity')->options = \Config::get('waka.cloudis::ImageOptions.gravity.options');
         $imageWidget->getField('code')->value = $data['code'];
-        $imageWidget->getField('source')->value = $data['source'];
-        $imageWidget->getField('width')->value = $data['width'];
-        $imageWidget->getField('height')->value = $data['height'];
-        $imageWidget->getField('crop')->value = $data['crop'];
+        $imageWidget->getField('source')->value = $data['source'] ?? null;
+        $imageWidget->getField('width')->value = $data['width'] ?? null;
+        $imageWidget->getField('height')->value = $data['height'] ?? null;
+        $imageWidget->getField('crop')->value = $data['crop'] ?? null;
+        $imageWidget->getField('gravity')->value = $data['gravity'] ?? null;
         $this->vars['imageWidget'] = $imageWidget;
         $this->vars['oldCode'] = $code;
         $this->vars['oldSource'] = $source;
@@ -156,12 +161,13 @@ class ImagesList extends FormWidgetBase
         //mis d'en une collection des données existantes
         $datas = $this->getLoadValue();
 
-        trace_log($oldCode);
+        //trace_log($oldCode);
 
         //preparatio de l'array a ajouter
         $imageOptionsArray = post('imageOptions_array');
         $imageInfo = $this->model->data_source->getOnePictureKey($imageOptionsArray['source']);
         $imageOptionsArray = array_merge($imageOptionsArray, $imageInfo);
+        trace_log($imageOptionsArray);
 
         foreach ($datas as $key => $data) {
             if ($data['code'] == $oldCode) {
