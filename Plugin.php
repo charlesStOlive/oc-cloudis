@@ -131,15 +131,15 @@ class Plugin extends PluginBase
     {
         return [
             'waka.cloudis.admin.super' => [
-                'tab' => 'Waka',
+                'tab' => 'Waka - Cloudi',
                 'label' => 'Super Administrateur de Cloudi',
             ],
             'waka.cloudis.admin' => [
-                'tab' => 'Waka',
+                'tab' => 'Waka - Cloudi',
                 'label' => 'Administrateur de Cloudi',
             ],
             'waka.cloudis.user' => [
-                'tab' => 'Waka',
+                'tab' => 'Waka - Cloudi',
                 'label' => 'Utilisateur de cloudi',
             ],
         ];
