@@ -22,7 +22,7 @@
                         <?=$value['name']?>
                     </td>
                     <td>
-                        <?=$value['width'].'/'.$value['height'].'/'.$value['crop']?>
+                        <?=$value['width'] ?? null.'/'.$value['height'] ?? null.'/'.$value['crop'] ?? null?>
                     </td>
                     <td class="nolink text-right">
                         <button data-attach-loading href="javascript:;" data-control="popup"

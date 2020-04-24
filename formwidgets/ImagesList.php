@@ -69,7 +69,7 @@ class ImagesList extends FormWidgetBase
         //liste des images de la classe depuis le datasource
         $imageWidget = $this->createFormWidget();
         $imageWidget->getField('source')->options = $this->model->data_source->getAllPicturesKey();
-        $imageWidget->getField('crop')->options = \Config::get('waka.cloudis::ImageCrops');
+        $imageWidget->getField('crop')->options = \Config::get('waka.cloudis::ImageOptions.crop.options');
         $imageWidget->getField('gravity')->options = \Config::get('waka.cloudis::ImageOptions.gravity.options');
         $this->vars['imageWidget'] = $imageWidget;
         return $this->makePartial('popup');
