@@ -51,9 +51,22 @@ class Plugin extends PluginBase
                     return $twig->getCloudiUrl($width, $height, $format, $crop);
                     //
                 },
-                'getCloudiMontageUrl' => function ($twig, $key = false, $size = false) {
-                    //trace_log("twig");
-                    return $twig->getCloudiBaseUrl('main_image', 'jpg-400-350');
+                'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = 'png', $crop = "fill", $gravity = "center") {
+                    trace_log("twig");
+                    $montage = \Waka\Cloudis\Models\Montage::where('slug', $slug)->first();
+                    $opt = [
+                        'width' => $width,
+                        'height' => $height,
+                        'format' => $format,
+                        'crop' => $crop,
+                        'gravity' => $gravity,
+                    ];
+                    if ($montage) {
+                        return $twig->getCloudiModelUrl($montage, $opt);
+                    } else {
+                        return 'error';
+                    }
+
                     //
                 },
                 'imageHeight' => function ($image) {
