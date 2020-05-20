@@ -18,7 +18,12 @@ class GroupedImages
     public function getLists($dataSource)
     {
         $collection = $this->getAllDataSourceImage($dataSource);
-        return $collection->lists('name', 'key');
+        if ($collection) {
+            return $collection->lists('name', 'key');
+        } else {
+            return null;
+        }
+
     }
     public function getOne($dataSource, $key)
     {
