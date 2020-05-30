@@ -188,7 +188,7 @@ class ImagesList extends FormWidgetBase
 
     public function createFormWidget()
     {
-        $config = $this->makeConfig('$/waka/cloudis/models/imageList/fields.yaml');
+        $config = $this->makeConfig('$/waka/cloudis/models/imagelist/fields.yaml');
         $config->alias = 'imageOptionsWidget';
         $config->arrayName = 'imageOptions_array';
         $config->model = new \Waka\Cloudis\Models\ImageList();
