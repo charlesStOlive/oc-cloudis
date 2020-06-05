@@ -52,7 +52,7 @@ class Plugin extends PluginBase
                     //
                 },
                 'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = 'png', $crop = "fill", $gravity = "center") {
-                    trace_log("twig");
+                    //trace_log("twig");
                     $montage = \Waka\Cloudis\Models\Montage::where('slug', $slug)->first();
                     $opt = [
                         'width' => $width,

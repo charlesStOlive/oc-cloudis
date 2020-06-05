@@ -24,11 +24,11 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
 
     public function afterDelete()
     {
-        trace_log("after delete in cloudi");
+        //trace_log("after delete in cloudi");
     }
     public function beforeDelete()
     {
-        trace_log("before delete in cloudi");
+        //trace_log("before delete in cloudi");
     }
 
     public function getCloudiPathAttribute()

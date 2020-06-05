@@ -151,7 +151,7 @@ trait CloudiTrait
         }
         $model = $model::find($modelId);
         $parser = new YamlParserRelation($modelMontage, $model);
-        //  trace_log($parser);
+        //  //trace_log($parser);
         $options = $parser->options;
         $formatOption = $version ? $this->setFormat($version) : null;
         // si il y a un format particulier on le merge avec

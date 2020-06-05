@@ -167,7 +167,7 @@ class ImagesList extends FormWidgetBase
         $imageOptionsArray = post('imageOptions_array');
         $imageInfo = $this->model->data_source->getOnePictureKey($imageOptionsArray['source']);
         $imageOptionsArray = array_merge($imageOptionsArray, $imageInfo);
-        trace_log($imageOptionsArray);
+        //trace_log($imageOptionsArray);
 
         foreach ($datas as $key => $data) {
             if ($data['code'] == $oldCode) {
