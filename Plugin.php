@@ -91,7 +91,7 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        Event::listen('backend.down.update', function ($controller) {
+        Event::listen('backend.update.prod', function ($controller) {
             if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
                 $data = [
                     'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
@@ -100,7 +100,7 @@ class Plugin extends PluginBase
                 return View::make('waka.cloudis::cloudisbutton')->withData($data);;
             }
         });
-        Event::listen('popup.actions.line1', function ($controller, $model, $id) {
+        Event::listen('popup.actions.prod', function ($controller, $model, $id) {
             if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
                 $data = [
                     'model' => str_replace('\\', '\\\\', $model),
