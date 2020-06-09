@@ -147,7 +147,7 @@ class Plugin extends PluginBase
                 'tab' => 'Waka - Cloudi',
                 'label' => 'Super Administrateur de Cloudi',
             ],
-            'waka.cloudis.admin' => [
+            'waka.cloudis.admin.base' => [
                 'tab' => 'Waka - Cloudi',
                 'label' => 'Administrateur de Cloudi',
             ],
