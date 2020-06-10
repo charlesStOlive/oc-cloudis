@@ -131,12 +131,14 @@ trait CloudiTrait
 
     public function getErrorImage()
     {
-        return CloudisSettings::get('srcPath');
+        $cloudiSettings = CloudisSettings::instance();
+        return $cloudiSettings->unknown->cloudiId;
     }
 
     public function getUrlErrorImage()
     {
-        return \Cloudder::secureShow(CloudisSettings::get('srcPath'));
+        $cloudiSettings = CloudisSettings::instance();
+        return $cloudiSettings->unknown->getUrl();
     }
 
     public function getCloudiUrl($id = null, $version = null)

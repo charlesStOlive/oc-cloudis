@@ -2,27 +2,36 @@ fields:
     cloudinary_path: 
         label: waka.cloudis::lang.settings.cloudinary_path
         span: full
+    logo: 
+        label: waka.cloudis::lang.settings.logo
+        commentAbove: waka.cloudis::lang.settings.logo_com
+        type: cloudifileupload
+        mode: image
+        span: auto
+        imageHeight: 100
+        imageWidth: 260
     unknown: 
         label: waka.cloudis::lang.settings.unknown
         commentAbove: waka.cloudis::lang.settings.unknown_com
-        type: mediafinder
+        type: cloudifileupload
         mode: image
-        span: full
+        span: auto
+        imageHeight: 100
         imageWidth: 260
-        thumbOptions:
-            mode: crop
-            offset:
-                - 0
-                - 0
-            quality: 90
 
     primary_color:
-            label: waka.cloudis::lang.settings.primary_color
-            type: colorpicker
+            tab: waka.crsm::lang.client.colors
+            label: waka.crsm::lang.client.primary_color
+            type: colorpickercloudi
             span: auto
+            colorsFrom: logo
+            dependsOn: logo
 
     secondary_color:
-        label: waka.cloudis::lang.settings.secondary_color
-        type: colorpicker
+        tab: waka.crsm::lang.client.colors
+        label: waka.crsm::lang.client.secondary_color
+        type: colorpickercloudi
         span: auto
+        colorsFrom: logo
+        dependsOn: logo
 
