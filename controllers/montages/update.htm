@@ -11,7 +11,7 @@
 
 <div class="form-buttons">
     <?php if ($this->user->hasAccess('waka.cloudis.admin.*')): ?>
-    <?= $this->fireViewEvent('backend.update.duplicate') ?>
+    <?= $this->fireViewEvent('backend.update.tools') ?>
     <?php endif ?>
     <?= $this->fireViewEvent('backend.top.update') ?>
     <?= $this->fireViewEvent('backend.crsm.updateView') ?>

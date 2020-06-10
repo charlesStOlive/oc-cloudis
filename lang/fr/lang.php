@@ -19,6 +19,13 @@ return [
         'unknown_com' => "Image de remplacement pour les assets manquant",
         'primary_color' => "Couleur primaire",
         'secondary_color' => "Couleur secondaire",
+        'police_1' => "Police pour les montages",
+        'police_1_com' => "Code à utiliser : {nom_du_chemin}:police:police1",
+        'police_2' => "Police 2 pour les montages",
+        'police_2_com' => "Code à utiliser : {nom_du_chemin}:police:police2",
+        'police_3' => "Police 3 pour les montages",
+        'police_3_com' => "Code à utiliser : {nom_du_chemin}:police:police3",
+
     ],
     'montage' => [
         'name' => 'Nom du montage',

@@ -35,3 +35,25 @@ fields:
         colorsFrom: logo
         dependsOn: logo
 
+    police_1: 
+        label: waka.cloudis::lang.settings.police_1
+        commentAbove: waka.cloudis::lang.settings.police_1_com
+        type: mediafinder
+        span: storm
+        cssClass: col-xs-12 col-md-4
+        mode: file
+    police_2: 
+        label: waka.cloudis::lang.settings.police_2
+        commentAbove: waka.cloudis::lang.settings.police_2_com
+        type: mediafinder
+        span: storm
+        cssClass: col-xs-12 col-md-4
+        mode: file
+    police_3: 
+        label: waka.cloudis::lang.settings.police_3
+        commentAbove: waka.cloudis::lang.settings.police_3_com
+        type: mediafinder
+        span: storm
+        cssClass: col-xs-12 col-md-4
+        mode: file
+
