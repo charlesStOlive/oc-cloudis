@@ -185,7 +185,7 @@ class Plugin extends PluginBase
                 'description' => Lang::get('waka.cloudis::lang.menu.description'),
                 'category' => Lang::get('waka.cloudis::lang.menu.settings_category'),
                 'icon' => 'icon-object-group',
-                'permissions' => ['waka.cloudis.admin'],
+                'permissions' => ['waka.cloudis.admin.*'],
                 'url' => Backend::url('waka/cloudis/montages'),
                 'order' => 1,
             ],
