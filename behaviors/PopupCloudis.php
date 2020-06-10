@@ -25,6 +25,7 @@ class PopupCloudis extends ControllerBehavior
             $model = $modelName::find($modelId);
         }
         $this->vars['url'] = $model->getCloudiUrl();
+        //trace_log($model->getCloudiUrl());
         return $this->makePartial('$/waka/cloudis/behaviors/popupcloudis/_popup.htm');
     }
     public function onCallPopupModelCloudis()
@@ -37,6 +38,7 @@ class PopupCloudis extends ControllerBehavior
         $montage = $model->montages->find($relationId);
 
         $url = $model->getCloudiModelUrl($montage);
+        //trace_log($montage);
         $this->vars['url'] = $url;
         return $this->makePartial('$/waka/cloudis/behaviors/popupcloudis/_popup.htm');
     }

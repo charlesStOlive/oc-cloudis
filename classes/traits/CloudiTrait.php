@@ -156,10 +156,14 @@ trait CloudiTrait
         //  //trace_log($parser);
         $options = $parser->options;
         $formatOption = $version ? $this->setFormat($version) : null;
+
+        //trace_log($formatOption);
         // si il y a un format particulier on le merge avec
         if ($formatOption) {
             array_push($options['transformation'], $formatOption);
         }
+
+        //trace_log($options);
 
         return \Cloudder::secureShow($parser->src, $options);
 

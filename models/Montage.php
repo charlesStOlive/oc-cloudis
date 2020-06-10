@@ -87,10 +87,12 @@ class Montage extends Model
     /**
      * Event
      */
-    public function afterSave()
+    public function afterUpdate()
     {
         $this->testCloudis();
-        $this->updateCLoudiRelationsFromMontage();
+        if ($this->auto_create) {
+            $this->updateCLoudiRelationsFromMontage();
+        }
     }
     /**
      * Attributes
