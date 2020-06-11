@@ -38,6 +38,7 @@ return [
         'src' => 'Source du montage',
         'data_source_placeholder' => '--Choisissez une source--',
         'use_files' => "Utiliser des fichiers pour le montage",
+        'masque' => "Seconde source (ex: masque)",
     ],
     'popup' => [
         'title' => 'Montage cloudis',
