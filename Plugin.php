@@ -180,7 +180,7 @@ class Plugin extends PluginBase
     public function registerSettings()
     {
         return [
-            'montage' => [
+            'montages' => [
                 'label' => Lang::get('waka.cloudis::lang.menu.label'),
                 'description' => Lang::get('waka.cloudis::lang.menu.description'),
                 'category' => Lang::get('waka.cloudis::lang.menu.settings_category'),
