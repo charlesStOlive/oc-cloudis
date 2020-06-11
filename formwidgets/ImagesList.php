@@ -99,6 +99,8 @@ class ImagesList extends FormWidgetBase
         $this->model[$field] = $datas;
         $this->model->save();
 
+        $this->updateSideBarreAttribute();
+
         //rafraichissement de la liste
         return [
             '#listimagesoptions' => $this->makePartial('listimagesoptions', ['values' => $datas]),
@@ -128,6 +130,7 @@ class ImagesList extends FormWidgetBase
         $this->vars['imageWidget'] = $imageWidget;
         $this->vars['oldCode'] = $code;
         $this->vars['oldSource'] = $source;
+
         return $this->makePartial('popup_update');
 
     }
@@ -148,6 +151,8 @@ class ImagesList extends FormWidgetBase
         $field = $this->fieldName;
         $this->model[$field] = $updatedDatas;
         $this->model->save();
+
+        $this->updateSideBarreAttribute();
 
         return [
             '#listimagesoptions' => $this->makePartial('listimagesoptions', ['values' => $updatedDatas]),
@@ -180,10 +185,17 @@ class ImagesList extends FormWidgetBase
         $this->model[$field] = $datas;
         $this->model->save();
 
+        $this->updateSideBarreAttribute();
+
         //rafraichissement de la liste
         return [
             '#listimagesoptions' => $this->makePartial('listimagesoptions', ['values' => $datas]),
         ];
+    }
+
+    public function updateSideBarreAttribute()
+    {
+        return \Redirect::refresh();
     }
 
     public function createFormWidget()
