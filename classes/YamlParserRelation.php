@@ -19,8 +19,17 @@ class YamlParserRelation
         $this->model = $model;
         $this->modelMontage = $modelMontage;
         $array = Yaml::parse($modelMontage->options);
-        $this->src = $this->getParsedValue($array['src']);
-        $this->options = $this->recursiveSearch($array['options']);
+        if ($array['src'] ?? false) {
+            $this->src = $this->getParsedValue($array['src']);
+        } else {
+            $this->errors = 1;
+        }
+        if ($array['options'] ?? false) {
+            $this->options = $this->recursiveSearch($array['options']);
+        } else {
+            $this->errors = 1;
+        }
+
     }
 
     private function recursiveSearch(array $array)

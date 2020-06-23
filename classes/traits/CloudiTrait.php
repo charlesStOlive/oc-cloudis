@@ -153,7 +153,13 @@ trait CloudiTrait
         }
         $model = $model::find($modelId);
         $parser = new YamlParserRelation($modelMontage, $model);
-        //  //trace_log($parser);
+
+        trace_log($parser->options);
+
+        if (!$parser->options) {
+            return $this->getUrlErrorImage();
+        }
+
         $options = $parser->options;
         $formatOption = $version ? $this->setFormat($version) : null;
 
@@ -175,6 +181,9 @@ trait CloudiTrait
         $options = $parser->options;
         //$formatOption = $version ? $this->setFormat($version) : null;
         // si il y a un format particulier on le merge avec
+        if (!$parser->options) {
+            return $this->getUrlErrorImage();
+        }
         if ($opt) {
             array_push($options['transformation'], $opt);
         }
