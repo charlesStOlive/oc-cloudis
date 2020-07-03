@@ -61,7 +61,7 @@ class Plugin extends PluginBase
                         'crop' => $crop,
                         'gravity' => $gravity,
                     ];
-                    if ($montage) {
+                    if ($montage  && $twig) {
                         return $twig->getCloudiModelUrl($montage, $opt);
                     } else {
                         return 'error';
