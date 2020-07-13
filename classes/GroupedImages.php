@@ -1,5 +1,7 @@
 <?php namespace Waka\Cloudis\Classes;
 
+use October\Rain\Support\Collection;
+
 class GroupedImages
 {
     use \Waka\Utils\Classes\Traits\StringRelation;
@@ -82,13 +84,7 @@ class GroupedImages
 
     private function getAllDataSourceImage($dataSource)
     {
-        $relationWithImages = new \October\Rain\Support\Collection($dataSource->relations_list);
-        if (!$relationWithImages->count()) {
-            return;
-        }
-        $relationWithImages = $relationWithImages->where('has_images', true)->pluck('name');
-
-        $allImages = new \October\Rain\Support\Collection();
+        $allImages = new Collection();
 
         $listsImages = $this->getCloudisList($this->model);
         $listMontages = $this->getCloudiMontagesList($this->model);
@@ -98,19 +94,43 @@ class GroupedImages
         if ($listMontages) {
             $allImages = $allImages->merge($listMontages);
         }
+        $relationWithImages = new Collection($dataSource->relations_list);
+        if ($relationWithImages->count()) {
+            $relationWithImages = $relationWithImages->where('has_images', true)->pluck('name');
+            foreach ($relationWithImages as $relation) {
+                $subModel = $this->getStringModelRelation($this->model, $relation);
+                $listsImages = $this->getCloudisList($subModel, $relation);
+                $listMontages = $this->getCloudiMontagesList($subModel, $relation);
+                if ($listsImages) {
+                    $allImages = $allImages->merge($listsImages);
+                }
+                if ($listMontages) {
+                    $allImages = $allImages->merge($listMontages);
+                }
 
-        foreach ($relationWithImages as $relation) {
-            $subModel = $this->getStringModelRelation($this->model, $relation);
-            $listsImages = $this->getCloudisList($subModel, $relation);
-            $listMontages = $this->getCloudiMontagesList($subModel, $relation);
-            if ($listsImages) {
-                $allImages = $allImages->merge($listsImages);
             }
-            if ($listMontages) {
-                $allImages = $allImages->merge($listMontages);
-            }
-
         }
+
+        // c'est pas encore au point tt ça...
+
+        // $indeClassWithImages = new Collection($dataSource->inde_class_list);
+        // if ($indeClassWithImages->count()) {
+        //     $indeClassWithImages = $indeClassWithImages->where('has_images', true);
+        //     foreach ($indeClassWithImages as $indeClass) {
+        //         trace_log($indeClass);
+        //         $class = new $indeClass['class'];
+        //         $class = $class::find($indeClass['id'])->first();
+        //         $listsImages = $this->getCloudisList($class);
+        //         //$listMontages = $this->getCloudiMontagesList($class);
+        //         if ($listsImages) {
+        //             $allImages = $allImages->merge($listsImages);
+        //         }
+        //         // if ($listMontages) {
+        //         //     $allImages = $allImages->merge($listMontages);
+        //         // }
+        //     }
+        // }
+
         return $allImages;
     }
 
