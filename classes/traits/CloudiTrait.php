@@ -154,7 +154,7 @@ trait CloudiTrait
         $model = $model::find($modelId);
         $parser = new YamlParserRelation($modelMontage, $model);
 
-        trace_log($parser->options);
+        //trace_log($parser->options);
 
         if (!$parser->options) {
             return $this->getUrlErrorImage();

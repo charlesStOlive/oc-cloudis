@@ -117,7 +117,7 @@ class GroupedImages
         // if ($indeClassWithImages->count()) {
         //     $indeClassWithImages = $indeClassWithImages->where('has_images', true);
         //     foreach ($indeClassWithImages as $indeClass) {
-        //         trace_log($indeClass);
+        //         //trace_log($indeClass);
         //         $class = new $indeClass['class'];
         //         $class = $class::find($indeClass['id'])->first();
         //         $listsImages = $this->getCloudisList($class);
