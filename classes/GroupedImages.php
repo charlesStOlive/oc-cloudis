@@ -17,6 +17,15 @@ class GroupedImages
     {
         return $this->getAllDataSourceImage($dataSource);
     }
+
+    public function getModelImages()
+    {
+        return $this->getCloudisList($this->model);
+    }
+    public function getModelMonntages()
+    {
+        return $this->getCloudiMontagesList($this->model);
+    }
     public function getLists($dataSource)
     {
         $collection = $this->getAllDataSourceImage($dataSource);
@@ -33,7 +42,7 @@ class GroupedImages
         return $collection->where('key', $key)->first();
     }
 
-    private function getCloudisList($model, $relation = null)
+    public function getCloudisList($model, $relation = null)
     {
         $modelClassName = get_class($model);
         $shortName = (new \ReflectionClass($modelClassName))->getShortName();
@@ -57,7 +66,7 @@ class GroupedImages
         }
         return $cloudiKeys;
     }
-    private function getCloudiMontagesList($model, $relation = null)
+    public function getCloudiMontagesList($model, $relation = null)
     {
         $modelClassName = get_class($model);
         $shortName = (new \ReflectionClass($modelClassName))->getShortName();

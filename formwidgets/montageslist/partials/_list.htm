@@ -2,12 +2,6 @@
     <table class="table data" data-control="rowlink">
         <thead>
             <tr>
-                <th class="list-checkbox">
-                    <div class="checkbox custom-checkbox nolabel">
-                        <input type="checkbox" id="checkboxAll" />
-                        <label for="checkboxAll"></label>
-                    </div>
-                </th>
                 <th><a href="/">Nom de l'image</a></th>
                 <th><a href="/">Slug</a></th>
                 <th><a href="/">Etat</a></th>
@@ -18,12 +12,6 @@
         <body>
             <?php foreach($montages as $montage) { ?>
             <tr>
-                <td class="list-checkbox nolink">
-                    <div class="checkbox custom-checkbox nolabel">
-                        <input id="checkbox_<?=$montage->id?>" type="checkbox" />
-                        <label for="checkbox_<?=$montage->id?>">Check</label>
-                    </div>
-                </td>
                 <td><a href="javascript:;" data-control="popup" data-handler="onShowCloudiImage"
                         data-request-data="id:<?=$montage->id?>">
                         <?=$montage->name?>
