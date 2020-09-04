@@ -187,7 +187,7 @@ trait CloudiTrait
         if ($opt) {
             array_push($options['transformation'], $opt);
         }
-        //  trace_log($options);
+        // trace_log($options);
 
         return \Cloudder::secureShow($parser->src, $options);
     }
@@ -240,9 +240,9 @@ trait CloudiTrait
             $models = $this->data_source->modelClass::get();
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
-                //  trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
+                // trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
                 $errors = $parser->errors ? true : false;
-                //  trace_log($errors);
+                // trace_log($errors);
                 $this->attachOrDetach($model, $this->id, $attachOrDetach, $errors);
             }
         } else {

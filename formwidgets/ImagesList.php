@@ -113,7 +113,7 @@ class ImagesList extends FormWidgetBase
         $source = post('source');
 
         $modelValues = $this->getLoadValue();
-        //  trace_log($modelValues);
+        // trace_log($modelValues);
         $datas = new \October\Rain\Support\Collection($modelValues);
         $data = $datas->where('code', $code)->first();
 
