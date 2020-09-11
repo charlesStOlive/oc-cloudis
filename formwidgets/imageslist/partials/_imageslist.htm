@@ -12,8 +12,10 @@
         Ajouter une image
     </button>
 </p>
-<div id="listimagesoptions">
-    <?= $this->makePartial('listimagesoptions', ['values' => $values]) ?>
+<div class="list-widget list-scrollable-container ">
+    <div class="control-list list-scrollable" id="listimagesoptions">
+        <?= $this->makePartial('listimagesoptions', ['values' => $values]) ?>
+    </div>
 </div>
 
 <?php } ?>
