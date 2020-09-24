@@ -61,7 +61,7 @@ class Plugin extends PluginBase
                         'crop' => $crop,
                         'gravity' => $gravity,
                     ];
-                    if ($montage  && $twig) {
+                    if ($montage && $twig) {
                         return $twig->getCloudiModelUrl($montage, $opt);
                     } else {
                         return 'error';
@@ -183,19 +183,19 @@ class Plugin extends PluginBase
             'montages' => [
                 'label' => Lang::get('waka.cloudis::lang.menu.label'),
                 'description' => Lang::get('waka.cloudis::lang.menu.description'),
-                'category' => Lang::get('waka.cloudis::lang.menu.settings_category'),
+                'category' => Lang::get('waka.utils::lang.menu.settings_category_model'),
                 'icon' => 'icon-object-group',
                 'permissions' => ['waka.cloudis.admin.*'],
                 'url' => Backend::url('waka/cloudis/montages'),
-                'order' => 1,
+                'order' => 40,
             ],
             'cloudis_settings' => [
                 'label' => Lang::get('waka.cloudis::lang.menu.settings'),
                 'description' => Lang::get('waka.cloudis::lang.menu.settings_description'),
                 'category' => Lang::get('waka.utils::lang.menu.settings_category'),
-                'icon' => 'icon-cog',
+                'icon' => 'icon-file-image-o',
                 'class' => 'Waka\Cloudis\Models\Settings',
-                'order' => 1,
+                'order' => 115,
                 'permissions' => ['waka.cloudis.admin.super'],
             ],
         ];
