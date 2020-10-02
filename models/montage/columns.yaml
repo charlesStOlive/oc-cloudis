@@ -19,8 +19,7 @@ columns:
         label: waka.cloudis::lang.montage.active
     auto_create:
         label: waka.cloudis::lang.montage.auto_create
-    datasrc:
-        label: waka.cloudis::lang.montage.data_source
-        relation: data_source
-        select: name
+    data_source_id:
+        label: waka.utils::lang.datasource.title
+        type: datasource
     

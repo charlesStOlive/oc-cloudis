@@ -34,7 +34,7 @@ class Montage extends Model
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:waka_cloudis_montages',
-        'data_source' => 'required',
+        'data_source_id' => 'required',
     ];
 
     /**
@@ -71,9 +71,7 @@ class Montage extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [
-        'data_source' => 'Waka\utils\Models\DataSource',
-    ];
+    public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
@@ -107,9 +105,17 @@ class Montage extends Model
         $user = \BackendAuth::getUser();
         if (!$user->hasAccess('waka.cloudis.admin.*')) {
             $fields->options->hidden = true;
-            $fields->data_source->readOnly = true;
+            $fields->data_source_id->readOnly = true;
             $fields->slug->readOnly = true;
             $fields->use_files->readOnly = true;
         }
+    }
+
+    /***
+     * LISTs
+     */
+    public function listDataSource()
+    {
+        return \Waka\Utils\Classes\DataSourceList::lists();
     }
 }

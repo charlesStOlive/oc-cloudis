@@ -20,11 +20,11 @@ fields:
         type: checkbox
         default: true
         span: auto
-    data_source:
-        label: waka.cloudis::lang.montage.data_source
-        type: relation
-        placeholder: waka.cloudis::lang.montage.data_source_placeholder
-        nameFrom: name
+    data_source_id:
+        label: waka.utils::lang.datasource.title
+        placeholder: waka.utils::lang.datasource.placeholder
+        type: dropdown
+        options: listDataSource
     use_files@update:
         label: waka.cloudis::lang.montage.use_files
         type: checkbox
