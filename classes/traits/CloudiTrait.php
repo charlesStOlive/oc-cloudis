@@ -1,6 +1,7 @@
 <?php namespace Waka\Cloudis\Classes\Traits;
 
 use Waka\Cloudis\Classes\YamlParserRelation;
+use Waka\Utils\Classes\DataSource;
 use \Waka\Cloudis\Models\Settings as CloudisSettings;
 use \Waka\Informer\Models\Inform;
 
@@ -144,14 +145,8 @@ trait CloudiTrait
     public function getCloudiUrl($id = null, $version = null)
     {
         $modelMontage = $this;
-        $model = new $this->data_source->modelClass;
-        $modelId;
-        if ($id) {
-            $modelId = $id;
-        } else {
-            $modelId = $this->data_source->test_id;
-        }
-        $model = $model::find($modelId);
+        $ds = new DataSource($this->data_source_id, 'id');
+        $model = $ds->getModel($id);
         $parser = new YamlParserRelation($modelMontage, $model);
 
         //trace_log($parser->options);
@@ -237,7 +232,8 @@ trait CloudiTrait
         //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
         if ($mainClass == 'Waka\Cloudis\Models\Montage') {
-            $models = $this->data_source->modelClass::get();
+            $ds = new DataSource($this->data_source_id, 'id');
+            $models = $ds->class::get();
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
                 // trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
@@ -247,11 +243,10 @@ trait CloudiTrait
             }
         } else {
             $shortName = (new \ReflectionClass($this))->getShortName();
-            //trace_log($shortName);
+            $ds = new DataSource(get_class($this), 'class');
             $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
-                ->whereHas('data_source', function ($query) use ($shortName) {
-                    $query->where('model', '=', $shortName);
-                })->get();
+                ->where('data_source_id', $ds->id)->get();
+            //trace_log($montages->toArray());
             foreach ($montages as $montage) {
                 //trace_log($montage->slug);
                 $parser = new YamlParserRelation($montage, $this);
@@ -277,6 +272,55 @@ trait CloudiTrait
             }
         }
 
+    }
+
+    public function getCloudisList($relation = null)
+    {
+        $modelClassName = get_class($this);
+        $shortName = (new \ReflectionClass($modelClassName))->getShortName();
+        $cloudiKeys = [];
+        if (!$relation) {
+            $relation = 'self';
+        }
+
+        $cloudiImgs = $this->attachOne;
+        foreach ($cloudiImgs as $key => $value) {
+            if ($value == 'Waka\Cloudis\Models\CloudiFile') {
+                $img = [
+                    'field' => $key,
+                    'type' => 'cloudi',
+                    'relation' => $relation,
+                    'key' => $shortName . $key,
+                    'name' => $shortName . ' : ' . $key,
+                ];
+                array_push($cloudiKeys, $img);
+            }
+        }
+        return $cloudiKeys;
+    }
+    public function getCloudiMontagesList($relation = null)
+    {
+        $modelClassName = get_class($this);
+        $shortName = (new \ReflectionClass($modelClassName))->getShortName();
+        $cloudiKeys = [];
+        if (!$relation) {
+            $relation = 'self';
+        }
+
+        $montages = $this->montages;
+        if ($montages) {
+            foreach ($montages as $montage) {
+                $img = [
+                    'id' => $montage->id,
+                    'type' => 'montage',
+                    'relation' => $relation,
+                    'key' => $shortName . $montage->id,
+                    'name' => 'Montage : ' . $montage->name,
+                ];
+                array_push($cloudiKeys, $img);
+            }
+        }
+        return $cloudiKeys;
     }
 
 }
