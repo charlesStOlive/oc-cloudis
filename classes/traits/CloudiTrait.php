@@ -220,7 +220,7 @@ trait CloudiTrait
     }
     public function updateCLoudiRelationsFromMontage()
     {
-        trace_log("updateCLoudiRelationsFromMontage : " . $this->active);
+        //trace_log("updateCLoudiRelationsFromMontage : " . $this->active);
         if ($this->active) {
             $this->updateCloudiRelations('attach');
         } else {
@@ -229,7 +229,7 @@ trait CloudiTrait
     }
     public function updateCloudiRelations($attachOrDetach = 'attach')
     {
-        trace_log('updateCloudiRelations : ');
+        //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
         if ($mainClass == 'Waka\Cloudis\Models\Montage') {
             $ds = new DataSource($this->data_source_id, 'id');

@@ -70,8 +70,8 @@ class ImagesList extends FormWidgetBase
     public function onShowImages()
     {
         $ds = new DataSource($this->model->data_source_id, 'id');
-        trace_log('ds->getAllPicturesKey()...');
-        trace_log($ds->getAllPicturesKey());
+        //trace_log('ds->getAllPicturesKey()...');
+        //trace_log($ds->getAllPicturesKey());
         //liste des images de la classe depuis le datasource
         $imageWidget = $this->createFormWidget();
         $imageWidget->getField('source')->options = $ds->getAllPicturesKey();
