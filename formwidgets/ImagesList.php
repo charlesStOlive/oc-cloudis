@@ -1,6 +1,7 @@
 <?php namespace Waka\Cloudis\FormWidgets;
 
 use Backend\Classes\FormWidgetBase;
+use Waka\Utils\Classes\DataSource;
 
 /**
  * ImagesList Form Widget
@@ -37,8 +38,10 @@ class ImagesList extends FormWidgetBase
      */
     public function prepareVars()
     {
+
         $noImage = true;
-        $imagesList = $this->model->data_source->getAllPicturesKey();
+        $ds = new DataSource($this->model->data_source_id, 'id');
+        $imagesList = $ds->getAllPicturesKey();
         if ($imagesList) {
             $noImage = false;
         }
@@ -66,9 +69,12 @@ class ImagesList extends FormWidgetBase
 
     public function onShowImages()
     {
+        $ds = new DataSource($this->model->data_source_id, 'id');
+        trace_log('ds->getAllPicturesKey()...');
+        trace_log($ds->getAllPicturesKey());
         //liste des images de la classe depuis le datasource
         $imageWidget = $this->createFormWidget();
-        $imageWidget->getField('source')->options = $this->model->data_source->getAllPicturesKey();
+        $imageWidget->getField('source')->options = $ds->getAllPicturesKey();
         $imageWidget->getField('crop')->options = \Config::get('waka.cloudis::ImageOptions.crop.options');
         $imageWidget->getField('gravity')->options = \Config::get('waka.cloudis::ImageOptions.gravity.options');
         $this->vars['imageWidget'] = $imageWidget;
@@ -78,6 +84,7 @@ class ImagesList extends FormWidgetBase
 
     public function onCreateImageValidation()
     {
+        $ds = new DataSource($this->model->data_source_id, 'id');
         //mis d'en une collection des données existantes
         $data = [];
         $modelImagesValues = $this->getLoadValue();
@@ -89,7 +96,7 @@ class ImagesList extends FormWidgetBase
         //preparatio de l'array a ajouter
         $imageOptionsArray = post('imageOptions_array');
 
-        $imageInfo = $this->model->data_source->getOnePictureKey($imageOptionsArray['source']);
+        $imageInfo = $ds->getOnePictureKey($imageOptionsArray['source']);
         $imageOptionsArray = array_merge($imageOptionsArray, $imageInfo);
 
         $datas->push($imageOptionsArray);
@@ -108,6 +115,7 @@ class ImagesList extends FormWidgetBase
     }
     public function onUpdateImage()
     {
+        $ds = new DataSource($this->model->data_source_id, 'id');
 
         $code = post('code');
         $source = post('source');
@@ -118,7 +126,7 @@ class ImagesList extends FormWidgetBase
         $data = $datas->where('code', $code)->first();
 
         $imageWidget = $this->createFormWidget();
-        $imageWidget->getField('source')->options = $this->model->data_source->getAllPicturesKey();
+        $imageWidget->getField('source')->options = $ds->getAllPicturesKey();
         $imageWidget->getField('crop')->options = \Config::get('waka.cloudis::ImageOptions.crop.options');
         $imageWidget->getField('gravity')->options = \Config::get('waka.cloudis::ImageOptions.gravity.options');
         $imageWidget->getField('code')->value = $data['code'];
@@ -161,6 +169,7 @@ class ImagesList extends FormWidgetBase
     }
     public function onUpdateImageValidation()
     {
+        $ds = new DataSource($this->model->data_source_id, 'id');
         //On range collection code hidden das oldCollectionCode au cas ou le user change le collectionCode qui est notre clé
         $oldCode = post('oldCode');
         //mis d'en une collection des données existantes
@@ -170,7 +179,7 @@ class ImagesList extends FormWidgetBase
 
         //preparatio de l'array a ajouter
         $imageOptionsArray = post('imageOptions_array');
-        $imageInfo = $this->model->data_source->getOnePictureKey($imageOptionsArray['source']);
+        $imageInfo = $ds->getOnePictureKey($imageOptionsArray['source']);
         $imageOptionsArray = array_merge($imageOptionsArray, $imageInfo);
         //trace_log($imageOptionsArray);
 
