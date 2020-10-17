@@ -3,7 +3,7 @@
 use ApplicationException;
 use Yaml;
 
-trait CloudisKey
+trait CloudisKeySTOP
 {
     public function encryptKeyedImage($dataSource, $id = null)
     {

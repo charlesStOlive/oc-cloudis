@@ -2,7 +2,7 @@
 
 use October\Rain\Support\Collection;
 
-class GroupedImages
+class GroupedImagesSTOP
 {
     use \Waka\Utils\Classes\Traits\StringRelation;
 
