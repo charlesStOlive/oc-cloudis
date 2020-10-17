@@ -53,7 +53,7 @@ class MontagesList extends FormWidgetBase
 
     public function onShowCloudiImage() {
         $montage = $this->model->montages->find(post('id'));
-        $url = $this->model->getCloudiModelUrl($montage);
+        $url = $this->model->getMontage($montage);
         $this->vars['url'] = $url;
         return $this->makePartial('popup');
     }

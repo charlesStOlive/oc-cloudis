@@ -1,6 +1,10 @@
 <?php namespace Waka\Cloudis\Models;
 
 use Model;
+use Waka\utils\Classes\DataSource;
+use Waka\Cloudis\Classes\YamlParserRelation;
+use \Waka\Cloudis\Models\Settings as CloudisSettings;
+use \Waka\Informer\Models\Inform;
 
 /**
  * Montage Model
@@ -162,7 +166,7 @@ class Montage extends Model
 
     }
 
-    public function getCloudiUrl($id = null, $version = null)
+    public function getUrl($id = null, $version = null)
     {
         $modelMontage = $this;
         $ds = new DataSource($this->data_source_id, 'id');

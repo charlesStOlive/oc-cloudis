@@ -36,6 +36,28 @@ trait CloudiTrait
         
     }
 
+
+    /**
+     * 
+     */
+    public function getMontage($modelMontage, $opt = null)
+    {
+        $model = $this;
+        $parser = new YamlParserRelation($modelMontage, $model);
+        $options = $parser->options;
+        //$formatOption = $version ? $this->setFormat($version) : null;
+        // si il y a un format particulier on le merge avec
+        if (!$parser->options) {
+            return $this->getUrlErrorImage();
+        }
+        if ($opt) {
+            array_push($options['transformation'], $opt);
+        }
+        // trace_log($options);
+
+        return \Cloudder::secureShow($parser->src, $options);
+    }
+
     /**
      * 
      */

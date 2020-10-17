@@ -62,7 +62,7 @@ class Plugin extends PluginBase
                         'gravity' => $gravity,
                     ];
                     if ($montage && $twig) {
-                        return $twig->getCloudiModelUrl($montage, $opt);
+                        return $twig->getMontage($montage, $opt);
                     } else {
                         return 'error';
                     }
@@ -79,10 +79,10 @@ class Plugin extends PluginBase
         ];
     }
 
-    public function getCloudiUrl($cloudi)
-    {
-        return get_class($cloudi);
-    }
+    // public function getCloudiUrl($cloudi)
+    // {
+    //     return get_class($cloudi);
+    // }
 
     /**
      * Boot method, called right before the request route.
