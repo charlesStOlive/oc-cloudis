@@ -5,14 +5,17 @@ return [
         'width' => [
             'label' => "Largeur",
             'type' => "text",
+            'span' => 'left',
         ],
         'height' => [
             'label' => "hauteur",
             'type' => "text",
+            'span' => 'right',
         ],
         'crop' => [
             'label' => "Comment ajuster l'image ?",
             'type' => 'dropdown',
+            'span' => 'left',
             'options' => [
                 'fill' => 'fill : ajuster',
                 'crop' => 'crop : couper',
@@ -24,6 +27,7 @@ return [
         'gravity' => [
             'label' => "Gravity",
             'type' => 'dropdown',
+            'span' => 'right',
             'options' => [
                 'center' => 'center',
                 'face' => 'face',

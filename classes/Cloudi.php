@@ -32,7 +32,6 @@ class Cloudi
 
     public static function listMontages($model, $relation = null)
     {
-        trace_log('listMontages');
         $modelClassName = get_class($model);
         $shortName = (new \ReflectionClass($modelClassName))->getShortName();
         $cloudiMontages = [];
