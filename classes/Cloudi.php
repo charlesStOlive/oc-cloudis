@@ -21,7 +21,7 @@ class Cloudi
                     'field' => $key,
                     'type' => 'cloudi',
                     'relation' => $relation,
-                    'key' => $shortName . $key,
+                    'key' => 'c_'.$shortName . $key,
                     'name' => $shortName . ' : ' . $key,
                 ];
                 array_push($cloudiKeys, $img);
@@ -46,7 +46,7 @@ class Cloudi
                     'id' => $montage->id,
                     'type' => 'montage',
                     'relation' => $relation,
-                    'key' => $shortName . $montage->id,
+                    'key' => 'c_'.$shortName . $montage->id,
                     'name' => 'Montage : ' . $montage->name,
                 ];
                 array_push($cloudiMontages, $img);
