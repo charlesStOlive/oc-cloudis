@@ -20,16 +20,16 @@ fields:
         imageWidth: 260
 
     primary_color:
-            tab: waka.crsm::lang.client.colors
-            label: waka.crsm::lang.client.primary_color
+            tab: waka.wconfig::lang.client.colors
+            label: waka.wconfig::lang.client.primary_color
             type: colorpickercloudi
             span: auto
             colorsFrom: logo
             dependsOn: logo
 
     secondary_color:
-        tab: waka.crsm::lang.client.colors
-        label: waka.crsm::lang.client.secondary_color
+        tab: waka.wconfig::lang.client.colors
+        label: waka.wconfig::lang.client.secondary_color
         type: colorpickercloudi
         span: auto
         colorsFrom: logo
