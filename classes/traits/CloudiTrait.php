@@ -7,7 +7,6 @@ use \Waka\Informer\Models\Inform;
 
 trait CloudiTrait
 {
-
     /*
      * Constructor
      */
@@ -18,12 +17,13 @@ trait CloudiTrait
              * Define relationships
              */
             $model->morphToMany['montages'] = [
-                    'Waka\Cloudis\Models\Montage',
-                    'name' => 'montageable',
-                    'table' => 'waka_cloudis_montageables',
+                'Waka\Cloudis\Models\Montage',
+                'name' => 'montageable',
+                'table' => 'waka_cloudis_montageables',
+                'pivot' => ['errors'],
+                'delete' => true,
             ];
 
-            
             $model->bindEvent('model.afterSave', function () use ($model) {
                 $model->updateCloudiRelations('attach');
             });
@@ -33,12 +33,10 @@ trait CloudiTrait
             });
         });
 
-        
     }
 
-
     /**
-     * 
+     *
      */
     public function getMontage($modelMontage, $opt = null)
     {
@@ -59,7 +57,7 @@ trait CloudiTrait
     }
 
     /**
-     * 
+     *
      */
     public function getErrorImage()
     {
@@ -128,12 +126,11 @@ trait CloudiTrait
         }
     }
 
-
     public function updateCloudiRelations($attachOrDetach = 'attach')
     {
         //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
-        
+
         $shortName = (new \ReflectionClass($this))->getShortName();
         $ds = new DataSource(get_class($this), 'class');
         $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
@@ -165,7 +162,4 @@ trait CloudiTrait
 
     }
 
-
-
-    
 }
