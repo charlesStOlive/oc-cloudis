@@ -134,7 +134,7 @@ trait CloudiTrait
         $shortName = (new \ReflectionClass($this))->getShortName();
         $ds = new DataSource(get_class($this), 'class');
         $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
-            ->where('data_source_id', $ds->id)->get();
+            ->where('data_source', $ds->code)->get();
         //trace_log($montages->toArray());
         foreach ($montages as $montage) {
             //trace_log($montage->slug);

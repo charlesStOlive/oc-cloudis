@@ -20,7 +20,7 @@ fields:
         type: checkbox
         default: true
         span: auto
-    data_source_id:
+    data_source:
         label: waka.utils::lang.datasource.title
         placeholder: waka.utils::lang.datasource.placeholder
         type: dropdown

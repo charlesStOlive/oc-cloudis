@@ -37,7 +37,7 @@ class Montage extends Model
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:waka_cloudis_montages',
-        'data_source_id' => 'required',
+        'data_source' => 'required',
     ];
 
     /**
@@ -108,7 +108,7 @@ class Montage extends Model
         $user = \BackendAuth::getUser();
         if (!$user->hasAccess('waka.cloudis.admin.*')) {
             $fields->options->hidden = true;
-            $fields->data_source_id->readOnly = true;
+            $fields->data_source->readOnly = true;
             $fields->slug->readOnly = true;
             $fields->use_files->readOnly = true;
         }
@@ -138,7 +138,7 @@ class Montage extends Model
     {
         //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
-        $ds = new DataSource($this->data_source_id, 'id');
+        $ds = new DataSource($this->data_source);
         $models = $ds->class::get();
         foreach ($models as $model) {
             $parser = new YamlParserRelation($this, $model);
@@ -169,7 +169,7 @@ class Montage extends Model
     public function getUrl($id = null, $version = null)
     {
         $modelMontage = $this;
-        $ds = new DataSource($this->data_source_id, 'id');
+        $ds = new DataSource($this->data_source);
         $model = $ds->getModel($id);
         $parser = new YamlParserRelation($modelMontage, $model);
 

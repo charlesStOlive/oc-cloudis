@@ -18,7 +18,7 @@ class CreateMontagesTable extends Migration
             $table->boolean('auto_create')->default(true);
             $table->boolean('ready')->default(false);
 
-            $table->boolean('data_source_id');
+            $table->string('data_source');
 
             $table->text('options')->nullable();
 
