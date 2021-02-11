@@ -47,11 +47,11 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = 'png', $crop = "fill") {
+                'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = null, $crop = "fill") {
                     return $twig->getCloudiUrl($width, $height, $format, $crop);
                     //
                 },
-                'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = 'png', $crop = "fill", $gravity = "center") {
+                'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = null, $crop = "fill", $gravity = "center") {
                     //trace_log("twig");
                     $montage = \Waka\Cloudis\Models\Montage::where('slug', $slug)->first();
                     $opt = [
@@ -60,6 +60,7 @@ class Plugin extends PluginBase
                         'format' => $format,
                         'crop' => $crop,
                         'gravity' => $gravity,
+                        'quality' => 'auto',
                     ];
                     if ($montage && $twig) {
                         return $twig->getMontage($montage, $opt);
