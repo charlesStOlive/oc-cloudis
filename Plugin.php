@@ -5,6 +5,7 @@ use Event;
 use Lang;
 use System\Classes\PluginBase;
 use View;
+use Waka\Cloudis\Models\Biblio;
 
 /**
  * Cloudis Plugin Information File
@@ -75,6 +76,21 @@ class Plugin extends PluginBase
                         $image = new Image($image);
                     }
                     return getimagesize($image->getCachedImagePath())[1];
+                },
+            ],
+            'functions' => [
+                // Using an inline closure
+                'biblioVideo' => function ($code, $width = null, $height = null, $start_at = null) {
+                    $ressource = Biblio::where('slug', $code)->first();
+                    //trace_log($ressource->srcv->getVideoUrl($width, $height, $start_at));
+                    return $ressource->srcv->getVideoUrl($width, $height, $start_at);
+                },
+                'biblioImage' => function ($code, $width = null, $height = null, $format = null, $crop = "fill") {
+                    //trace_log($code);
+                    $ressource = Biblio::where('slug', $code)->first();
+                    //trace_log($ressource->src->getCloudiUrl($width, $height, $format, $crop));
+                    return $ressource->src->getCloudiUrl($width, $height, $format, $crop);
+                    //biblioVideo('une-video',null,null,3)
                 },
             ],
         ];
@@ -197,6 +213,15 @@ class Plugin extends PluginBase
                 'class' => 'Waka\Cloudis\Models\Settings',
                 'order' => 115,
                 'permissions' => ['waka.cloudis.admin.super'],
+            ],
+            'biblios' => [
+                'label' => Lang::get('waka.cloudis::lang.menu.biblios'),
+                'description' => Lang::get('waka.cloudis::lang.menu.biblios_desc'),
+                'category' => Lang::get('waka.utils::lang.menu.settings_category_model'),
+                'icon' => 'icon-object-group',
+                'permissions' => ['waka.cloudis.*'],
+                'url' => Backend::url('waka/cloudis/biblios'),
+                'order' => 40,
             ],
         ];
     }

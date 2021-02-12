@@ -1,0 +1,32 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: waka.cloudis::biblio.form_name
+
+# Model Form Field configuration
+form: $/waka/cloudis/models/biblio/fields.yaml
+
+# Model Class name
+modelClass: Waka\Cloudis\Models\Biblio
+
+# Default redirect location
+defaultRedirect: waka/cloudis/biblios
+
+# Create page
+create:
+    title: waka.cloudis::biblio.create
+    redirect: waka/cloudis/biblios/update/:id
+    redirectClose: waka/cloudis/biblios
+    form: $/waka/cloudis/models/biblio/fields_create.yaml
+
+# Update page
+update:
+    title: waka.cloudis::biblio.update
+    redirect: waka/cloudis/biblios
+    redirectClose: waka/cloudis/biblios
+
+# Preview page
+preview:
+    title: waka.cloudis::biblio.preview_name

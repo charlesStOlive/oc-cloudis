@@ -54,7 +54,11 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         ? $uploadedFile->getPath() . DIRECTORY_SEPARATOR . $uploadedFile->getFileName()
         : $uploadedFile->getRealPath();
 
-        \Cloudder::upload($realPath, $this->cloudiPath . '/' . $this->disk_name);
+        if (starts_with($this->content_type, 'video')) {
+            \Cloudder::uploadVideo($realPath, $this->cloudiPath . '/' . $this->disk_name);
+        } else {
+            \Cloudder::upload($realPath, $this->cloudiPath . '/' . $this->disk_name);
+        }
 
         //$this->putFile($realPath, $this->disk_name);
 
@@ -111,6 +115,25 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         if ($format) {
             $formatOption['format'] = $format;
         }
+        return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
+    }
+
+    public function getVideoUrl($width = null, $height = null, $start_at = null, $crop = "fill")
+    {
+        $formatOption = [
+            'resource_type' => 'video',
+            "format" => "mp4",
+        ];
+        if ($width) {
+            $formatOption['width'] = $width;
+        }
+        if ($height) {
+            $formatOption['height'] = $height;
+        }
+        if ($start_at) {
+            $formatOption['start_offset'] = $start_at;
+        }
+        //trace_log($this->disk_name);
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
 

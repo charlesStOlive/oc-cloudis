@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+icon: icon-id-card
+attributes:
+    name:
+        label: waka.cloudis::biblio.name
+    slug:
+        label: waka.cloudis::biblio.slug
+    updated_at:
+        label: waka.utils::lang.global.updated_at
+        type: date-medium

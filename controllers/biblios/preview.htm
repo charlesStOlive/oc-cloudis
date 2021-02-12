@@ -1,0 +1,20 @@
+<?php Block::put('breadcrumb') ?>
+<ul>
+    <li><a href="<?= Backend::url('waka/cloudis/biblios') ?>"><?= e(trans('waka.cloudis::biblio.preview_name')) ?></a></li>
+    <li><?= e($this->pageTitle) ?></li>
+</ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+<div class="form-preview">
+    <?= $this->formRenderPreview() ?>
+</div>
+
+<?php else: ?>
+
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url('waka/cloudis/biblios') ?>"
+       class="btn btn-default">Return to biblio list</a></p>
+
+<?php endif ?>

@@ -1,0 +1,38 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:    
+    name:
+        label: waka.cloudis::biblio.name
+        span: left
+        required: true
+    slug:
+        label: waka.cloudis::biblio.slug
+        span: right
+        required: true
+        preset: name
+    type:
+        label: waka.cloudis::biblio.type
+        span: left
+        type: balloon-selector
+        default: image
+        options: listTypeImage
+    src:
+        label: waka.cloudis::biblio.src
+        span: left
+        type: cloudifileupload
+        mode: image
+        imageHeight: 100
+        imageWidth: 260
+        dependsOn: type
+    srcv:
+        label: waka.cloudis::biblio.srcv
+        span: left
+        type: cloudifileupload
+        mode: file
+    options:
+        label: waka.cloudis::biblio.options
+        span: full
+        type: taglist
+        options: ['1','2']
