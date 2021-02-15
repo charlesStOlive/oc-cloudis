@@ -1,10 +1,9 @@
 <?php namespace Waka\Cloudis\Models;
 
 use Model;
-use Waka\utils\Classes\DataSource;
 use Waka\Cloudis\Classes\YamlParserRelation;
+use Waka\utils\Classes\DataSource;
 use \Waka\Cloudis\Models\Settings as CloudisSettings;
-use \Waka\Informer\Models\Inform;
 
 /**
  * Montage Model
@@ -90,7 +89,6 @@ class Montage extends Model
      */
     public function afterUpdate()
     {
-        $this->testCloudis();
         if ($this->auto_create) {
             $this->updateCLoudiRelationsFromMontage();
         }
@@ -122,7 +120,6 @@ class Montage extends Model
         return \Waka\Utils\Classes\DataSourceList::lists();
     }
 
-
     public function updateCLoudiRelationsFromMontage()
     {
         //trace_log("updateCLoudiRelationsFromMontage : " . $this->active);
@@ -132,7 +129,6 @@ class Montage extends Model
             $this->updateCloudiRelations('detach');
         }
     }
-
 
     public function updateCloudiRelations($attachOrDetach = 'attach')
     {
@@ -194,10 +190,14 @@ class Montage extends Model
 
     }
 
+    public function getUrlErrorImage()
+    {
+        $cloudiSettings = CloudisSettings::instance();
+        return $cloudiSettings->unknown->getUrl();
+    }
 
     /**
-     * 
+     *
      */
-    
 
 }
