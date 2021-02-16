@@ -81,16 +81,27 @@ class Plugin extends PluginBase
             'functions' => [
                 // Using an inline closure
                 'biblioVideo' => function ($code, $width = null, $height = null, $start_at = null) {
+                    trace_log($code);
                     $ressource = Biblio::where('slug', $code)->first();
+
                     //trace_log($ressource->srcv->getVideoUrl($width, $height, $start_at));
-                    return $ressource->srcv->getVideoUrl($width, $height, $start_at);
+                    if ($ressource->srcv) {
+                        return $ressource->srcv->getVideoUrl($width, $height, $start_at);
+                    } else {
+                        return null;
+                    }
+
                 },
                 'biblioImage' => function ($code, $width = null, $height = null, $format = null, $crop = "fill") {
-                    //trace_log($code);
+                    trace_log($code);
+                    trace_log($crop);
                     $ressource = Biblio::where('slug', $code)->first();
+                    if ($ressource) {
+                        return $ressource->src->getCloudiUrl($width, $height, $format, $crop);
+                    } else {
+                        return null;
+                    }
                     //trace_log($ressource->src->getCloudiUrl($width, $height, $format, $crop));
-                    return $ressource->src->getCloudiUrl($width, $height, $format, $crop);
-                    //biblioVideo('une-video',null,null,3)
                 },
             ],
         ];
@@ -148,6 +159,7 @@ class Plugin extends PluginBase
         return [
             'Waka\Cloudis\FormWidgets\MontagesList' => 'montagelist',
             'Waka\Cloudis\FormWidgets\CloudiFileUpload' => 'cloudifileupload',
+            'Waka\Cloudis\FormWidgets\BiblioList' => 'bibliolist',
         ];
     }
 
