@@ -13,6 +13,7 @@ class Montage extends Model
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\NestedTree;
     use \October\Rain\Database\Traits\SoftDelete;
+    use \Waka\Cloudis\Classes\Traits\CloudiTrait;
     //
 
     /**
