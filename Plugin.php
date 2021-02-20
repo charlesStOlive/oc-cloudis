@@ -81,7 +81,7 @@ class Plugin extends PluginBase
             'functions' => [
                 // Using an inline closure
                 'biblioVideo' => function ($code, $width = null, $height = null, $start_at = null) {
-                    trace_log($code);
+                    //trace_log($code);
                     $ressource = Biblio::where('slug', $code)->first();
 
                     //trace_log($ressource->srcv->getVideoUrl($width, $height, $start_at));
@@ -93,8 +93,8 @@ class Plugin extends PluginBase
 
                 },
                 'biblioImage' => function ($code, $width = null, $height = null, $format = null, $crop = "fill") {
-                    trace_log($code);
-                    trace_log($crop);
+                    //trace_log($code);
+                    //trace_log($crop);
                     $ressource = Biblio::where('slug', $code)->first();
                     if ($ressource) {
                         return $ressource->src->getCloudiUrl($width, $height, $format, $crop);
@@ -230,7 +230,7 @@ class Plugin extends PluginBase
                 'label' => Lang::get('waka.cloudis::lang.menu.biblios'),
                 'description' => Lang::get('waka.cloudis::lang.menu.biblios_desc'),
                 'category' => Lang::get('waka.utils::lang.menu.settings_category_model'),
-                'icon' => 'icon-object-group',
+                'icon' => 'icon-picture-o',
                 'permissions' => ['waka.cloudis.*'],
                 'url' => Backend::url('waka/cloudis/biblios'),
                 'order' => 40,

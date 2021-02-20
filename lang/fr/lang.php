@@ -8,6 +8,8 @@ return [
         'settings_description' => "Réglage des valeurs par defaut ( images, couleurs, image manquante)",
         'settings_category' => 'Wakaari Modèle',
         'settings_category_options' => 'Wakaari Options',
+        'biblios' => "Bibliothèque Cloudinary",
+        'biblios_desc' => "Images et vidéo de la bibliothèque Cloudinary",
     ],
     'settings' => [
         'category' => 'Cloudi',
