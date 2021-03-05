@@ -54,6 +54,4 @@ class Cloudi
         }
         return $cloudiMontages;
     }
-    
-
 }

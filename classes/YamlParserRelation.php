@@ -29,7 +29,6 @@ class YamlParserRelation
         } else {
             $this->errors = 1;
         }
-
     }
 
     private function recursiveSearch(array $array)

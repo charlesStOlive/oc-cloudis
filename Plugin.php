@@ -41,7 +41,6 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-
     }
 
     public function registerMarkupTags()
@@ -90,7 +89,6 @@ class Plugin extends PluginBase
                     } else {
                         return null;
                     }
-
                 },
                 'biblioImage' => function ($code, $width = null, $height = null, $format = null, $crop = "fill") {
                     //trace_log($code);
@@ -125,7 +123,8 @@ class Plugin extends PluginBase
                     'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
                     'modelId' => $controller->formGetModel()->id,
                 ];
-                return View::make('waka.cloudis::cloudisbutton')->withData($data);;
+                return View::make('waka.cloudis::cloudisbutton')->withData($data);
+                ;
             }
         });
         Event::listen('popup.actions.prod', function ($controller, $model, $id) {
@@ -134,10 +133,10 @@ class Plugin extends PluginBase
                     'model' => str_replace('\\', '\\\\', $model),
                     'modelId' => $id,
                 ];
-                return View::make('waka.cloudis::cloudisbutton')->withData($data);;
+                return View::make('waka.cloudis::cloudisbutton')->withData($data);
+                ;
             }
         });
-
     }
 
     /**

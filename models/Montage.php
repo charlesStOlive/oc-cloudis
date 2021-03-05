@@ -160,7 +160,6 @@ class Montage extends Model
                 $model->montages()->detach($montageId);
             }
         }
-
     }
 
     public function getUrl($id = null, $version = null)
@@ -188,7 +187,6 @@ class Montage extends Model
         //trace_log($options);
 
         return \Cloudder::secureShow($parser->src, $options);
-
     }
 
     public function getUrlErrorImage()
@@ -200,5 +198,4 @@ class Montage extends Model
     /**
      *
      */
-
 }

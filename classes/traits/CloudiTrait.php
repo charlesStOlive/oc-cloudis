@@ -32,7 +32,6 @@ trait CloudiTrait
                 $model->clouderDeleteAll();
             });
         });
-
     }
 
     /**
@@ -96,7 +95,6 @@ trait CloudiTrait
                 if ($value == 'Waka\Cloudis\Models\CloudiFile' && $this->{$key}) {
                     array_push($cloudiKeys, $this->{$key});
                 }
-
             } else {
                 if ($value == 'Waka\Cloudis\Models\CloudiFile') {
                     array_push($cloudiKeys, $this->{$key});
@@ -159,7 +157,5 @@ trait CloudiTrait
                 $model->montages()->detach($montageId);
             }
         }
-
     }
-
 }

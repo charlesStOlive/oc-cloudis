@@ -59,15 +59,16 @@
         this.$el.on('click', '.upload-object.is-error', this.proxy(this.onClickErrorObject))
 
         // Stop here for preview mode
-        if (this.options.isPreview)
+        if (this.options.isPreview) {
             return
 
-        this.$el.on('click', '.upload-remove-button', this.proxy(this.onRemoveObject))
+            this.$el.on('click', '.upload-remove-button', this.proxy(this.onRemoveObject))
 
-        this.bindUploader()
+            this.bindUploader()
 
-        if (this.options.isSortable) {
-            this.bindSortable()
+            if (this.options.isSortable) {
+                this.bindSortable()
+            }
         }
 
     }
@@ -275,13 +276,12 @@
                 _super($item, container)
                 self.onSortAttachments()
             },
-            distance: 10
+                distance: 10
         })
     }
 
     FileUpload.prototype.onSortAttachments = function () {
         if (this.options.sortHandler) {
-
             /*
              * Build an object of ID:ORDER
              */
@@ -323,13 +323,15 @@
     }
 
     FileUpload.prototype.onClickSuccessObject = function (ev) {
-        if ($(ev.target).closest('.meta').length) return
-
-        var $target = $(ev.target).closest('.upload-object')
-
-        if (!this.options.configHandler) {
-            window.open($target.data('path'))
+        if ($(ev.target).closest('.meta').length) {
             return
+
+            var $target = $(ev.target).closest('.upload-object')
+
+            if (!this.options.configHandler) {
+                window.open($target.data('path'))
+                return
+            }
         }
 
         $target.popup({
@@ -455,8 +457,12 @@
             var $this = $(this)
             var data = $this.data('oc.fileUpload')
             var options = $.extend({}, FileUpload.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('oc.fileUpload', (data = new FileUpload(this, options)))
-            if (typeof option == 'string') data[option].call($this)
+            if (!data) {
+                $this.data('oc.fileUpload', (data = new FileUpload(this, options)))
+                if (typeof option == 'string') {
+                    data[option].call($this)
+                }
+            }
         })
     }
 

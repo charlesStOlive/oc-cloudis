@@ -24,6 +24,4 @@ class Biblios extends Controller
         BackendMenu::setContext('October.System', 'system', 'settings');
         SettingsManager::setContext('Waka.Cloudis', 'Biblios');
     }
-
 }
-

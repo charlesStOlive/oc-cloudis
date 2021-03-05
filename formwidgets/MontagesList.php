@@ -39,10 +39,12 @@ class MontagesList extends FormWidgetBase
         $this->vars['montages'] = $this->getMontageList();
     }
 
-    public function getMontageList() {
+    public function getMontageList()
+    {
         return $this->model->montages;
     }
-    public function onRefreshList() {
+    public function onRefreshList()
+    {
 
         $this->vars['montages'] = $this->getMontageList();
         return [
@@ -51,7 +53,8 @@ class MontagesList extends FormWidgetBase
         //return $this->makePartial('montageslist');
     }
 
-    public function onShowCloudiImage() {
+    public function onShowCloudiImage()
+    {
         $montage = $this->model->montages->find(post('id'));
         $url = $this->model->getMontage($montage);
         $this->vars['url'] = $url;

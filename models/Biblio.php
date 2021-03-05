@@ -141,5 +141,4 @@ class Biblio extends Model
     /**
      * OTHERS
      */
-
 }

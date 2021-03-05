@@ -22,5 +22,4 @@ class CleanUnused_112 extends Migration
             $table->morphs('cloudeable');
         });
     }
-
 }

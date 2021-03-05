@@ -49,7 +49,6 @@ trait CloudisKeySTOP
                     }
                     break;
             }
-
         }
         return $collection;
     }
@@ -170,7 +169,6 @@ trait CloudisKeySTOP
                     }
                     break;
             }
-
         }
         return $collection;
     }

@@ -10,7 +10,6 @@ class PopupCloudis extends ControllerBehavior
     {
         parent::__construct($controller);
         $this->model = $controller->formGetModel();
-
     }
 
     public function onCallPopupCloudis()

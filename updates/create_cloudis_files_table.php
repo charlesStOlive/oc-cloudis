@@ -14,7 +14,7 @@ class CreateCloudisFilesTable extends Migration
             $table->string('code');
             $table->string('version');
             $table->timestamp('last_update_at');
-            $table->morphs('cloudeable');                         
+            $table->morphs('cloudeable');
         });
     }
 

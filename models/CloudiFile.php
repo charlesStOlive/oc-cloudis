@@ -15,7 +15,6 @@ use \Waka\Cloudis\Models\Settings as CloudisSettings;
  * @author Alexey Bobkov, Samuel Georges
  */
 class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
-
 {
     /**
      * @var string The database table used by the model.
@@ -212,7 +211,6 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         }
 
         return $array;
-
     }
 
     /**

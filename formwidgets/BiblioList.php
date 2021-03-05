@@ -67,5 +67,4 @@ class BiblioList extends FormWidgetBase
     {
         return $value;
     }
-
 }

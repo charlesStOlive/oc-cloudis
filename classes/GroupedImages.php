@@ -34,7 +34,6 @@ class GroupedImagesSTOP
         } else {
             return null;
         }
-
     }
     public function getOne($dataSource, $key)
     {
@@ -116,7 +115,6 @@ class GroupedImagesSTOP
                 if ($listMontages) {
                     $allImages = $allImages->merge($listMontages);
                 }
-
             }
         }
 
@@ -145,6 +143,5 @@ class GroupedImagesSTOP
 
     private function createObject($value, $relation, $submodel)
     {
-
     }
 }

@@ -36,7 +36,6 @@ trait CloudiTraitSTOP
                 if ($value == 'Waka\Cloudis\Models\CloudiFile' && $this->{$key}) {
                     array_push($cloudiKeys, $this->{$key});
                 }
-
             } else {
                 if ($value == 'Waka\Cloudis\Models\CloudiFile') {
                     array_push($cloudiKeys, $this->{$key});
@@ -58,7 +57,6 @@ trait CloudiTraitSTOP
                 if ($value == 'Waka\Cloudis\Models\CloudiFile' && $strict ? $this->{$key} : true) {
                     $cloudiKeys[$key] = $key;
                 }
-
             } else {
                 if ($value == 'Waka\Cloudis\Models\CloudiFile') {
                     $cloudiKeys[$key] = $key;
@@ -70,7 +68,6 @@ trait CloudiTraitSTOP
             foreach ($montages as $montage) {
                 $cloudiKeys['montages'][$montage->slug] = $montage->id;
             }
-
         }
         return $cloudiKeys;
     }
@@ -84,7 +81,6 @@ trait CloudiTraitSTOP
                 if ($value == 'Waka\Cloudis\Models\CloudiFile' && $strict ? $this->{$key} : true) {
                     $cloudiKeys[$key] = 'cloudi-' . $key;
                 }
-
             } else {
                 if ($value == 'Waka\Cloudis\Models\CloudiFile') {
                     $cloudiKeys[$key] = 'cloudi-' . $key;
@@ -96,7 +92,6 @@ trait CloudiTraitSTOP
             foreach ($montages as $montage) {
                 $cloudiKeys['montages'][$montage->slug] = 'montage-' . $montage->id;
             }
-
         }
         return $cloudiKeys;
     }
@@ -122,7 +117,6 @@ trait CloudiTraitSTOP
             foreach ($montages as $montage) {
                 $cloudiKeys['montages'][$montage->slug] = $montage->id;
             }
-
         }
 
         return $cloudiKeys;
@@ -165,7 +159,6 @@ trait CloudiTraitSTOP
         //trace_log($options);
 
         return \Cloudder::secureShow($parser->src, $options);
-
     }
     public function getCloudiModelUrl($modelMontage, $opt = null)
     {
@@ -269,7 +262,6 @@ trait CloudiTraitSTOP
                 $model->montages()->detach($montageId);
             }
         }
-
     }
 
     public function getCloudisList($relation = null)
@@ -320,5 +312,4 @@ trait CloudiTraitSTOP
         }
         return $cloudiKeys;
     }
-
 }
