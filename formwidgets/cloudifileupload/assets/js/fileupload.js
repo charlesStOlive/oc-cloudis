@@ -3,8 +3,6 @@
  *
  * Data attributes:
  * - data-control="fileupload" - enables the file upload plugin
- * - data-unique-id="XXX" - an optional identifier for multiple uploaders on the same page, this value will
- *   appear in the postback variable called X_OCTOBER_FILEUPLOAD
  * - data-template - a Dropzone.js template to use for each item
  * - data-error-template - a popover template used to show an error
  * - data-sort-handler - AJAX handler for sorting postbacks
@@ -16,8 +14,7 @@
  * Dependancies:
  * - Dropzone.js
  */
-+function ($) {
-    "use strict";
++function ($) { "use strict";
 
     var Base = $.oc.foundation.base,
         BaseProto = Base.prototype
@@ -37,7 +34,7 @@
     FileUpload.prototype = Object.create(BaseProto)
     FileUpload.prototype.constructor = FileUpload
 
-    FileUpload.prototype.init = function () {
+    FileUpload.prototype.init = function() {
         if (this.options.isMulti === null) {
             this.options.isMulti = this.$el.hasClass('is-multi')
         }
@@ -59,21 +56,20 @@
         this.$el.on('click', '.upload-object.is-error', this.proxy(this.onClickErrorObject))
 
         // Stop here for preview mode
-        if (this.options.isPreview) {
+        if (this.options.isPreview)
             return
 
-            this.$el.on('click', '.upload-remove-button', this.proxy(this.onRemoveObject))
+        this.$el.on('click', '.upload-remove-button', this.proxy(this.onRemoveObject))
 
-            this.bindUploader()
+        this.bindUploader()
 
-            if (this.options.isSortable) {
-                this.bindSortable()
-            }
+        if (this.options.isSortable) {
+            this.bindSortable()
         }
 
     }
 
-    FileUpload.prototype.dispose = function () {
+    FileUpload.prototype.dispose = function() {
 
         this.$el.off('click', '.upload-object.is-success', this.proxy(this.onClickSuccessObject))
         this.$el.off('click', '.upload-object.is-error', this.proxy(this.onClickErrorObject))
@@ -98,7 +94,7 @@
     // Uploading
     //
 
-    FileUpload.prototype.bindUploader = function () {
+    FileUpload.prototype.bindUploader = function() {
         this.uploaderOptions = {
             url: this.options.url,
             paramName: this.options.paramName,
@@ -141,12 +137,12 @@
         this.dropzone.on('error', this.proxy(this.onUploadError))
     }
 
-    FileUpload.prototype.onResizeFileInfo = function (file) {
+    FileUpload.prototype.onResizeFileInfo = function(file) {
         var info,
             targetWidth,
             targetHeight
 
-        if (!this.options.thumbnailWidth && !this.options.thumbnailWidth) {
+        if (!this.options.thumbnailWidth && !this.options.thumbnailHeight) {
             targetWidth = targetHeight = 100
         }
         else if (this.options.thumbnailWidth) {
@@ -175,7 +171,7 @@
         return info
     }
 
-    FileUpload.prototype.onUploadAddedFile = function (file) {
+    FileUpload.prototype.onUploadAddedFile = function(file) {
         var $object = $(file.previewElement).data('dzFileObject', file),
             filesize = this.getFilesize(file)
 
@@ -190,12 +186,12 @@
         this.evalIsPopulated()
     }
 
-    FileUpload.prototype.onUploadSending = function (file, xhr, formData) {
+    FileUpload.prototype.onUploadSending = function(file, xhr, formData) {
         this.addExtraFormData(formData)
         xhr.setRequestHeader('X-OCTOBER-REQUEST-HANDLER', this.options.uploadHandler)
     }
 
-    FileUpload.prototype.onUploadSuccess = function (file, response) {
+    FileUpload.prototype.onUploadSuccess = function(file, response) {
         var $preview = $(file.previewElement),
             $img = $('.image img', $preview)
 
@@ -211,7 +207,7 @@
         this.triggerChange();
     }
 
-    FileUpload.prototype.onUploadError = function (file, error) {
+    FileUpload.prototype.onUploadError = function(file, error) {
         var $preview = $(file.previewElement)
         $preview.addClass('is-error')
     }
@@ -219,11 +215,11 @@
     /*
      * Trigger change event (Compatibility with october.form.js)
      */
-    FileUpload.prototype.triggerChange = function () {
+    FileUpload.prototype.triggerChange = function() {
         this.$el.closest('[data-field-name]').trigger('change.oc.formwidget')
     }
 
-    FileUpload.prototype.addExtraFormData = function (formData) {
+    FileUpload.prototype.addExtraFormData = function(formData) {
         if (this.options.extraData) {
             $.each(this.options.extraData, function (name, value) {
                 formData.append(name, value)
@@ -238,10 +234,10 @@
         }
     }
 
-    FileUpload.prototype.removeFileFromElement = function ($element) {
+    FileUpload.prototype.removeFileFromElement = function($element) {
         var self = this
 
-        $element.each(function () {
+        $element.each(function() {
             var $el = $(this),
                 obj = $el.data('dzFileObject')
 
@@ -258,7 +254,7 @@
     // Sorting
     //
 
-    FileUpload.prototype.bindSortable = function () {
+    FileUpload.prototype.bindSortable = function() {
         var
             self = this,
             placeholderEl = $('<div class="upload-object upload-placeholder"/>').css({
@@ -276,19 +272,20 @@
                 _super($item, container)
                 self.onSortAttachments()
             },
-                distance: 10
+            distance: 10
         })
     }
 
-    FileUpload.prototype.onSortAttachments = function () {
+    FileUpload.prototype.onSortAttachments = function() {
         if (this.options.sortHandler) {
+
             /*
              * Build an object of ID:ORDER
              */
             var orderData = {}
 
             this.$el.find('.upload-object.is-success')
-                .each(function (index) {
+                .each(function(index){
                     var id = $(this).data('id')
                     orderData[id] = index + 1
                 })
@@ -303,16 +300,16 @@
     // User interaction
     //
 
-    FileUpload.prototype.onRemoveObject = function (ev) {
+    FileUpload.prototype.onRemoveObject = function(ev) {
         var self = this,
             $object = $(ev.target).closest('.upload-object')
 
         $(ev.target)
             .closest('.upload-remove-button')
-            .one('ajaxPromise', function () {
+            .one('ajaxPromise', function(){
                 $object.addClass('is-loading')
             })
-            .one('ajaxDone', function () {
+            .one('ajaxDone', function(){
                 self.removeFileFromElement($object)
                 self.evalIsPopulated()
                 self.triggerChange()
@@ -322,16 +319,14 @@
         ev.stopPropagation()
     }
 
-    FileUpload.prototype.onClickSuccessObject = function (ev) {
-        if ($(ev.target).closest('.meta').length) {
+    FileUpload.prototype.onClickSuccessObject = function(ev) {
+        if ($(ev.target).closest('.meta').length) return
+
+        var $target = $(ev.target).closest('.upload-object')
+
+        if (!this.options.configHandler) {
+            window.open($target.data('path'))
             return
-
-            var $target = $(ev.target).closest('.upload-object')
-
-            if (!this.options.configHandler) {
-                window.open($target.data('path'))
-                return
-            }
         }
 
         $target.popup({
@@ -339,9 +334,9 @@
             extraData: { file_id: $target.data('id') }
         })
 
-        $target.one('popupComplete', function (event, element, modal) {
+        $target.one('popupComplete', function(event, element, modal){
 
-            modal.one('ajaxDone', 'button[type=submit]', function (e, context, data) {
+            modal.one('ajaxDone', 'button[type=submit]', function(e, context, data) {
                 if (data.displayName) {
                     $('[data-dz-name]', $target).text(data.displayName)
                 }
@@ -349,7 +344,7 @@
         })
     }
 
-    FileUpload.prototype.onClickErrorObject = function (ev) {
+    FileUpload.prototype.onClickErrorObject = function(ev) {
         var
             self = this,
             $target = $(ev.target).closest('.upload-object'),
@@ -371,7 +366,7 @@
         })
 
         var $container = $target.data('oc.popover').$container
-        $container.one('click', '[data-remove-file]', function () {
+        $container.one('click', '[data-remove-file]', function() {
             $target.data('oc.popover').hide()
             self.removeFileFromElement($target)
             self.evalIsPopulated()
@@ -382,7 +377,7 @@
     // Helpers
     //
 
-    FileUpload.prototype.evalIsPopulated = function () {
+    FileUpload.prototype.evalIsPopulated = function() {
         var isPopulated = !!$('.upload-object', this.$filesContainer).length
         this.$el.toggleClass('is-populated', isPopulated)
 
@@ -398,10 +393,10 @@
      */
     FileUpload.prototype.getFilesize = function (file) {
         var formatter = new Intl.NumberFormat('en', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }),
+                style: 'decimal',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }),
             size = 0,
             units = 'bytes'
 
@@ -433,7 +428,6 @@
         uploadHandler: null,
         configHandler: null,
         sortHandler: null,
-        uniqueId: null,
         extraData: {},
         paramName: 'file_data',
         fileTypes: null,
@@ -454,15 +448,11 @@
 
     $.fn.fileUploader = function (option) {
         return this.each(function () {
-            var $this = $(this)
-            var data = $this.data('oc.fileUpload')
+            var $this   = $(this)
+            var data    = $this.data('oc.fileUpload')
             var options = $.extend({}, FileUpload.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) {
-                $this.data('oc.fileUpload', (data = new FileUpload(this, options)))
-                if (typeof option == 'string') {
-                    data[option].call($this)
-                }
-            }
+            if (!data) $this.data('oc.fileUpload', (data = new FileUpload(this, options)))
+            if (typeof option == 'string') data[option].call($this)
         })
     }
 
