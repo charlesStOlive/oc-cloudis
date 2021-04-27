@@ -48,11 +48,18 @@ class Plugin extends PluginBase
         return [
             'filters' => [
                 'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = null, $crop = "fill") {
+                    if(!$twig) {
+                        \Log::warning('getCloudiUrl : twig null');
+                        return null;
+                    }
                     return $twig->getCloudiUrl($width, $height, $format, $crop);
                     //
                 },
                 'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = null, $crop = "fill", $gravity = "center") {
-                    //trace_log("twig");
+                    if(!$twig) {
+                        \Log::warning('getCloudiMontageUrl : twig null');
+                        return null;
+                    }
                     $montage = \Waka\Cloudis\Models\Montage::where('slug', $slug)->first();
                     $opt = [
                         'width' => $width,
