@@ -23,8 +23,7 @@ fields:
         span: left
         type: cloudifileupload
         mode: image
-        imageHeight: 100
-        imageWidth: 260
+        imageHeight: 400
         dependsOn: type
     srcv:
         label: waka.cloudis::biblio.srcv

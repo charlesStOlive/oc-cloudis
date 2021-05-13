@@ -115,6 +115,13 @@ class Biblio extends Model
     /**
      * GETTERS
      **/
+    public function getCloudiLinkAttribute() {
+        if($this->type == 'image') {
+            return "<a href='".$this->src->getCloudiUrl('300','300',null,'pad')."' target='_blank'><img src='" . $this->src->getColumnThumb() . "'></a>";
+        } else {
+            return "<a href='".$this->srcv->getVideoUrl()."' target='_blank'>lien</a>";
+        }
+    }
 
     /**
      * SCOPES

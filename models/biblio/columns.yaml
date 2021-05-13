@@ -16,3 +16,8 @@ columns:
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: timetense
+    cloudiLink:
+        label: lien
+        clickable: false
+        type: partial
+        path: $/waka/cloudis/models/biblio/_column_link.htm
