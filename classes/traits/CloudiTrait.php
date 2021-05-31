@@ -76,7 +76,7 @@ trait CloudiTrait
     public function clouderDeleteAll()
     {
         $imgs = $this->getCloudiKeys();
-        trace_log($imgs);
+        //trace_log($imgs);
 
         foreach ($imgs as $img) {
             $img->deleteCloudi();
