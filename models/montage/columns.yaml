@@ -6,12 +6,12 @@ columns:
     name:
         label: waka.cloudis::lang.montage.name
         searchable: true
-    action:
-        type: waka-btn-actions
-        icon: icon-wrench
-        clickable: false
-        searchable: false
-        sortable: false
+    # action:
+    #     type: waka-btn-actions
+    #     icon: icon-wrench
+    #     clickable: false
+    #     searchable: false
+    #     sortable: false
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: timetense
