@@ -8,7 +8,7 @@ use Model;
 
 class Biblio extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
+    use \Winter\Storm\Database\Traits\Validation;
     use \Waka\Cloudis\Classes\Traits\CloudiTrait;
 
     /**

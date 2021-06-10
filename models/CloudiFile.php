@@ -3,7 +3,7 @@
 use Backend\Controllers\Files;
 use Config;
 use File as FileHelper;
-use October\Rain\Database\Attach\File as FileBase;
+use Winter\Storm\Database\Attach\File as FileBase;
 use Storage;
 use Url;
 use \Waka\Cloudis\Models\Settings as CloudisSettings;

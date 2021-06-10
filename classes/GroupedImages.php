@@ -1,6 +1,6 @@
 <?php namespace Waka\Cloudis\Classes;
 
-use October\Rain\Support\Collection;
+use Winter\Storm\Support\Collection;
 
 class GroupedImagesSTOP
 {
