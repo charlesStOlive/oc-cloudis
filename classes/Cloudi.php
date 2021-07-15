@@ -16,6 +16,9 @@ class Cloudi
 
         $cloudiImgs = $model->attachOne;
         foreach ($cloudiImgs as $key => $value) {
+            if(is_array($value)) {
+                 $value =  $value[0];
+            }
             if ($value == 'Waka\Cloudis\Models\CloudiFile') {
                 $img = [
                     'field' => $key,
