@@ -1,6 +1,7 @@
 <?php namespace Waka\Cloudis\Classes;
 
 use Winter\Storm\Support\Collection;
+/**SUPPR ? */
 
 class Cloudi
 {

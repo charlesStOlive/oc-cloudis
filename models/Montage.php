@@ -135,7 +135,7 @@ class Montage extends Model
     {
         //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
-        $ds = new DataSource($this->data_source);
+        $ds = \DataSources::find($this->data_source);
         $models = $ds->class::get();
         foreach ($models as $model) {
             $parser = new YamlParserRelation($this, $model);
@@ -165,7 +165,7 @@ class Montage extends Model
     public function getUrl($id = null, $version = null)
     {
         $modelMontage = $this;
-        $ds = new DataSource($this->data_source);
+        $ds = \DataSources::find($this->data_source);
         $model = $ds->getModel($id);
         $parser = new YamlParserRelation($modelMontage, $model);
 

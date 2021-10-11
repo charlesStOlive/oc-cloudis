@@ -6,6 +6,7 @@ use Lang;
 use System\Classes\PluginBase;
 use View;
 use Waka\Cloudis\Models\Biblio;
+use Winter\Storm\Support\Collection;
 
 /**
  * Cloudis Plugin Information File
@@ -144,6 +145,13 @@ class Plugin extends PluginBase
                 ;
             }
         });
+        \Waka\Utils\Classes\Ds\DataSource::extend(function($ds) {
+            $ds->addDynamicMethod('getImagesFilesFromMontage', function($code) use ($ds) {
+                $code ? $code : $ds->code;
+                return \Waka\Cloudis\Models\Montage::where('data_source', $code)->lists('name', 'id');
+            });
+                
+        });
     }
 
     /**
@@ -188,6 +196,19 @@ class Plugin extends PluginBase
             'waka.cloudis.user' => [
                 'tab' => 'Waka - Cloudi',
                 'label' => 'Utilisateur de cloudi',
+            ],
+        ];
+    }
+
+    public function registerWakaRules()
+    {
+        return [
+            'asks' => [
+                ['\Waka\Cloudis\WakaRules\Asks\FileCloudiLinked'],
+                ['\Waka\Cloudis\WakaRules\Asks\MontageCloudi'],
+            ],
+            'fncs' => [
+               
             ],
         ];
     }

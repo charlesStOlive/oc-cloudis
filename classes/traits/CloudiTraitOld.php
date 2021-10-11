@@ -137,7 +137,7 @@ trait CloudiTraitSTOP
     public function getCloudiUrl($id = null, $version = null)
     {
         $modelMontage = $this;
-        $ds = new DataSource($this->data_source);
+        $ds = \DataSources::find($this->data_source);
         $model = $ds->getModel($id);
         $parser = new YamlParserRelation($modelMontage, $model);
 
@@ -223,7 +223,7 @@ trait CloudiTraitSTOP
         //trace_log('updateCloudiRelations : ');
         $mainClass = get_class($this);
         if ($mainClass == 'Waka\Cloudis\Models\Montage') {
-            $ds = new DataSource($this->data_source);
+            $ds = \DataSources::find($this->data_source);
             $models = $ds->class::get();
             foreach ($models as $model) {
                 $parser = new YamlParserRelation($this, $model);
@@ -234,7 +234,7 @@ trait CloudiTraitSTOP
             }
         } else {
             $shortName = (new \ReflectionClass($this))->getShortName();
-            $ds = new DataSource(get_class($this), 'class');
+            $ds =  \DataSources::findByClass(get_class($this));
             $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
                 ->where('data_source', $ds->code)->get();
             //trace_log($montages->toArray());
