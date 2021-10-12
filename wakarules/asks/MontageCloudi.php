@@ -35,7 +35,7 @@ class MontageCloudi extends AskBase
     {
         $hostObj = $this->host;
         $idMontage = $hostObj->config_data['image'] ?? null;
-        $name = \Waka\Cloudis\Models\Montage::find($idMontage)->name;
+        $name = \Waka\Cloudis\Models\Montage::find($idMontage)->name ?? "En attente";
         $src = $hostObj->config_data['srcImage'] ?? null;
         if($name) {
             return "montage cloudi : ".$name. " | "."source : ".$src;

@@ -25,7 +25,7 @@ fields:
         label: height
         span: auto
     quality:
-        label: canvas width
+        label: Qualité
         span: auto
         type: dropdown
         options: 

@@ -131,7 +131,7 @@ trait CloudiTrait
         $mainClass = get_class($this);
 
         $shortName = (new \ReflectionClass($this))->getShortName();
-        $ds = \DataSources::find(get_class($this), 'class');
+        $ds = \DataSources::findByClass(get_class($this));
         $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
             ->where('data_source', $ds->code)->get();
         //trace_log($montages->toArray());
