@@ -1,0 +1,14 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Titre
+    image_code:
+            label: Une photo de la bibliothèque cloudi
+            type: bibliolist
+            mode: image
+
+
+

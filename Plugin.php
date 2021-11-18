@@ -210,6 +210,11 @@ class Plugin extends PluginBase
             'fncs' => [
                
             ],
+            'contents' => [
+                ['\Waka\Cloudis\WakaRules\Contents\HtmlCloudi'], 
+                ['\Waka\Cloudis\WakaRules\Contents\imageCloudi'], 
+                ['\Waka\Cloudis\WakaRules\Contents\videoCloudi'], 
+            ]
         ];
     }
 

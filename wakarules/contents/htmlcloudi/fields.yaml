@@ -1,0 +1,19 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Titre
+    html:
+        label: Text HTML
+        type: richeditor
+        size: huge
+        toolbarButtons: bold|italic|underline|align|inlineStyle|paragraphStyle|insertLink|redo|clearFormatting|fullscreen|html
+    image_code:
+            label: Une photo de la bibliothèque cloudi
+            type: bibliolist
+            mode: image
+
+
+
