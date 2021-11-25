@@ -1,11 +1,11 @@
-<section class="p-4 ">
-    <div class="mx-auto {% if data.opt_container %}container{% endif %} {% if data.content %} grid grid-cols-1 md:grid-cols-2{% endif %}">
+<section class="p-4  {{ data.opt_env_colors | default('env-white') }}">
+    <div class="mx-auto {% if data.opt_is_container %}container{% endif %} {% if data.content %} grid grid-cols-1 md:grid-cols-2{% endif %}">
         <div>
             {% if data.content %}
-            <h3 class="w-h2 text-secondary mb-2">{{data.title}}</h3>
-            <div class=" prose">{{data.content | raw }}</div>
+            <h3 class="title  mb-2">{{data.title}}</h3>
+            <div class="">{{data.content | raw }}</div>
             {% else %}
-            <h3 class="w-h3 text-secondary mb-2 text-center">{{data.title}}</h3>
+            <h3 class="title  mb-2 text-center">{{data.title}}</h3>
             {% endif %}
         </div>
         <div class="mx-auto px-4 sm:px-6 lg:px-8 ">
