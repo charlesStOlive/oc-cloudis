@@ -126,7 +126,7 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
        
         $formatOption['format'] = $format;
         $formatOption = array_merge($formatOption, $otherOptions);
-        trace_log($formatOption);
+        //trace_log($formatOption);
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
 
