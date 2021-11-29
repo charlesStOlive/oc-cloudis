@@ -48,12 +48,16 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = null, $crop = "fill") {
+                'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = null, $crop = "fill", $greyScale = false) {
                     if(!$twig) {
                         \Log::warning('getCloudiUrl : twig null');
                         return null;
                     }
-                    return $twig->getCloudiUrl($width, $height, $format, $crop);
+                    $otherOptions = [];
+                    if($greyScale) {
+                        $otherOptions['effect'] = "grayscale";
+                    }
+                    return $twig->getCloudiUrl($width, $height, $format, $crop, $otherOptions);
                     //
                 },
                 'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = null, $crop = "fill", $gravity = "center") {
