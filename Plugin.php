@@ -129,6 +129,8 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        \DataSources::registerDataSources(plugins_path().'/waka/cloudis/config/datasources.yaml');
+
         Event::listen('backend.update.prod', function ($controller) {
             if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
                 $data = [

@@ -1,0 +1,9 @@
+# ===================================
+#  Config des data source
+# ===================================
+datasource: 
+    biblio:
+        label: Bibliothèque Cloudi
+        code: biblio
+        class: Waka\Cloudis\Models\Biblio
+
