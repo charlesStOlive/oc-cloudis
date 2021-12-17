@@ -24,13 +24,13 @@ trait CloudiTrait
                 'delete' => true,
             ];
 
-            $model->bindEvent('model.afterSave', function () use ($model) {
-                $model->updateCloudiRelations('attach');
-            });
+            // $model->bindEvent('model.afterSave', function () use ($model) {
+            //     $model->updateCloudiRelations('attach');
+            // });
 
-            $model->bindEvent('model.beforeDelete', function () use ($model) {
-                $model->clouderDeleteAll();
-            });
+            // $model->bindEvent('model.beforeDelete', function () use ($model) {
+            //     $model->clouderDeleteAll();
+            // });
         });
     }
 
@@ -50,9 +50,13 @@ trait CloudiTrait
         if ($opt) {
             array_push($options['transformation'], $opt);
         }
-        // trace_log($options);
+        if(!$parser->src) {
+            //Si la source n'est pas trouvé
+           $parser->src = $this->getErrorImage();
+        }
+        $url = \Cloudder::secureShow($parser->src, $options);
 
-        return \Cloudder::secureShow($parser->src, $options);
+        return $url;
     }
 
     /**
@@ -125,38 +129,38 @@ trait CloudiTrait
         }
     }
 
-    public function updateCloudiRelations($attachOrDetach = 'attach')
-    {
-        //trace_log('updateCloudiRelations : ');
-        $mainClass = get_class($this);
+    // public function updateCloudiRelations($attachOrDetach = 'attach')
+    // {
+    //     //trace_log('updateCloudiRelations : ');
+    //     $mainClass = get_class($this);
 
-        $shortName = (new \ReflectionClass($this))->getShortName();
-        $ds = \DataSources::findByClass(get_class($this));
-        $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
-            ->where('data_source', $ds->code)->get();
-        //trace_log($montages->toArray());
-        foreach ($montages as $montage) {
-            //trace_log($montage->slug);
-            $parser = new YamlParserRelation($montage, $this);
-            //trace_log($parser->errors);
-            $errors = $parser->errors ? true : false;
-            $this->attachOrDetach($this, $montage->id, $attachOrDetach, $errors);
-        }
-    }
-    public function attachOrDetach($model, $montageId, $attachOrDetach, $errors)
-    {
-        //trace_log('attachOrDetach : '.$attachOrDetach);
-        if ($attachOrDetach == 'attach') {
-            if (!$model->montages()->find($montageId)) {
-                $model->montages()->attach($montageId, ['errors' => $errors]);
-            } else {
-                $model->montages()->updateExistingPivot($montageId, ['errors' => $errors]);
-            }
-        }
-        if ($attachOrDetach == 'detach') {
-            if ($model->montages()->find($montageId)) {
-                $model->montages()->detach($montageId);
-            }
-        }
-    }
+    //     $shortName = (new \ReflectionClass($this))->getShortName();
+    //     $ds = \DataSources::findByClass(get_class($this));
+    //     $montages = \Waka\Cloudis\Models\Montage::where('active', '=', true)
+    //         ->where('data_source', $ds->code)->get();
+    //     //trace_log($montages->toArray());
+    //     foreach ($montages as $montage) {
+    //         //trace_log($montage->slug);
+    //         $parser = new YamlParserRelation($montage, $this);
+    //         //trace_log($parser->errors);
+    //         $errors = $parser->errors ? true : false;
+    //         $this->attachOrDetach($this, $montage->id, $attachOrDetach, $errors);
+    //     }
+    // }
+    // public function attachOrDetach($model, $montageId, $attachOrDetach, $errors)
+    // {
+    //     //trace_log('attachOrDetach : '.$attachOrDetach);
+    //     if ($attachOrDetach == 'attach') {
+    //         if (!$model->montages()->find($montageId)) {
+    //             $model->montages()->attach($montageId, ['errors' => $errors]);
+    //         } else {
+    //             $model->montages()->updateExistingPivot($montageId, ['errors' => $errors]);
+    //         }
+    //     }
+    //     if ($attachOrDetach == 'detach') {
+    //         if ($model->montages()->find($montageId)) {
+    //             $model->montages()->detach($montageId);
+    //         }
+    //     }
+    // }
 }

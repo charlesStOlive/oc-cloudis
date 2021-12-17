@@ -1,19 +1,6 @@
 1.0.1: 
- - First version of Cloudis
- - create_montageables_table.php
+ - "First version of Cloudis"
  - create_montages_table.php
- - create_cloudis_files_table.php
-1.1.0:
-  - create_montageables_table_u110.php
-1.1.1:
-  - 'create cloudis_system_files'
-  - create_cloudis_system_files.php
-1.1.2:
-  - 'clean unused table'
-  - clean_unused_112.php
-1.1.3:
-  - 'Ajout de cled'
-  - create_montageables_table_u113.php
-1.1.4:
-  - 'Ajout de la bibliothèque'
-  - create_biblios_table.php
+ - create_cloudis_system_files.php
+ - create_biblios_table.php
+  

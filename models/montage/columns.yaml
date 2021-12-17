@@ -3,23 +3,21 @@
 # ===================================
 
 columns:
-    name:
-        label: waka.cloudis::lang.montage.name
+    state:
+        label: waka.cloudis::montage.state
         searchable: true
-    # action:
-    #     type: waka-btn-actions
-    #     icon: icon-wrench
-    #     clickable: false
-    #     searchable: false
-    #     sortable: false
+    name:
+        label: waka.cloudis::montage.name
+        searchable: true
+    slug:
+        label: waka.cloudis::montage.slug
+        searchable: true
+    data_source:
+        label: waka.cloudis::montage.data_source
+        searchable: true
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: timetense
-    active:
-        label: waka.cloudis::lang.montage.active
-    auto_create:
-        label: waka.cloudis::lang.montage.auto_create
-    data_source:
-        label: waka.utils::lang.datasource.title
-        type: datasource
-    
+    sort_order:
+        label: waka.utils::lang.global.sort_order
+        invisible: true

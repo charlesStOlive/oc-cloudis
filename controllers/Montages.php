@@ -5,28 +5,32 @@ use Backend\Classes\Controller;
 use System\Classes\SettingsManager;
 
 /**
- * Montages Back-end Controller
+ * Montage Back-end Controller
  */
 class Montages extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
-        'Waka.Utils.Behaviors.DuplicateModel',
-        'Waka.Cloudis.Behaviors.PopupCloudis',
-
+        'Waka.Utils.Behaviors.BtnsBehavior',
+        'Waka.Cloudis.Behaviors.MontageBehavior',
     ];
-
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
-    public $duplicateConfig = 'config_duplicate.yaml';
+    public $btnsConfig = 'config_btns.yaml';
+
+    public $requiredPermissions = ['waka.cloudis.*'];
+    //FIN DE LA CONFIG AUTO
 
     public function __construct()
     {
         parent::__construct();
-
-        //BackendMenu::setContext('Waka.Cloudis', 'cloudis', 'montages');
         BackendMenu::setContext('October.System', 'system', 'settings');
-        SettingsManager::setContext('Waka.Cloudis', 'montages');
+        SettingsManager::setContext('Waka.Cloudis', 'Montages');
     }
+
+    //startKeep/
+
+    //endKeep/
 }
+

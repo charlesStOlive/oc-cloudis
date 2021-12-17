@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Montage
+name: waka.cloudis::montage.form_name
 
 # Model Form Field configuration
 form: $/waka/cloudis/models/montage/fields.yaml
@@ -16,16 +16,17 @@ defaultRedirect: waka/cloudis/montages
 
 # Create page
 create:
-    title: Create Montage
+    title: waka.cloudis::montage.create
     redirect: waka/cloudis/montages/update/:id
     redirectClose: waka/cloudis/montages
+    form: $/waka/cloudis/models/montage/fields_create.yaml
 
 # Update page
 update:
-    title: Edit Montage
-    redirect: waka/cloudis/montages
+    title: waka.cloudis::montage.update
+    redirect: waka/cloudis/montages/update/:id
     redirectClose: waka/cloudis/montages
 
 # Preview page
 preview:
-    title: Preview Montage
+    title: waka.cloudis::montage.preview_name

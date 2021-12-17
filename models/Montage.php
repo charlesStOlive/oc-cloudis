@@ -2,43 +2,56 @@
 
 use Model;
 use Waka\Cloudis\Classes\YamlParserRelation;
-use Waka\utils\Classes\DataSource;
 use \Waka\Cloudis\Models\Settings as CloudisSettings;
 
 /**
- * Montage Model
+ * montage Model
  */
+
 class Montage extends Model
 {
     use \Winter\Storm\Database\Traits\Validation;
-    use \Winter\Storm\Database\Traits\NestedTree;
-    use \Winter\Storm\Database\Traits\SoftDelete;
-    use \Waka\Cloudis\Classes\Traits\CloudiTrait;
-    //
+    use \Winter\Storm\Database\Traits\Sortable;
+    use \Waka\Utils\Classes\Traits\DataSourceHelpers;
+
 
     /**
      * @var string The database table used by the model.
      */
     public $table = 'waka_cloudis_montages';
 
+
     /**
      * @var array Guarded fields
      */
-    protected $guarded = ['*'];
+    protected $guarded = ['id'];
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    //protected $fillable = [];
 
     /**
      * @var array Validation rules for attributes
      */
     public $rules = [
+        'state' => 'required',
         'name' => 'required',
-        'slug' => 'required|unique:waka_cloudis_montages',
+        'slug' => 'required|unique',
         'data_source' => 'required',
     ];
+
+    public $customMessages = [
+        'data_source.required' => 'waka.cloudis::montage.e.data_source',
+        'state.required' => 'waka.cloudis::montage.e.state',
+    ];
+
+    /**
+     * @var array attributes send to datasource for creating document
+     */
+    public $attributesToDs = [
+    ];
+
 
     /**
      * @var array Attributes to be cast to native types
@@ -48,17 +61,19 @@ class Montage extends Model
     /**
      * @var array Attributes to be cast to JSON
      */
-    protected $jsonable = [];
+    protected $jsonable = [
+    ];
 
     /**
      * @var array Attributes to be appended to the API representation of the model (ex. toArray())
      */
-    protected $appends = [];
+    protected $appends = [
+    ];
 
     /**
      * @var array Attributes to be removed from the API representation of the model (ex. toArray())
      */
-    protected $hidden = ['options'];
+    protected $hidden = [];
 
     /**
      * @var array Attributes to be cast to Argon (Carbon) instances
@@ -66,136 +81,76 @@ class Montage extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**
      * @var array Relations
      */
-    public $hasOne = [];
-    public $hasMany = [];
-    public $belongsTo = [];
-    public $belongsToMany = [];
-    public $morphTo = [];
-    public $morphOne = [];
-    public $morphMany = [];
-    public $attachOne = [
-        'src' => 'Waka\Cloudis\Models\CloudiFile',
-        'masque' => 'Waka\Cloudis\Models\CloudiFile',
+    public $hasOne = [
     ];
-    public $attachMany = [];
+    public $hasMany = [
+    ];
+    public $hasOneThrough = [
+    ];
+    public $hasManyThrough = [
+    ];
+    public $belongsTo = [
+    ];
+    public $belongsToMany = [
+    ];        
+    public $morphTo = [];
+    public $morphOne = [
+    ];
+    public $morphMany = [
+        'rule_conditions' => [
+            'Waka\Utils\Models\RuleCondition',
+            'name' => 'conditioneable',
+            'delete' => true
+        ],
+    ];
+    public $attachOne = [
+        'src' => ['Waka\Cloudis\Models\CloudiFile'],
+        'masque' => ['Waka\Cloudis\Models\CloudiFile'],
+    ];
+    public $attachMany = [
+    ];
+
+    //startKeep/
 
     /**
-     * Event
-     */
-    public function afterUpdate()
-    {
-        if ($this->auto_create) {
-            $this->updateCLoudiRelationsFromMontage();
-        }
-    }
+     *EVENTS
+     **/
+
     /**
-     * Attributes
-     */
-    public function getCloudi()
-    {
-        return $this->src();
-    }
-
-    public function filterFields($fields, $context = null)
-    {
-        $user = \BackendAuth::getUser();
-        if (!$user->hasAccess('waka.cloudis.admin.*')) {
-            $fields->options->hidden = true;
-            $fields->data_source->readOnly = true;
-            $fields->slug->readOnly = true;
-            $fields->use_files->readOnly = true;
-        }
-    }
-
-    /***
-     * LISTs
-     */
-    public function listDataSource()
-    {
-        return \Waka\Utils\Classes\DataSourceList::lists();
-    }
-
-    public function updateCLoudiRelationsFromMontage()
-    {
-        //trace_log("updateCLoudiRelationsFromMontage : " . $this->active);
-        if ($this->active) {
-            $this->updateCloudiRelations('attach');
-        } else {
-            $this->updateCloudiRelations('detach');
-        }
-    }
-
-    public function updateCloudiRelations($attachOrDetach = 'attach')
-    {
-        //trace_log('updateCloudiRelations : ');
-        $mainClass = get_class($this);
-        $ds = \DataSources::find($this->data_source);
-        $models = $ds->class::get();
-        foreach ($models as $model) {
-            $parser = new YamlParserRelation($this, $model);
-            // trace_log($model->name . " : " . $parser->errors . " , " . $attachOrDetach);
-            $errors = $parser->errors ? true : false;
-            // trace_log($errors);
-            $this->attachOrDetach($model, $this->id, $attachOrDetach, $errors);
-        }
-    }
-    public function attachOrDetach($model, $montageId, $attachOrDetach, $errors)
-    {
-        //trace_log('attachOrDetach : '.$attachOrDetach);
-        if ($attachOrDetach == 'attach') {
-            if (!$model->montages()->find($montageId)) {
-                $model->montages()->attach($montageId, ['errors' => $errors]);
-            } else {
-                $model->montages()->updateExistingPivot($montageId, ['errors' => $errors]);
-            }
-        }
-        if ($attachOrDetach == 'detach') {
-            if ($model->montages()->find($montageId)) {
-                $model->montages()->detach($montageId);
-            }
-        }
-    }
-
-    public function getUrl($id = null, $version = null)
-    {
-        $modelMontage = $this;
-        $ds = \DataSources::find($this->data_source);
-        $model = $ds->getModel($id);
-        $parser = new YamlParserRelation($modelMontage, $model);
-
-        //trace_log($parser->options);
-
-        if (!$parser->options) {
-            return $this->getUrlErrorImage();
-        }
-
-        $options = $parser->options;
-        $formatOption = $version ? $this->setFormat($version) : null;
-
-        //trace_log($formatOption);
-        // si il y a un format particulier on le merge avec
-        if ($formatOption) {
-            array_push($options['transformation'], $formatOption);
-        }
-
-        //trace_log($options);
-
-        return \Cloudder::secureShow($parser->src, $options);
-    }
-
-    public function getUrlErrorImage()
-    {
-        $cloudiSettings = CloudisSettings::instance();
-        return $cloudiSettings->unknown->getUrl();
+     * LISTS
+     **/
+    public function listStates() {
+        return \Config::get('waka.utils::basic_state');
     }
 
     /**
-     *
+     * GETTERS
+     **/
+
+    /**
+     * SCOPES
      */
+    public function scopeActive($query) {
+        return $query->where('state', 'actif');
+
+    }
+
+    /**
+     * SETTERS
+     */
+ 
+    /**
+     * FILTER FIELDS
+     */
+
+    /**
+     * OTHERS
+     */
+
+//endKeep/
 }

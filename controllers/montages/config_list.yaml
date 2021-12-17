@@ -9,7 +9,7 @@ list: $/waka/cloudis/models/montage/columns.yaml
 modelClass: Waka\Cloudis\Models\Montage
 
 # List Title
-title: Manage Montages
+title: waka.cloudis::montage.title
 
 # Link URL for each record
 recordUrl: waka/cloudis/montages/update/:id
@@ -29,12 +29,15 @@ showSetup: true
 # Displays the sorting link on each column
 showSorting: true
 
+
 # Default sorting column
 # defaultSort:
 #     column: created_at
 #     direction: desc
-
-# Display checkboxes next to each record
+defaultSort:
+    column: updated_at
+    direction: desc
+    # Display checkboxes next to each record
 showCheckboxes: true
 
 # Toolbar widget configuration
@@ -45,3 +48,5 @@ toolbar:
     # Search widget configuration
     search:
         prompt: backend::lang.list.search_prompt
+
+filter: config_filters.yaml

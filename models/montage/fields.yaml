@@ -3,59 +3,83 @@
 # ===================================
 
 fields:
+    state:
+        label: waka.cloudis::montage.state
+        span: full
+        type: balloon-selector
+        required: true
+        default: Brouillon
+        options: listStates
+        default: Actif
+        permissions: [waka.cloudis.admin.*]
     name:
-        label: waka.cloudis::lang.montage.name
-        span: auto
+        label: waka.cloudis::montage.name
+        span: left
+        required: true
     slug:
-        label: waka.utils::lang.global.slug
+        label: waka.cloudis::montage.slug
+        span: right
+        required: true
         preset: name
-        span: auto
-    active:
-        label: waka.cloudis::lang.montage.active
-        type: checkbox
-        default: true
-        span: auto
-    auto_create:
-        label: waka.cloudis::lang.montage.auto_create
-        type: checkbox
-        default: true
-        span: auto
     data_source:
-        label: waka.utils::lang.datasource.title
-        placeholder: waka.utils::lang.datasource.placeholder
+        label: waka.cloudis::montage.data_source
+        span: left
         type: dropdown
+        placeholder: waka.utils::lang.global.placeholder
+        required: true
+        disabled: true
         options: listDataSource
-    use_files@update:
-        label: waka.cloudis::lang.montage.use_files
-        type: checkbox
-
-    src@update:
-        label: waka.cloudis::lang.montage.src
-        type: cloudifileupload
-        mode: image
-        span: auto
-        imageHeight: 100
-        imageWidth: 260
         trigger:
-            action: show
-            field: use_files
+            action: hide
+            field: no_ds
             condition: checked
-    masque@update:
-        label: waka.cloudis::lang.montage.masque
-        type: cloudifileupload
-        mode: image
-        span: auto
-        imageHeight: 100
-        imageWidth: 260
-        trigger:
-            action: show
-            field: use_files
-            condition: checked
-            
-    options@update:
-        label: waka.cloudis::lang.montage.options
+    test_id:
+        label: waka.cloudis::montage.test_id
+        span: right
+        type: dropdown
+        placeholder: waka.utils::lang.global.placeholder
+        options: listDataSourceTarget
+    options:
+        span: full
         type: codeeditor
+        size: giant
         language: yaml
-
-
-    
+    use_files:
+        label: waka.cloudis::montage.use_files
+        span: full
+        type: switch
+        default: false
+    src:
+        label: waka.cloudis::montage.src
+        span: left
+        type: cloudifileupload
+        mode: image
+        imageHeight: 100
+        imageWidth: 260
+        trigger:
+            action: show
+            field: use_files
+            condition: checked
+    masque:
+        label: waka.cloudis::montage.masque
+        span: right
+        type: cloudifileupload
+        mode: image
+        imageHeight: 100
+        imageWidth: 260
+        trigger:
+            action: show
+            field: use_files
+            condition: checked
+    memo:
+        label: waka.cloudis::montage.memo
+        span: full
+        type: textarea
+        size: small
+        cssClass: txt_memo
+    rule_conditions:
+        label: waka.cloudis::montage.rule_conditions
+        span: full
+        type: rulebuilder
+        ruleMode: condition
+        targetProductor: wakaMail

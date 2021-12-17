@@ -1,19 +1,26 @@
 <?php Block::put('breadcrumb') ?>
-    <ul>
-        <li><a href="<?= Backend::url('waka/cloudis/montages') ?>">Montages</a></li>
-        <li><?= e($this->pageTitle) ?></li>
-    </ul>
+<?=$this->btnsWidget->renderBreadcrump()?>
 <?php Block::endPut() ?>
 
 <?php if (!$this->fatalError): ?>
 
-    <div class="form-preview">
-        <?= $this->formRenderPreview() ?>
+<?= Form::open(['class' => 'layout']) ?>
+
+<div class="layout-row">
+    <?= $this->formRenderPreview() ?>
+</div>
+<div class="form-buttons">
+    <div class="loading-indicator-container">
+        <?= $this->btnsWidget->renderBar('preview') ?>
     </div>
+</div>
+
+<?= Form::close() ?>
 
 <?php else: ?>
 
-    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('waka/cloudis/montages') ?>" class="btn btn-default">Return to montages list</a></p>
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url('waka/cloudis/montages') ?>"
+       class="btn btn-default">Return to montage list</a></p>
 
 <?php endif ?>

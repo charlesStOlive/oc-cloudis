@@ -94,6 +94,9 @@ class Plugin extends PluginBase
                 'biblioVideo' => function ($code, $width = null, $height = null, $start_at = null) {
                     //trace_log($code);
                     $ressource = Biblio::where('slug', $code)->first();
+                    if(!$ressource) {
+                        return null;
+                    }
 
                     //trace_log($ressource->srcv->getVideoUrl($width, $height, $start_at));
                     if ($ressource->srcv) {
@@ -131,26 +134,26 @@ class Plugin extends PluginBase
     {
         \DataSources::registerDataSources(plugins_path().'/waka/cloudis/config/datasources.yaml');
 
-        Event::listen('backend.update.prod', function ($controller) {
-            if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
-                $data = [
-                    'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
-                    'modelId' => $controller->formGetModel()->id,
-                ];
-                return View::make('waka.cloudis::cloudisbutton')->withData($data);
-                ;
-            }
-        });
-        Event::listen('popup.actions.prod', function ($controller, $model, $id) {
-            if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
-                $data = [
-                    'model' => str_replace('\\', '\\\\', $model),
-                    'modelId' => $id,
-                ];
-                return View::make('waka.cloudis::cloudisbutton')->withData($data);
-                ;
-            }
-        });
+        // Event::listen('backend.update.prod', function ($controller) {
+        //     if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
+        //         $data = [
+        //             'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
+        //             'modelId' => $controller->formGetModel()->id,
+        //         ];
+        //         return View::make('waka.cloudis::cloudisbutton')->withData($data);
+        //         ;
+        //     }
+        // });
+        // Event::listen('popup.actions.prod', function ($controller, $model, $id) {
+        //     if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
+        //         $data = [
+        //             'model' => str_replace('\\', '\\\\', $model),
+        //             'modelId' => $id,
+        //         ];
+        //         return View::make('waka.cloudis::cloudisbutton')->withData($data);
+        //         ;
+        //     }
+        // });
         \Waka\Utils\Classes\Ds\DataSource::extend(function($ds) {
             $ds->addDynamicMethod('getImagesFilesFromMontage', function($code) use ($ds) {
                 $code ? $code : $ds->code;
@@ -168,16 +171,12 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return []; // Remove this line to activate
-
-        return [
-            'Waka\Cloudis\Components\MyComponent' => 'myComponent',
-        ];
     }
 
     public function registerFormWidgets(): array
     {
         return [
-            'Waka\Cloudis\FormWidgets\MontagesList' => 'montagelist',
+            //'Waka\Cloudis\FormWidgets\MontagesList' => 'montagelist',
             'Waka\Cloudis\FormWidgets\CloudiFileUpload' => 'cloudifileupload',
             'Waka\Cloudis\FormWidgets\BiblioList' => 'bibliolist',
         ];
@@ -232,16 +231,6 @@ class Plugin extends PluginBase
     public function registerNavigation()
     {
         return []; // Remove this line to activate
-
-        return [
-            'cloudis' => [
-                'label' => 'Cloudis',
-                'url' => Backend::url('waka/cloudis/mycontroller'),
-                'icon' => 'icon-leaf',
-                'permissions' => ['waka.cloudis.*'],
-                'order' => 500,
-            ],
-        ];
     }
     public function registerSettings()
     {
