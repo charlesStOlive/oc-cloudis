@@ -30,7 +30,6 @@ class MontageBehavior extends ControllerBehavior
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
         $this->vars['errors'] = $this->errors;
-        trace_log($this->errors);
         $this->vars['modelClass'] = $modelClass;
 
         return $this->makePartial('$/waka/cloudis/behaviors/montagebehavior/_popup.htm');
