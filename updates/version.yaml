@@ -1,6 +1,9 @@
 1.0.1: 
- - "First version of Cloudis"
- - create_montages_table.php
- - create_cloudis_system_files.php
- - create_biblios_table.php
-  
+    - "First version of Cloudis"
+    - create_montages_table.php
+    - create_cloudis_system_files.php
+    - create_biblios_table.php
+1.1.0: 
+    - "2nd version of Cloudis"
+    - update_cloudis_system_files.php
+    - update_biblio_system_files.php

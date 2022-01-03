@@ -18,8 +18,14 @@ fields:
         type: balloon-selector
         default: image
         options: listTypeImage
+    load_options:
+        label: waka.cloudis::biblio.load_options
+        span: full
+        type: codeeditor
+        language: yaml
     options:
         label: waka.cloudis::biblio.options
         span: full
-        type: taglist
-        options: ['1','2']
+        type: codeeditor
+        language: yaml
+

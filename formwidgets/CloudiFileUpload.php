@@ -457,7 +457,9 @@ class CloudiFileUpload extends FormWidgetBase
             $fileRelation = $this->getRelationObject();
 
             $file = $fileModel;
+            $file->options = $this->model->load_options;
             $file->data = $uploadedFile;
+            
             $file->is_public = $fileRelation->isPublic();
             $file->save();
 

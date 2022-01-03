@@ -97,10 +97,20 @@ class Plugin extends PluginBase
                     if(!$ressource) {
                         return null;
                     }
+                    $options = [];
+                    if($width) {
+                        $options['width'] = $width;
+                    }
+                    if($height) {
+                        $options['height'] = $height;
+                    }
+                    if($start_at) {
+                        $options['start_at'] = $start_at;
+                    }
 
                     //trace_log($ressource->srcv->getVideoUrl($width, $height, $start_at));
                     if ($ressource->srcv) {
-                        return $ressource->srcv->getVideoUrl($width, $height, $start_at);
+                        return $ressource->getVideoUrl($options);
                     } else {
                         return null;
                     }

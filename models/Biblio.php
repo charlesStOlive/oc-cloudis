@@ -120,12 +120,30 @@ class Biblio extends Model
         if($this->type == 'image' && $this->src) {
             return "<a href='".$this->src->getCloudiUrl('150','150',null,'pad')."' target='_blank'><img src='" . $this->src->getColumnThumb() . "'></a>";
         } elseif($this->srcv) {
-            return "<a href='".$this->srcv->getVideoUrl()."' target='_blank'>lien</a>";
+            return "<a href='".$this->getVideoUrl()."' target='_blank'>lien</a>";
         } else {
             return null;
         }
     }
 
+    public function getVideoUrl($options = [])
+    {
+        
+        
+        $biblioOption = $this->getOptions();
+        $formatOption = array_merge($biblioOption, $options);
+        trace_log($formatOption);
+        return $this->srcv->getVideoUrl($formatOption);
+    }
+
+    public function getOptions() {
+        if(!$this->options) {
+            return [];
+        } else {
+            return \Yaml::parse($this->options);
+        }
+        
+    }
     /**
      * SCOPES
      */

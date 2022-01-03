@@ -35,10 +35,23 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         return CloudisSettings::get('cloudinary_path');
     }
 
+    /**
+     * @var array Attributes to be cast to JSON
+     */
+    protected $jsonable = [
+        'options'
+    ];
+
     public function fromPost($uploadedFile)
     {
         if ($uploadedFile === null) {
             return;
+        }
+
+        $options = [];
+
+        if($this->options) {
+            $options = \Yaml::parse($this->options);
         }
 
         $this->file_name = $uploadedFile->getClientOriginalName();
@@ -53,10 +66,11 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         ? $uploadedFile->getPath() . DIRECTORY_SEPARATOR . $uploadedFile->getFileName()
         : $uploadedFile->getRealPath();
 
+
         if (starts_with($this->content_type, 'video')) {
-            \Cloudder::uploadVideo($realPath, $this->cloudiPath . '/' . $this->disk_name);
+            \Cloudder::uploadVideo($realPath, $this->cloudiPath . '/' . $this->disk_name, $options);
         } else {
-            \Cloudder::upload($realPath, $this->cloudiPath . '/' . $this->disk_name);
+            \Cloudder::upload($realPath, $this->cloudiPath . '/' . $this->disk_name, $options);
         }
 
         //$this->putFile($realPath, $this->disk_name);
@@ -130,21 +144,13 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
 
-    public function getVideoUrl($width = null, $height = null, $start_at = null, $crop = "fill")
+    public function getVideoUrl($options)
     {
         $formatOption = [
             'resource_type' => 'video',
             "format" => "mp4",
         ];
-        if ($width) {
-            $formatOption['width'] = $width;
-        }
-        if ($height) {
-            $formatOption['height'] = $height;
-        }
-        if ($start_at) {
-            $formatOption['start_offset'] = $start_at;
-        }
+        $formatOption = array_merge($formatOption, $options);
         //trace_log($this->disk_name);
         return \Cloudder::secureShow($this->cloudiPath . '/' . $this->disk_name, $formatOption);
     }
