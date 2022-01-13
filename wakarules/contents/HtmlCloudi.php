@@ -3,15 +3,14 @@
 use Waka\Utils\Classes\Rules\RuleContentBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
+use Waka\Utils\Interfaces\RuleContent as RuleContentInterface;
 
-class HtmlCloudi extends RuleContentBase
+class HtmlCloudi extends RuleContentBase  implements RuleContentInterface
 {
-    protected $tableDefinitions = [];
-
     /**
      * Returns information about this event, including name and description.
      */
-    public function ruleDetails()
+    public function subFormDetails()
     {
         return [
             'name'        => 'Champs HTML + image cloudi',

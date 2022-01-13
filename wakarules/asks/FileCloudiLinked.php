@@ -3,21 +3,22 @@
 use Waka\Utils\Classes\Rules\AskBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
+use Waka\Utils\Interfaces\Ask as AskInterface;
 
-class FileCloudiLinked extends AskBase
+class FileCloudiLinked extends AskBase implements AskInterface
 {
-    protected $tableDefinitions = [];
-
     /**
      * Returns information about this event, including name and description.
      */
-    public function askDetails()
+    public function subFormDetails()
     {
         return [
             'name'        => 'Une image cloudi',
             'description' => 'Une image sur le service cloudi',
             'icon'        => 'wicon-stars',
-            'word_type' => 'IMG',
+            'outputs' => [
+                'word_type' => 'IMG',
+            ]
         ];
     }
 
