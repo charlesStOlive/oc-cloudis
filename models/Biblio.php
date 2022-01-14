@@ -132,7 +132,7 @@ class Biblio extends Model
         
         $biblioOption = $this->getOptions();
         $formatOption = array_merge($biblioOption, $options);
-        trace_log($formatOption);
+        //trace_log($formatOption);
         return $this->srcv->getVideoUrl($formatOption);
     }
 
