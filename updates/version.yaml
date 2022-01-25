@@ -7,3 +7,6 @@
     - "2nd version of Cloudis"
     - update_cloudis_system_files.php
     - update_biblio_system_files.php
+1.2.0:
+    - "Ajout du champs mémo"
+    - create_montages_table_u110.php

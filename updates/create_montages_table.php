@@ -18,7 +18,6 @@ class CreateMontagesTable extends Migration
             $table->string('test_id')->nullable();
             $table->text('options')->nullable();
             $table->boolean('use_files')->nullable()->default(false);
-            $table->text('memo')->nullable();
             //reorder
             $table->integer('sort_order')->default(0);
             $table->timestamps();
