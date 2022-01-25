@@ -9,4 +9,4 @@
     - update_biblio_system_files.php
 1.2.0:
     - "Ajout du champs mémo"
-    - create_montages_table_u110.php
+    - create_montages_table_u120.php
