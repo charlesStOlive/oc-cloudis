@@ -21,7 +21,6 @@ tabs:
             tab: options
             label: Option globales
             type: section
-            tab: options
         opt_env_colors:
             tab: options
             type: dropdown
@@ -33,10 +32,10 @@ tabs:
             label: Dans un container
             type: checkbox
             tab: options
-        opt_css_container:
+        opt_style_container:
             tab: options
-            label: Class
-            comment: aspect-w-16 aspect-h-10 h-screen-25 h-screen-50 h-screen-90  h-screen  
+            label: Styles
+            comment: Separer les styles avec ';
 
         s_video_options:
             label: Options vidéos

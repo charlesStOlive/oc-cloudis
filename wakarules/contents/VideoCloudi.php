@@ -37,7 +37,7 @@ class VideoCloudi extends RuleContentBase implements RuleContentInterface
      * IS true
      */
 
-    public function resolve() {
+    public function resolve($ds = []) {
         return $this->getConfigs();
     }
 }
