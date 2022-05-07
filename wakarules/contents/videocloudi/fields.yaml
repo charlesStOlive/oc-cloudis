@@ -7,48 +7,70 @@ tabs:
     fields:
         title:
             label: Titre
+        video_code:
+            label: Une vidéo de la bibliothèque cloudi
+            type: bibliolist
+            mode: video
         content:
             label: Text HTML
             type: richeditor
             size: huge
             toolbarButtons: bold|italic|underline|align|clearFormatting|fullscreen|html
-        video_code:
-            label: Une vidéo de la bibliothèque cloudi
-            type: bibliolist
-            mode: video
-        
         s_opt_t:
-            tab: options
-            label: Option globales
-            type: section
+                tab: options
+                label: Option globales
+                type: section
         opt_env_colors:
             tab: options
             type: dropdown
             options:
-                env-white: Blanc & textes noirs
-                env-primary: Couleurs primaires de fond
-                env-secondary: Couleurs secondaire de fond
-        opt_is_container:
-            label: Dans un container
+                null: inherit
+                env-white: "Txt noir | Bg : blanc"
+                env-primary: "Txt blanc | Bg : Couleur primaire"
+                env-secondary: "Txt blanc | Bg : Couleur secondaire"
+                env-trans: "Txt Noir | Bg : Trasparent"
+                env-trans-dark: "Txt blanc | Bg : Transparent"
+        opt_style_container:
+            tab: options 
+            label: Styles du container
+            comment: Separer les styles avec ';'
+        opt_center_container:
+            label: Centrer le container ( ajoute mx-auto )
             type: checkbox
             tab: options
-        opt_style_container:
-            tab: options
-            label: Styles
-            comment: Separer les styles avec ';
-
+            default: true
+        # opt_is_container:
+        #     label: Ajouter la classe container
+        #     type: checkbox
+        #     tab: options
         s_video_options:
             label: Options vidéos
             tab: options
             type: section
-        opt_video_width:
-            label: Largeur (px ou  %)
-            tab: options
-            span: auto
-        opt_video_height:
-            label: Largeur (px ou  %)
-            tab: options
-            span: auto
-
-
         
+        opt_center_video:
+            label: Centrer la vidéo
+            type: checkbox
+            tab: options
+        opt_style_video:
+            tab: options
+            label: Styles de la vidéo
+            laceholder: "color:#FF0000;background-color:#000000;aspect-ratio: 16 / 9..."
+            comment: Conseil, exploitez le css aspect-ratio pour avoir la taille adéquate. Separer les styles avec ';'
+        s_text_options:
+            label: Options s_text_options
+            comment: Seulement si texte existe
+            tab: options
+            type: section
+        opt_style_text:
+            tab: options
+            label: Styles du text
+            placeholder: "color:#FF0000;background-color:#000000;..."
+        opt_center_content:
+            label: Centrer le contenu
+            type: checkbox
+            tab: options
+
+
+
+ 
