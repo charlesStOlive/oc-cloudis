@@ -77,6 +77,6 @@ class Settings extends Model
 
     public function afterSave()
     {
-        $this->updateCloudiRelations('attach');
+        //$this->updateCloudiRelations('attach');
     }
 }
