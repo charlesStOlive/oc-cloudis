@@ -4,7 +4,6 @@ use Yaml;
 
 class YamlParserRelation
 {
-    use \Waka\Utils\Classes\Traits\StringRelation;
     private $id;
     private $model;
     private $modelMontage;
@@ -76,13 +75,14 @@ class YamlParserRelation
 
     private function getModel($value)
     {
-        $result;
-        return $this->getStringRelation($this->model, $value);
+        //trace_log('get model');
+        return array_get($this->model, $value);
     }
 
     private function getLayer($value)
     {
-        $layer = $this->getStringRelation($this->modelMontage, $value);
+        //trace_log('get layer');
+        $layer = array_get($this->modelMontage, $value);
         if ($layer) {
             $layer = $layer->cloudiId;
         } else {
@@ -95,7 +95,7 @@ class YamlParserRelation
     {
         // trace_log($value);
         // trace_log($this->model->name);
-        $layer = $this->getStringModelRelation($this->model, $value);
+        $layer = array_get($this->model, $value);
         // trace_log($layer);
         if ($layer) {
             $layer = $layer->cloudiId;
