@@ -2,8 +2,7 @@
 #  Btn  Behavior Config
 # ===================================
 
-Description: >
-    //startKeep/
+
 modelClass: Waka\Cloudis\Models\Montage
 
 workflow: false 
@@ -50,8 +49,7 @@ action_bar:
     partials: #Attention seul les variables modelId et modelClass (class du controller) sont disponible sans les partials.  
         test:
             url: $/waka/cloudis/controllers/montages/_test.htm
-Description: >
-    //endKeep/
+
 
 
 #     ##### SAUVEGARDE PURE ########

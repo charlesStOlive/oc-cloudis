@@ -10,7 +10,6 @@ fields:
         required: true
         default: Brouillon
         options: listStates
-        default: Actif
         permissions: [waka.cloudis.admin.*]
     name:
         label: waka.cloudis::montage.name
