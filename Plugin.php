@@ -49,7 +49,7 @@ class Plugin extends PluginBase
         return [
             'filters' => [
                 'getCloudiUrl' => function ($twig, $width = 400, $height = 400, $format = null, $crop = "fill", $greyScale = false) {
-                    if(!$twig) {
+                    if(!$twig or is_array($twig)) {
                         \Log::warning('getCloudiUrl : twig null');
                         return null;
                     }
@@ -61,7 +61,7 @@ class Plugin extends PluginBase
                     //
                 },
                 'getCloudiMontageUrl' => function ($twig, $slug, $width = 400, $height = 200, $format = null, $crop = "fill", $gravity = "center") {
-                    if(!$twig) {
+                    if(!$twig or is_array($twig)) {
                         \Log::warning('getCloudiMontageUrl : twig null');
                         return null;
                     }
