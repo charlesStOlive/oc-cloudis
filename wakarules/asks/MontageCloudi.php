@@ -16,6 +16,7 @@ class MontageCloudi extends AskBase implements AskInterface
             'name'        => 'Un montage cloudi',
             'description' => 'Un montage photo éditable',
             'icon'        => 'wicon-folder-images',
+            'subform_emit_field'    => 'image',
             'outputs' => [
                 'word_type' => 'IMG',
             ]
@@ -54,6 +55,15 @@ class MontageCloudi extends AskBase implements AskInterface
         return [];
     }
 
+    public function getEditableConfig()
+    {
+        $fieldConfig = $this->fieldConfig->fields['image'];
+        $fieldConfig['options'] = $this->listCloudiMontage();
+        $fieldConfig['span'] = 'full';
+        //trace_log(array_get($this->subFormDetails(), 'subform_emit'));
+        return $fieldConfig;
+    }
+
     public function listCloudiMontage()
     {
         $src = $this->getDs();
@@ -84,7 +94,7 @@ class MontageCloudi extends AskBase implements AskInterface
         //$clientModel = $this->getClientModel($clientId);
         $finalModel = null;
         //get configuration
-        $configs = $this->host->config_data;
+        $configs = $this->getConfigs();
         $keyImage = $configs['image'] ?? null;
         $src = $configs['srcImage'] ?? null;
         $width = $configs['width'] ?? null;
@@ -111,6 +121,9 @@ class MontageCloudi extends AskBase implements AskInterface
                 'gravity' => $gravity ?? null,
             ];
         $montage = \Waka\Cloudis\Models\Montage::find($keyImage);
+        if(!$finalModel or !$montage) {
+            throw new \ApplicationException('finalModel or montage non definis');;
+        }
         //trace_log($finalModel->name);
         if($context == 'twig' ) {
             return [
@@ -126,5 +139,6 @@ class MontageCloudi extends AskBase implements AskInterface
                 'ratio' => true,
             ];
         }
+        
     }
 }

@@ -83,7 +83,7 @@ class FileCloudiLinked extends AskBase implements AskInterface
         //$clientModel = $this->getClientModel($clientId);
         $finalModel = null;
         //get configuration
-        $configs = $this->host->config_data;
+        $configs = $this->getConfigs();
         $keyImage = $configs['image'] ?? null;
         $src = $configs['srcImage'] ?? null;
         $width = $configs['width'] ?? null;
@@ -109,7 +109,9 @@ class FileCloudiLinked extends AskBase implements AskInterface
                 'crop' => $crop ?? null,
                 'gravity' => $gravity ?? null,
             ];
-        //trace_log($finalModel->name);
+        if(!$finalModel->{$keyImage}) {
+            throw new \ApplicationException('finalModel {$keyImage}  non definis');;
+        }
         if($context == 'twig' ) {
             return [
                 'path' => $finalModel->{$keyImage}->geturl($options),
@@ -124,5 +126,6 @@ class FileCloudiLinked extends AskBase implements AskInterface
                 'ratio' => true,
             ];
         }
+        
     }
 }

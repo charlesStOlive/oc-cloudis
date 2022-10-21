@@ -1,4 +1,4 @@
-<?= Form::open()?>
+<?= Form::open() ?>
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -7,31 +7,26 @@
         </div>
         <div class="modal-body">
             <?= $this->makePartial('~/plugins/waka/utils/views/condition_errors_tt.htm', $errors) ?>
-            <input id="modelClass" name="modelClass" type="hidden" value="<?=$modelClass?>">
-            <input id="modelId" name="modelId" type="hidden" value="<?=$modelId?>">
-            <select class="form-control custom-select"
-                    data-request="onSelectMontage"
-                    data-request-loading="#wakaLoading"
-                    name="productorId">
-                <option value=""
-                        disabled
-                        selected><?=e(trans('waka.utils::lang.global.placeholder_model'))?></option>
-                <?php foreach($options as $key => $value)  { ?>
-                <option value="<?=$key?>">
-                    <?=$value?>
-                </option>
-                <?php } ?>
-            </select>
-            <div class="p-t-md">
-                <?= $this->makePartial('~/plugins/waka/utils/views/wakaLoading.htm') ?>
+            <input id="modelClass" name="modelClass" type="hidden" value="<?= $modelClass ?>">
+            <input id="modelId" name="modelId" type="hidden" value="<?= $modelId ?>">
+            <div class="form-group">
+                <select class="form-control custom-select" data-request="onSelectMontage" data-request-loading="#wakaLoading" name="productorId">
+                    <option value="" disabled selected><?= e(trans('waka.utils::lang.global.placeholder_model')) ?></option>
+                    <?php foreach ($options as $key => $value) : ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+            <div class="">
+
                 <div id="montage_result">
-                    
+
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary"
-                    data-dismiss="modal"><?= e(trans('waka.utils::lang.global.close')) ?></button>
+            <?= $this->makePartial('~/plugins/waka/utils/views/wakaLoading.htm') ?>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><?= e(trans('waka.utils::lang.global.close')) ?></button>
         </div>
     </div>
 </div>
