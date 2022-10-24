@@ -8,26 +8,18 @@ fields:
         span: full
         type: balloon-selector
         required: true
-        default: Brouillon
         options: listStates
+        default: Actif
         permissions: [waka.cloudis.admin.*]
+        tab: waka.cloudis::montage.tab_edit
     name:
         label: waka.cloudis::montage.name
         span: left
         required: true
+        tab: waka.cloudis::montage.tab_edit
     slug:
         label: waka.cloudis::montage.slug
         span: right
         required: true
         preset: name
-    data_source:
-        label: waka.cloudis::montage.data_source
-        span: left
-        type: dropdown
-        placeholder: waka.utils::lang.global.placeholder
-        required: true
-        options: listDataSource
-        trigger:
-            action: hide
-            field: no_ds
-            condition: checked
+        tab: waka.cloudis::montage.tab_edit

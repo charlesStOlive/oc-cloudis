@@ -10,3 +10,7 @@
 1.2.0:
     - "Ajout du champs mémo"
     - create_montages_table_u120.php
+2.0.0:
+    - "Transfert datasource vers wakasession"
+    - change_montages_table_u200.php
+    - create_montages_table_u200.php

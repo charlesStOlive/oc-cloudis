@@ -1,7 +1,6 @@
 <?php
 return [
     'create' => 'Créer un montage',
-    'data_source' => 'Source des données',
     'edit' => 'Éditer un montage',
     'form_name' => 'Gestion de l\'montage',
     'masque' => 'Masque ou autres sources (xl-masque-lx)',
@@ -13,12 +12,14 @@ return [
     'slug' => 'Slug/Code',
     'src' => 'Image (xl-src-lx)',
     'state' => 'État',
+    'tab_edit' => 'Editer',
+    'tab_session' => 'Session',
     'test' => 'Tester un montage',
-    'test_id' => 'Modèle de test',
     'test_title' => 'Tester un montage',
     'title' => 'Gestion des montages',
     'update' => 'Éditer un montage',
     'use_files' => 'Utilise des fichiers propres',
+    'waka_session' => 'Clef pour LP',
     'e' => [
         'data_source' => 'Vous devez choisir un modèle',
         'state' => 'Le champs état est obligatoire'

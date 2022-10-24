@@ -12,9 +12,6 @@ columns:
     slug:
         label: waka.cloudis::montage.slug
         searchable: true
-    data_source:
-        label: waka.cloudis::montage.data_source
-        searchable: true
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: timetense

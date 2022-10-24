@@ -38,7 +38,6 @@ class Montage extends Model
         'state' => 'required',
         'name' => 'required',
         'slug' => 'required|unique',
-        'data_source' => 'required',
     ];
 
     public $customMessages = [
@@ -83,6 +82,12 @@ class Montage extends Model
         'updated_at',
     ];
 
+/**
+    * @var array Spécifié le type d'export à utiliser pour chaque champs
+    */
+    public $importExportConfig = [
+    ]; 
+
     /**
      * @var array Relations
      */
@@ -98,8 +103,14 @@ class Montage extends Model
     ];
     public $belongsToMany = [
     ];        
-    public $morphTo = [];
+    public $morphTo = [
+    ];
     public $morphOne = [
+        'waka_session' => [
+            'Waka\Session\Models\WakaSession',
+            'name' => 'sessioneable',
+            'delete' => true
+        ],
     ];
     public $morphMany = [
         'rule_conditions' => [

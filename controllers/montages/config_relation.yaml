@@ -1,0 +1,16 @@
+# ===================================
+# Relation Behavior Config
+# ===================================
+
+waka_session:
+    label: waka.cloudis::montage.waka_session
+    manage:
+        form: $/waka/session/models/wakasession/fields.yaml
+    view:
+        form: $/waka/session/models/wakasession/fields.yaml
+        toolbarButtons: update|delete
+        showCheckboxes: false
+        defaultSort:
+            column: name
+            direction: asc
+

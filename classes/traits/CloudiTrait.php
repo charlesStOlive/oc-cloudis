@@ -1,9 +1,7 @@
 <?php namespace Waka\Cloudis\Classes\Traits;
 
 use Waka\Cloudis\Classes\YamlParserRelation;
-use Waka\Utils\Classes\DataSource;
 use \Waka\Cloudis\Models\Settings as CloudisSettings;
-use \Waka\Informer\Models\Inform;
 
 trait CloudiTrait
 {

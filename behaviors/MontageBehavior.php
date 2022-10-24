@@ -44,7 +44,9 @@ class MontageBehavior extends ControllerBehavior
         $modelId = post('modelId');
 
         $ds = \DataSources::findByClass($modelClass);
+        trace_log('ok');
         $options = $ds->getProductorOptions('Waka\Cloudis\Models\Montage', $modelId);
+        trace_log('dddssd');
 
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
@@ -70,8 +72,8 @@ class MontageBehavior extends ControllerBehavior
     public function onLoadMontageTestForm() {
         $productorId = \Input::get('productorId');
         $montage = Montage::find($productorId);
-        $ds = \DataSources::find($montage->data_source);
-        $model = $ds->class::find($montage->test_id);
+        $ds = \DataSources::find($montage->waka_session->data_source);
+        $model = $ds->class::find($montage->waka_session->ds_id_test);
         if(!$model) {
             throw new \ValidationException(['test_id' => 'Le champs de test est vide']);
         }

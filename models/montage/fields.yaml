@@ -1,84 +1,86 @@
 # ===================================
 #  Form Field Definitions
 # ===================================
-
-fields:
-    state:
-        label: waka.cloudis::montage.state
-        span: full
-        type: balloon-selector
-        required: true
-        default: Brouillon
-        options: listStates
-        permissions: [waka.cloudis.admin.*]
-    name:
-        label: waka.cloudis::montage.name
-        span: left
-        required: true
-    slug:
-        label: waka.cloudis::montage.slug
-        span: right
-        required: true
-        preset: name
-    data_source:
-        label: waka.cloudis::montage.data_source
-        span: left
-        type: dropdown
-        placeholder: waka.utils::lang.global.placeholder
-        required: true
-        disabled: true
-        options: listDataSource
-        trigger:
-            action: hide
-            field: no_ds
-            condition: checked
-    test_id:
-        label: waka.cloudis::montage.test_id
-        span: right
-        type: dropdown
-        placeholder: waka.utils::lang.global.placeholder
-        options: listDataSourceTarget
-    options:
-        span: full
-        type: codeeditor
-        size: giant
-        language: yaml
-    use_files:
-        label: waka.cloudis::montage.use_files
-        span: full
-        type: switch
-        default: false
-    src:
-        label: waka.cloudis::montage.src
-        span: left
-        type: cloudifileupload
-        mode: image
-        imageHeight: 100
-        imageWidth: 260
-        trigger:
-            action: show
-            field: use_files
-            condition: checked
-    masque:
-        label: waka.cloudis::montage.masque
-        span: right
-        type: cloudifileupload
-        mode: image
-        imageHeight: 100
-        imageWidth: 260
-        trigger:
-            action: show
-            field: use_files
-            condition: checked
-    memo:
-        label: waka.cloudis::montage.memo
-        span: full
-        type: textarea
-        size: small
-        cssClass: txt_memo
-    rule_conditions:
-        label: waka.cloudis::montage.rule_conditions
-        span: full
-        type: rulebuilder
-        ruleMode: condition
-        targetProductor: wakaMail
+tabs:
+    defaultTab: tab::waka.tbser::presentation.tab_edit
+    icons: 
+        waka.tbser::presentation.tab_edit: icon-pencil
+        waka.tbser::presentation.tab_session: icon-user
+    fields:    
+        state:
+            label: waka.cloudis::montage.state
+            span: full
+            type: balloon-selector
+            required: true
+            options: listStates
+            default: Actif
+            permissions: [waka.cloudis.admin.*]
+            tab: waka.cloudis::montage.tab_edit
+        name:
+            label: waka.cloudis::montage.name
+            span: left
+            required: true
+            tab: waka.cloudis::montage.tab_edit
+        slug:
+            label: waka.cloudis::montage.slug
+            span: right
+            required: true
+            preset: name
+            tab: waka.cloudis::montage.tab_edit
+        options:
+            span: full
+            type: codeeditor
+            size: giant
+            language: yaml
+            tab: waka.cloudis::montage.tab_edit
+        use_files:
+            label: waka.cloudis::montage.use_files
+            span: full
+            type: switch
+            default: false
+            tab: waka.cloudis::montage.tab_edit
+        src:
+            label: waka.cloudis::montage.src
+            span: left
+            type: cloudifileupload
+            mode: image
+            imageHeight: 100
+            imageWidth: 260
+            trigger:
+                action: show
+                field: use_files
+                condition: checked
+            tab: waka.cloudis::montage.tab_edit
+        masque:
+            label: waka.cloudis::montage.masque
+            span: right
+            type: cloudifileupload
+            mode: image
+            imageHeight: 100
+            imageWidth: 260
+            trigger:
+                action: show
+                field: use_files
+                condition: checked
+            tab: waka.cloudis::montage.tab_edit
+        memo:
+            label: waka.cloudis::montage.memo
+            span: full
+            type: textarea
+            size: small
+            cssClass: txt_memo
+            tab: waka.cloudis::montage.tab_edit
+        rule_conditions:
+            label: waka.cloudis::montage.rule_conditions
+            span: full
+            type: rulebuilder
+            ruleMode: condition
+            targetProductor: wakaMail
+            tab: waka.cloudis::montage.tab_edit
+        waka_session:
+            label: waka.cloudis::montage.waka_session
+            span: full
+            type: partial
+            path: field_waka_session
+            permissions: [waka.mailer.admin.super]
+            tab: waka.cloudis::montage.tab_session
