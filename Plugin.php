@@ -167,7 +167,9 @@ class Plugin extends PluginBase
         \Waka\Utils\Classes\Ds\DataSource::extend(function($ds) {
             $ds->addDynamicMethod('getImagesFilesFromMontage', function($code) use ($ds) {
                 $code ? $code : $ds->code;
-                return \Waka\Cloudis\Models\Montage::where('data_source', $code)->lists('name', 'id');
+                return \Waka\Cloudis\Models\Montage::whereHas('waka_session', function($q) use($code) {
+                            $q->where('data_source', $code);
+                })->lists('name', 'id');
             });
                 
         });
