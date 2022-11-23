@@ -44,9 +44,9 @@ class MontageBehavior extends ControllerBehavior
         $modelId = post('modelId');
 
         $ds = \DataSources::findByClass($modelClass);
-        trace_log('ok');
+        //trace_log('ok');
         $options = $ds->getProductorOptions('Waka\Cloudis\Models\Montage', $modelId);
-        trace_log('dddssd');
+        //trace_log('dddssd');
 
         $this->vars['options'] = $options;
         $this->vars['modelId'] = $modelId;
