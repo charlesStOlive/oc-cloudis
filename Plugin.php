@@ -2,6 +2,9 @@
 
 use Backend;
 use Event;
+use App;
+use Config;
+use Illuminate\Foundation\AliasLoader;
 use Lang;
 use System\Classes\PluginBase;
 use View;
@@ -135,6 +138,7 @@ class Plugin extends PluginBase
     //     return get_class($cloudi);
     // }
 
+    
     /**
      * Boot method, called right before the request route.
      *
@@ -142,6 +146,13 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        $aliasLoader = AliasLoader::getInstance();
+        $aliasLoader->alias('Cloudder', \JD\Cloudder\Facades\Cloudder::class);
+        App::register(\JD\Cloudder\CloudderServiceProvider::class);
+        $registeredAppPathConfig = require __DIR__ . '/config/cloudder.php';
+        \Config::set('cloudder', $registeredAppPathConfig);
+        // $this->bootPackages();
+
         \DataSources::registerDataSources(plugins_path().'/waka/cloudis/config/datasources.yaml');
 
         // Event::listen('backend.update.prod', function ($controller) {
