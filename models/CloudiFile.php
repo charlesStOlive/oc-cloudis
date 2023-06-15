@@ -108,7 +108,7 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
     /**
      * Copy de la finction de FILEBASE pour enlever les extentions.
      */
-    protected function getDiskName()
+    protected function getDiskName():string
     {
         if ($this->disk_name !== null) {
             return $this->disk_name;
@@ -250,7 +250,7 @@ class CloudiFile extends FileBase// copy de \Modules\System\Files et adaptation.
     /**
      * If working with local storage, determine the absolute local path.
      */
-    protected function getLocalRootPath()
+    protected function getLocalRootPath(): string
     {
         return Config::get('filesystems.disks.local.root', storage_path('app'));
     }
