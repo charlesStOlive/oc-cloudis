@@ -1,0 +1,21 @@
+{
+    "name": "waka/cloudis",
+    "description": "Plugin pour cloudis",
+    "type": "winter-plugin",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/charlesStOlive/cloudder"
+        }
+    ],
+    "require": {
+        "jrm2k6/cloudder": "dev-waka"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Charles Saint Olive",
+            "email": "contact@notilac.fr"
+        }
+    ]
+}
