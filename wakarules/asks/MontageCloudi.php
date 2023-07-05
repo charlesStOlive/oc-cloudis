@@ -1,6 +1,6 @@
 <?php namespace Waka\Cloudis\WakaRules\Asks;
 
-use Waka\Utils\Classes\Rules\AskBase;
+use Waka\WakaBlocs\Classes\Rules\AskBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
 use Waka\Utils\Interfaces\Ask as AskInterface;

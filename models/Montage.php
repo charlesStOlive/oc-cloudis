@@ -114,7 +114,7 @@ class Montage extends Model
     ];
     public $morphMany = [
         'rule_conditions' => [
-            'Waka\Utils\Models\RuleCondition',
+            'Waka\WakaBlocs\Models\RuleCondition',
             'name' => 'conditioneable',
             'delete' => true
         ],

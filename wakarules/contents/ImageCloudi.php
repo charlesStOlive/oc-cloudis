@@ -1,6 +1,6 @@
 <?php namespace Waka\Cloudis\WakaRules\Contents;
 
-use Waka\Utils\Classes\Rules\RuleContentBase;
+use Waka\WakaBlocs\Classes\Rules\RuleContentBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
 use Waka\Utils\Interfaces\RuleContent as RuleContentInterface;
