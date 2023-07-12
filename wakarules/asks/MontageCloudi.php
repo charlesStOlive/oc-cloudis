@@ -3,7 +3,7 @@
 use Waka\WakaBlocs\Classes\Rules\AskBase;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use ApplicationException;
-use Waka\Utils\Interfaces\Ask as AskInterface;
+use Waka\WakaBlocs\Interfaces\Ask as AskInterface;
 
 class MontageCloudi extends AskBase implements AskInterface
 {

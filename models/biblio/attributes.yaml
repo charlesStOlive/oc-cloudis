@@ -9,5 +9,5 @@ attributes:
     slug:
         label: waka.cloudis::biblio.slug
     updated_at:
-        label: waka.utils::lang.global.updated_at
+        label: waka.wutils::lang.global.updated_at
         type: date-medium

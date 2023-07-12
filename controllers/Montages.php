@@ -12,9 +12,9 @@ class Montages extends Controller
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
-        'Waka.Utils.Behaviors.BtnsBehavior',
+        'Waka.Wutils.Behaviors.BtnsBehavior',
         'Backend.Behaviors.RelationController',
-        'Waka.Cloudis.Behaviors.MontageBehavior',
+        //'Waka.Cloudis.Behaviors.MontageBehavior',
     ];
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';

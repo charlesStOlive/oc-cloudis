@@ -7,7 +7,7 @@
 modelClass: Waka\Cloudis\Models\Montage
 
 name: montages
-title: waka.utils::lang.global.duplicate_the Montage
+title: waka.wutils::lang.global.duplicate_the Montage
 redirect: backend/waka/cloudis/montages/update/
 
 duplication:

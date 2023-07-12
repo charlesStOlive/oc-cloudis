@@ -12,7 +12,7 @@ class Montage extends Model
 {
     use \Winter\Storm\Database\Traits\Validation;
     use \Winter\Storm\Database\Traits\Sortable;
-    use \Waka\Utils\Classes\Traits\DataSourceHelpers;
+    //use \Waka\Utils\Classes\Traits\DataXXSourceHelpers;
 
 
     /**

@@ -11,7 +11,7 @@
             <input id="modelId" name="modelId" type="hidden" value="<?= $modelId ?>">
             <div class="form-group">
                 <select class="form-control custom-select" data-request="onSelectMontage" data-request-loading="#wakaLoading" name="productorId">
-                    <option value="" disabled selected><?= e(trans('waka.utils::lang.global.placeholder_model')) ?></option>
+                    <option value="" disabled selected><?= e(trans('waka.wutils::lang.global.placeholder_model')) ?></option>
                     <?php foreach ($options as $key => $value) : ?>
                         <option value="<?= $key ?>"><?= $value ?></option>
                     <?php endforeach ?>
@@ -26,7 +26,7 @@
         </div>
         <div class="modal-footer m-t">
             <?= $this->makePartial('~/plugins/waka/utils/views/wakaLoading.htm') ?>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><?= e(trans('waka.utils::lang.global.close')) ?></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><?= e(trans('waka.wutils::lang.global.close')) ?></button>
         </div>
     </div>
 </div>

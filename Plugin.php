@@ -20,7 +20,7 @@ class Plugin extends PluginBase
      * @var array Plugin dependencies
      */
     public $require = [
-        'Waka.Utils',
+        'Waka.Wutils',
     ];
 
     /**
@@ -153,37 +153,15 @@ class Plugin extends PluginBase
         \Config::set('cloudder', $registeredAppPathConfig);
         // $this->bootPackages();
 
-        \DataSources::registerDataSources(plugins_path().'/waka/cloudis/config/datasources.yaml');
-
-        // Event::listen('backend.update.prod', function ($controller) {
-        //     if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
-        //         $data = [
-        //             'model' => $modelClass = str_replace('\\', '\\\\', get_class($controller->formGetModel())),
-        //             'modelId' => $controller->formGetModel()->id,
-        //         ];
-        //         return View::make('waka.cloudis::cloudisbutton')->withData($data);
-        //         ;
-        //     }
-        // });
-        // Event::listen('popup.actions.prod', function ($controller, $model, $id) {
-        //     if (in_array('Waka.Cloudis.Behaviors.PopupCloudis', $controller->implement)) {
-        //         $data = [
-        //             'model' => str_replace('\\', '\\\\', $model),
-        //             'modelId' => $id,
-        //         ];
-        //         return View::make('waka.cloudis::cloudisbutton')->withData($data);
-        //         ;
-        //     }
-        // });
-        \Waka\Utils\Classes\Ds\DataSource::extend(function($ds) {
-            $ds->addDynamicMethod('getImagesFilesFromMontage', function($code) use ($ds) {
-                $code ? $code : $ds->code;
-                return \Waka\Cloudis\Models\Montage::whereHas('waka_session', function($q) use($code) {
-                            $q->where('data_source', $code);
-                })->lists('name', 'id');
-            });
+        // \Waka\Utils\Classes\Ds\DataXXSource::extend(function($ds) {
+        //     $ds->addDynamicMethod('getImagesFilesFromMontage', function($code) use ($ds) {
+        //         $code ? $code : $ds->code;
+        //         return \Waka\Cloudis\Models\Montage::whereHas('waka_session', function($q) use($code) {
+        //                     $q->where('data_source', $code);
+        //         })->lists('name', 'id');
+        //     });
                 
-        });
+        // // });
     }
 
     /**

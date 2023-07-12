@@ -18,13 +18,6 @@ fields:
         type: balloon-selector
         default: image
         options: listTypeImage
-    src:
-        label: waka.cloudis::biblio.src
-        span: left
-        type: cloudifileupload
-        mode: image
-        imageHeight: 400
-        dependsOn: type
     srcv:
         label: waka.cloudis::biblio.srcv
         span: left
