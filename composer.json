@@ -1,5 +1,5 @@
 {
-    "name": "waka/cloudis",
+    "name": "waka/wn-cloudis-plugin",
     "description": "Plugin pour cloudis",
     "type": "winter-plugin",
     "repositories": [
